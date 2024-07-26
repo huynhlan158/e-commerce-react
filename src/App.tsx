@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import Navbar from '~/components/Navbar';
 import './App.css';
 
 function App() {
@@ -6,7 +7,8 @@ function App() {
 
   return (
     <div>
-      <h1 className="text-red-500 text-3xl font-bold underline">Hello world!</h1>
+      <Navbar />
+      <h1 className="text-red-500 text-4xlarge font-light">Hello world!</h1>
       <p>{t('welcome')}</p>
     </div>
   );
