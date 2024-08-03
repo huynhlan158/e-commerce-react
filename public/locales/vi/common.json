@@ -1,3 +1,7 @@
 {
-  "welcome": "Chào mừng đến với website!"
+  "welcome": "Trang chủ",
+  "not-found": "Trang không tồn tại!",
+  "navbar-tab1": "Navbar tab 1",
+  "navbar-tab2": "Navbar tab 2",
+  "navbar-tab3": "Navbar tab 3"
 }
