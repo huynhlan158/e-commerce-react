@@ -5,15 +5,15 @@ interface TextProps extends StyleProps {
   /** The text of the component */
   text: string;
 
-  /** The size of the component
+  /** The font size of the text
    * @default 14
    */
-  size?: FontSize;
+  fontSize?: FontSize;
 }
 
 /** The text component to render text */
 export function Text(props: TextProps) {
-  const { className, text, size = 14 } = props;
+  const { className, text, fontSize = 14 } = props;
 
-  return <span className={clsx(`text-${size}`, className)}>{text}</span>;
+  return <span className={clsx(`text-${fontSize}`, className)}>{text}</span>;
 }

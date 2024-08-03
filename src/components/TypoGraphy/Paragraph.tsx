@@ -5,15 +5,15 @@ interface ParagraphProps extends StyleProps {
   /** The text of the component */
   text: string;
 
-  /** The size of the component
+  /** The font size of the text
    * @default 14
    */
-  size?: FontSize;
+  fontSize?: FontSize;
 }
 
 /** The paragraph component to render text as paragraph */
 export function Paragraph(props: ParagraphProps) {
-  const { className, text, size = 14 } = props;
+  const { className, text, fontSize = 14 } = props;
 
-  return <p className={clsx(`text-${size}`, className)}>{text}</p>;
+  return <p className={clsx(`text-${fontSize}`, className)}>{text}</p>;
 }
