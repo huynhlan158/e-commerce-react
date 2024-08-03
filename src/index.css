@@ -30,3 +30,7 @@ body {
   --bg-body: rgb(245, 245, 244);
   --grey: #262626;
 }
+
+* {
+  transition: all 300ms;
+}
