@@ -12,4 +12,5 @@ export interface StyleProps {
   className?: string;
 }
 
+/** The type of font size used in the app */
 export type FontSize = 12 | 14 | 16 | 18 | 20 | 22 | 24 | 28;
