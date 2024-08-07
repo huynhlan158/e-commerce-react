@@ -1,7 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import routes from '~/config/routes';
+import { setupServer } from '~/utils/mockApi';
 import { HomePage, Tab1, Tab2, Tab3, PageNotFound } from '~/pages';
+
 import '~/App.css';
 
 const publicRoutes = [
@@ -12,12 +15,21 @@ const publicRoutes = [
 ];
 
 function App() {
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      const server = setupServer();
+      return () => {
+        server.shutdown();
+      };
+    }
+  }, []);
+
   return (
     <Router>
       <Routes>
         {publicRoutes.map((route, index) => {
           const Page = route.component;
-          return <Route key={index} path={route.path} element={<Page />}></Route>;
+          return <Route key={index} path={route.path} element={<Page />} />;
         })}
         <Route path="*" element={<PageNotFound />} />
       </Routes>
