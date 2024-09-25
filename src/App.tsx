@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useEffect } from 'react';
 
 import routes from '~/config/routes';
 import { setupServer } from '~/utils/mockApi';
@@ -14,16 +13,11 @@ const publicRoutes = [
   { path: routes.tab3, component: Tab3 },
 ];
 
-function App() {
-  useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      const server = setupServer();
-      return () => {
-        server.shutdown();
-      };
-    }
-  }, []);
+if (process.env.NODE_ENV === 'development') {
+  setupServer();
+}
 
+function App() {
   return (
     <Router>
       <Routes>
