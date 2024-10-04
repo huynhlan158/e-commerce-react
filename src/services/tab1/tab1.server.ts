@@ -1,6 +1,6 @@
-import { httpRequest } from '~/services/fetch.server';
+import { fetchServer } from '~/services/fetch.server';
+import { Tab1Item } from './models/tab1Item';
 
-export const getTab1Items = async () => {
-  const result = await httpRequest.get('tab1-items');
-  return result.data;
-};
+export async function getTab1Items(): Promise<Tab1Item[]> {
+  return fetchServer<Tab1Item[]>({ path: '/tab1-items', method: 'GET' });
+}
