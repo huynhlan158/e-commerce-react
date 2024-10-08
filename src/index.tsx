@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Toaster } from 'react-hot-toast';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 
 import App from '~/App.tsx';
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <ChakraProvider theme={ChakraTheme}>
       <AuthProvider>
         <App />
+        <Toaster gutter={16} />
       </AuthProvider>
     </ChakraProvider>
   </React.StrictMode>

@@ -1,10 +1,13 @@
 import { useTranslation } from 'react-i18next';
+import { Stack } from '@chakra-ui/react';
+
+import { Heading } from '~/components/TypoGraphy';
 
 export function PageNotFound() {
   const { t } = useTranslation();
   return (
-    <div className="h-screen flex justify-center items-center">
-      <h1 className="text-3xl font-700">{t('not-found')}</h1>
-    </div>
+    <Stack className="h-screen">
+      <Heading text={t('not-found')} size="lg" />
+    </Stack>
   );
 }

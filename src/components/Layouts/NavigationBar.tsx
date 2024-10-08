@@ -16,57 +16,41 @@ export function NavigationBar() {
 
   return (
     <Stack
+      direction="row"
+      gap={12}
       className={clsx(
         'w-full h-56 px-24 bg-white',
         'border-b-1 border-gray-300'
       )}
     >
-      <Stack direction="row" gap={12} className="w-full h-[55px]">
-        {links.map((link) => (
-          <Stack
-            key={link.url}
-            onClick={() => navigate(link.url)}
-            justifyContent="center"
-            alignItems="center"
-            className={clsx(
-              'relative',
-              'cursor-pointer px-16 py-8 rounded-8',
-              'text-14 leading-20',
-              routes.home === link.url
-                ? 'hover:scale-110'
-                : 'hover:bg-peach-100',
-              activeTab === link.url &&
-                routes.home !== link.url &&
-                'bg-peach-100 text-brown-600 font-600'
-            )}
-          >
+      {links.map((link) => (
+        <Stack
+          key={link.url}
+          onClick={() => navigate(link.url)}
+          justifyContent="center"
+          alignItems="center"
+          className={clsx(
+            'relative',
+            'cursor-pointer px-16 py-8 rounded-t-8',
+            routes.home === link.url ? 'hover:scale-110' : 'hover:bg-gray-100',
+            activeTab === link.url &&
+              routes.home !== link.url &&
+              'text-brown-600 font-600'
+          )}
+        >
+          <span className="text-14 leading-20">{link.content}</span>
+
+          {activeTab === link.url && (
             <span
               className={clsx(
-                'text-14 leading-20',
-                'cursor-pointer',
-                routes.home === link.url
-                  ? 'hover:scale-110'
-                  : 'hover:bg-peach-100/60',
-                activeTab === link.url &&
-                  routes.home !== link.url &&
-                  'bg-peach-100 text-brown-600 font-600'
+                'absolute bottom-0',
+                'bg-brown-600',
+                'h-4 w-[40%] rounded-t-16'
               )}
-            >
-              {link.content}
-            </span>
-
-            {activeTab === link.url && (
-              <span
-                className={clsx(
-                  'absolute bottom-0',
-                  'bg-brown-600',
-                  'h-4 w-[40%] rounded-t-16'
-                )}
-              />
-            )}
-          </Stack>
-        ))}
-      </Stack>
+            />
+          )}
+        </Stack>
+      ))}
     </Stack>
   );
 }

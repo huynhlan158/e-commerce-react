@@ -67,15 +67,15 @@ export const commonTheme = {
       900: '#67481a',
     },
     green: {
-      100: '#BCC4A8',
-      200: '#A09B80',
-      300: '#979F70',
-      400: '#8B8C7A',
-      500: '#AAB396',
-      600: '#7B7D6A',
-      700: '#6C6E5A',
-      800: '#5D5F4A',
-      900: '#4E5040',
+      100: '#c8e6c9',
+      200: '#a5d6a7',
+      300: '#81c784',
+      400: '#66bb6a',
+      500: '#4caf50',
+      600: '#43a047',
+      700: '#388e3c',
+      800: '#2e7d32',
+      900: '#1b5e20',
     },
     peach: {
       100: '#FFFAF0',
@@ -141,7 +141,7 @@ export const commonTheme = {
     global: {
       body: {
         fontFamily: '"Montserrat", sans-serif',
-        color: 'var(--gray)',
+        color: 'var(--gray-900)',
       },
     },
   },

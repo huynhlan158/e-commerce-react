@@ -20,16 +20,25 @@
   src: url('/public/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
 }
 
+/* MS Edge web: avoid input fields with password type to display the default eye icon of the browser when inputting value. */
+/* Safari web: avoid input fields to have outline on focus. */
+::-ms-reveal {
+  display: none;
+}
+
 body {
   font-family: 'Montserrat', sans-serif;
-  color: var(--gray);
+  color: var(--gray-900);
 }
 
 :root {
   --white: rgb(255, 255, 255);
   --black: rgb(0, 0, 0);
   --bg-body: rgb(245, 245, 244);
-  --gray: #212121;
+  --gray-900: #212121;
+
+  /* Safari web: avoid the font weight in Safari web to be darker than the other browsers. */
+  font-synthesis: none;
 }
 
 * {
