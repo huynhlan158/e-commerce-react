@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Stack } from '@chakra-ui/react';
@@ -16,34 +17,54 @@ export function NavigationBar() {
   return (
     <Stack
       className={clsx(
-        'w-full h-64 px-24 bg-white',
-        'border-b-3 border-gray-75'
+        'w-full h-56 px-24 bg-white',
+        'border-b-1 border-gray-300'
       )}
     >
-      <Stack direction="row" gap={12} className="w-full h-64 -mb-4">
-        <span
-          className={clsx(
-            'flex items-center px-24 py-8 cursor-pointer border-b-3 hover:scale-110',
-            activeTab === routes.home ? 'border-blue-500' : 'border-transparent'
-          )}
-          onClick={() => navigate(routes.home)}
-        >
-          <Logo />
-        </span>
-
+      <Stack direction="row" gap={12} className="w-full h-[55px]">
         {links.map((link) => (
-          <span
-            className={clsx(
-              'text-14 leading-20 cursor-pointer border-b-3 hover:bg-blue-75 px-16 py-8 flex items-center',
-              activeTab === link.url
-                ? 'border-blue-500 text-blue-500 font-600'
-                : 'border-transparent'
-            )}
+          <Stack
             key={link.url}
             onClick={() => navigate(link.url)}
+            justifyContent="center"
+            alignItems="center"
+            className={clsx(
+              'relative',
+              'cursor-pointer px-16 py-8 rounded-8',
+              'text-14 leading-20',
+              routes.home === link.url
+                ? 'hover:scale-110'
+                : 'hover:bg-peach-100',
+              activeTab === link.url &&
+                routes.home !== link.url &&
+                'bg-peach-100 text-brown-600 font-600'
+            )}
           >
-            {link.title}
-          </span>
+            <span
+              className={clsx(
+                'text-14 leading-20',
+                'cursor-pointer',
+                routes.home === link.url
+                  ? 'hover:scale-110'
+                  : 'hover:bg-peach-100/60',
+                activeTab === link.url &&
+                  routes.home !== link.url &&
+                  'bg-peach-100 text-brown-600 font-600'
+              )}
+            >
+              {link.content}
+            </span>
+
+            {activeTab === link.url && (
+              <span
+                className={clsx(
+                  'absolute bottom-0',
+                  'bg-brown-600',
+                  'h-4 w-[40%] rounded-t-16'
+                )}
+              />
+            )}
+          </Stack>
         ))}
       </Stack>
     </Stack>
@@ -51,33 +72,45 @@ export function NavigationBar() {
 }
 
 interface MainLink {
-  /** The URL of the link */
+  /**
+   * The URL of the link.
+   */
   url: string;
-  /** The title of the link */
-  title: string;
+  /**
+   * The content of the link.
+   */
+  content: string | ReactNode;
 }
 
-/** Get the list for the main menu of the navigation bar */
+/**
+ * Get the list for the main menu of the navigation bar.
+ */
 function useMainLink(): MainLink[] {
   const { t } = useTranslation();
 
   return [
     {
+      url: routes.home,
+      content: <Logo />,
+    },
+    {
       url: routes.tab1,
-      title: t('navbar-tab1'),
+      content: t('navbar-tab1'),
     },
     {
       url: routes.tab2,
-      title: t('navbar-tab2'),
+      content: t('navbar-tab2'),
     },
     {
       url: routes.tab3,
-      title: t('navbar-tab3'),
+      content: t('navbar-tab3'),
     },
   ];
 }
 
-/** The logo of the application */
+/**
+ * The logo of the application.
+ */
 function Logo() {
   return (
     <svg
