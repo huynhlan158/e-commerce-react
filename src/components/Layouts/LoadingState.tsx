@@ -7,8 +7,8 @@ import { Spinner } from '../Spinner';
  */
 export function LoadingState() {
   return (
-    <Stack className="w-screen h-screen fixed top-0 left-0 z-50 bg-white/40">
-      <Spinner size="xl" thickness="4px" />
+    <Stack justify="center" align="center" className="w-screen h-screen fixed top-0 left-0 z-50 bg-white/40">
+      <Spinner size="lg" thickness="4px" />
     </Stack>
   );
 }

@@ -13,7 +13,6 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
-    "axios": "^1.7.3",
     "clsx": "^2.1.1",
     "framer-motion": "^11.3.21",
     "i18next": "^23.12.2",
@@ -25,9 +24,11 @@
     "react-dom": "^18.3.1",
     "react-i18next": "^15.0.0",
     "react-router-dom": "^6.26.0",
-    "styled-components": "^6.1.12"
+    "styled-components": "^6.1.12",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/node": "^22.7.4",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.15.0",
