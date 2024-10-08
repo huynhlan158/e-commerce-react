@@ -11,11 +11,36 @@ interface TextProps extends StyleProps {
    * @default 'md'
    */
   size?: FontSize;
+  /**
+   * The param values of the text.
+   */
+  params?: string[];
 }
 
-/** The text component to render text */
+/**
+ * The text component to render text.
+ */
 export function Text(props: TextProps) {
-  const { className, text, size = 'md' } = props;
+  const { className, text, size = 'md', params } = props;
+  if (!text || typeof text !== 'string') return text;
+
+  const textArray = text.split('{}');
+  const firstTextItem = textArray.shift();
+
+  const joinedText = params
+    ? params
+        .reduce((acc, cur) => [...acc, cur, textArray.shift()], [firstTextItem])
+        .join('')
+    : text;
+
+  if (joinedText.includes('<b>')) {
+    return (
+      <span
+        className={className}
+        dangerouslySetInnerHTML={{ __html: joinedText }}
+      />
+    );
+  }
 
   return (
     <span
@@ -26,7 +51,7 @@ export function Text(props: TextProps) {
         className
       )}
     >
-      {text}
+      {joinedText}
     </span>
   );
 }

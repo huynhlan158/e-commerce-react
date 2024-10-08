@@ -11,5 +11,15 @@ export interface StyleProps {
   className?: string;
 }
 
-/** The type of font size used in the app */
+/**
+ * The type of font size used in the app.
+ */
 export type FontSize = 'sm' | 'md' | 'lg';
+
+/**
+ * The status of an action.
+ */
+export enum Status {
+  SUCCESS = 'success',
+  ERROR = 'error',
+}
