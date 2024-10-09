@@ -1,14 +1,26 @@
 import { createServer } from 'miragejs';
-import { tab1Items, tab2Items, tab3Items } from './mockData';
+import { tab1Items, tab2Items, tab3Items, userList } from './mockData';
 
 export const setupServer = () => {
   const delay = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 300));
   };
 
   const server = createServer({
     routes() {
       this.namespace = 'mock-api';
+
+      // ===== Mock API for users service ===== //
+      this.get('/users', (schema) => {
+        delay();
+        return schema.db.userList;
+      });
+
+      this.get('/users/info/:id', (schema, request) => {
+        delay();
+        const { id } = request.params;
+        return schema.db.userList.find((user) => user.id === id);
+      });
 
       // ===== Mock API for tab 1 ===== //
       this.get('/tab1-items', (schema) => {
@@ -30,6 +42,7 @@ export const setupServer = () => {
 
     seeds(server) {
       server.db.loadData({
+        userList: userList,
         tab1Items: tab1Items,
         tab2Items: tab2Items,
         tab3Items: tab3Items,

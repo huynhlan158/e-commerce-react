@@ -1,18 +1,21 @@
 import clsx from 'clsx';
 import { ReactNode } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { Stack } from '@chakra-ui/react';
 
 import routes from '~/config/routes';
+import { useAuthStore } from '~/contexts/auth/AuthContext';
 
-/** The main navigation bar that allow users to switch to different tabs */
+/**
+ * The main navigation bar that allow users to switch to different tabs.
+ */
 export function NavigationBar() {
   const location = useLocation();
-  const navigate = useNavigate();
-  const links = useMainLink();
+  const { guests, users } = useMainLink();
+  const { isAuthenticated } = useAuthStore();
 
-  const activeTab = location.pathname;
+  const activeUrl = location.pathname;
 
   return (
     <Stack
@@ -23,35 +26,67 @@ export function NavigationBar() {
         'border-b-1 border-gray-300'
       )}
     >
-      {links.map((link) => (
-        <Stack
-          key={link.url}
-          onClick={() => navigate(link.url)}
-          justifyContent="center"
-          alignItems="center"
-          className={clsx(
-            'relative',
-            'cursor-pointer px-16 py-8 rounded-t-8',
-            routes.home === link.url ? 'hover:scale-110' : 'hover:bg-gray-100',
-            activeTab === link.url &&
-              routes.home !== link.url &&
-              'text-brown-600 font-600'
-          )}
-        >
-          <span className="text-14 leading-20">{link.content}</span>
-
-          {activeTab === link.url && (
-            <span
-              className={clsx(
-                'absolute bottom-0',
-                'bg-brown-600',
-                'h-4 w-[40%] rounded-t-16'
-              )}
+      {isAuthenticated
+        ? users.map((link) => (
+            <NavbarItem
+              key={link.url}
+              url={link.url}
+              activeUrl={activeUrl}
+              content={link.content}
             />
-          )}
-        </Stack>
-      ))}
+          ))
+        : guests.map((link) => (
+            <NavbarItem
+              key={link.url}
+              url={link.url}
+              activeUrl={activeUrl}
+              content={link.content}
+            />
+          ))}
     </Stack>
+  );
+}
+
+interface NavbarItemProps {
+  /**
+   * The url of the navbar item.
+   */
+  url: string;
+  /**
+   * The current url.
+   */
+  activeUrl: string;
+  /**
+   * The main content of the navbar item.
+   */
+  content: string | ReactNode;
+}
+
+/**
+ * A UI component for a navbar item.
+ */
+function NavbarItem({ url, activeUrl, content }: NavbarItemProps) {
+  return (
+    <NavLink
+      to={url}
+      className={clsx(
+        'relative flex justify-center items-center',
+        'cursor-pointer px-16 py-8 rounded-t-8',
+        routes.home === url ? 'hover:scale-110' : 'hover:bg-gray-100',
+        activeUrl === url && routes.home !== url && 'text-brown-600 font-600'
+      )}
+    >
+      <span className="text-14 leading-20">{content}</span>
+      {activeUrl === url && (
+        <span
+          className={clsx(
+            'absolute bottom-0',
+            'bg-brown-600',
+            'h-4 w-[40%] rounded-t-16'
+          )}
+        />
+      )}
+    </NavLink>
   );
 }
 
@@ -67,29 +102,37 @@ interface MainLink {
 }
 
 /**
- * Get the list for the main menu of the navigation bar.
+ * A custom hook to get the list for the main menu of the navigation bar.
  */
-function useMainLink(): MainLink[] {
+function useMainLink(): { [x: string]: MainLink[] } {
   const { t } = useTranslation();
 
-  return [
-    {
-      url: routes.home,
-      content: <Logo />,
-    },
-    {
-      url: routes.tab1,
-      content: t('navbar-tab1'),
-    },
-    {
-      url: routes.tab2,
-      content: t('navbar-tab2'),
-    },
-    {
-      url: routes.tab3,
-      content: t('navbar-tab3'),
-    },
-  ];
+  return {
+    guests: [
+      {
+        url: routes.home,
+        content: <Logo />,
+      },
+    ],
+    users: [
+      {
+        url: routes.home,
+        content: <Logo />,
+      },
+      {
+        url: routes.tab1,
+        content: t('navbar-tab1'),
+      },
+      {
+        url: routes.tab2,
+        content: t('navbar-tab2'),
+      },
+      {
+        url: routes.tab3,
+        content: t('navbar-tab3'),
+      },
+    ],
+  };
 }
 
 /**
