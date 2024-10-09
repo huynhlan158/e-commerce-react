@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Tab1Item } from '~/services/tab1/models/tab1Item';
-import { getTab1Items } from '~/services/tab1/tab1.server';
+import { getTab1Items } from '~/services/tab1/fetch.tab1';
 import { LoadingState } from '~/components/Layouts';
 import { Heading, Text } from '~/components/TypoGraphy';
 
@@ -13,13 +13,12 @@ export function Tab1() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchApi = async () => {
+    (async () => {
       setIsLoading(true);
       const tab1Items = await getTab1Items();
       setItems(tab1Items);
       setIsLoading(false);
-    };
-    fetchApi();
+    })();
   }, []);
 
   return (
