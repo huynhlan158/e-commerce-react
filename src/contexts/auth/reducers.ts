@@ -11,7 +11,7 @@ const reducerHandlers = {
       isAuthenticated = state.isAuthenticated,
       userProfile = state.userProfile,
     } = action.payload;
-    return { ...state, isAuthenticated, isInitialized: true, userProfile };
+    return { ...state, isInitialized: true, isAuthenticated, userProfile };
   },
 
   LOG_IN(

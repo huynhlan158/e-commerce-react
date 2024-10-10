@@ -1,30 +1,12 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import routes from '~/config/routes';
+import routes, { privateRoutes, publicRoutes } from '~/config/routes';
 import { setupServer } from '~/utils/mockApi';
-import { HomePage, Tab1, Tab2, Tab3, PageNotFound, Login } from '~/pages';
+import { PageNotFound } from '~/pages';
 import { GuestGuard } from '~/components/Guards/GuestGuard';
 import { AuthGuard } from '~/components/Guards/AuthGuard';
 import '~/App.css';
-
-/**
- * Routes for guests.
- */
-const publicRoutes = [
-  { path: routes.login, component: Login },
-  { path: routes.home, component: HomePage },
-];
-
-/**
- * Routes for users.
- */
-const privateRoutes = [
-  { path: routes.home, component: HomePage },
-  { path: routes.tab1, component: Tab1 },
-  { path: routes.tab2, component: Tab2 },
-  { path: routes.tab3, component: Tab3 },
-];
 
 export default function App() {
   useEffect(() => {

@@ -1,7 +1,8 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Stack } from '@chakra-ui/react';
 
-import routes from '~/config/routes';
+import routes, { privateRoutes } from '~/config/routes';
 import { useAuthStore } from '~/contexts/auth/AuthContext';
 import { LoadingState, NavigationBar } from '../Layouts';
 
@@ -10,11 +11,26 @@ import { LoadingState, NavigationBar } from '../Layouts';
  * It prevents navigation to the route if the user is already authenticated.
  */
 export function GuestGuard() {
-  const { isAuthenticated, isInitialized } = useAuthStore();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { isInitialized, isAuthenticated } = useAuthStore();
+
+  useEffect(() => {
+    /**
+     * We want to navigate users who try to access login route
+     * and guests who attempt to access private routes to the home page.
+     */
+    if (
+      (!!privateRoutes.find((route) => route.path === location.pathname) &&
+        location.pathname !== routes.home &&
+        !isAuthenticated) ||
+      (isAuthenticated && location.pathname === routes.login)
+    ) {
+      navigate(routes.home);
+    }
+  }, [location.pathname, isAuthenticated]);
 
   if (!isInitialized) return <LoadingState />;
-
-  if (isAuthenticated) return <Navigate to={routes.home} />;
 
   return (
     <Stack gap={0} className="min-h-screen">

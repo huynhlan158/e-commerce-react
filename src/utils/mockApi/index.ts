@@ -9,6 +9,12 @@ export const setupServer = () => {
   const server = createServer({
     routes() {
       this.namespace = 'mock-api';
+      // ===== Mock API for authentication service ===== //
+      this.post('/token', (schema, request) => {
+        delay();
+        const { username, password } = request.params;
+        return schema.db.userList.findBy({ username, password }).id;
+      });
 
       // ===== Mock API for users service ===== //
       this.get('/users', (schema) => {
@@ -19,7 +25,7 @@ export const setupServer = () => {
       this.get('/users/info/:id', (schema, request) => {
         delay();
         const { id } = request.params;
-        return schema.db.userList.find((user) => user.id === id);
+        return schema.db.userList.find(id);
       });
 
       // ===== Mock API for tab 1 ===== //

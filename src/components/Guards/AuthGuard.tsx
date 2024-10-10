@@ -14,7 +14,7 @@ export function AuthGuard() {
 
   if (!isInitialized) return <LoadingState />;
 
-  if (!isAuthenticated) return <Navigate to={routes.login} />;
+  if (!isAuthenticated) return <Navigate to={routes.home} />;
 
   return (
     <Stack gap={0} className="min-h-screen">
