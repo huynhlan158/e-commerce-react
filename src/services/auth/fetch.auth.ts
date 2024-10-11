@@ -4,7 +4,7 @@ import { LoginRequest } from './models/LoginRequest';
 
 /**
  * Performs a fetch request to the server and returns
- * the access token if the credential is valid.
+ * the user info alogin with access token if the credential is valid.
  * @returns The response from the server.
  */
 export async function getAccessToken(
