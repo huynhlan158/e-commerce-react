@@ -5,7 +5,12 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 
 import App from '~/App.tsx';
 import AuthProvider from '~/contexts/auth/AuthProvider';
-import { commonTheme, fontSize } from '~/config/customTheme';
+import {
+  commonTheme,
+  fontSize,
+  spacing,
+  buttonTheme,
+} from '~/config/customTheme';
 import '~/config/localization/i18n';
 import '~/index.css';
 
@@ -13,6 +18,10 @@ import '~/index.css';
 const ChakraTheme = extendTheme({
   ...commonTheme,
   fontSizes: fontSize,
+  space: spacing,
+  components: {
+    Button: buttonTheme,
+  },
 });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

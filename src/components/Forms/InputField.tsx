@@ -25,6 +25,7 @@ export function InputField({
   title,
   helperText,
   errorMessage,
+  size,
   isInvalid = false,
   className,
   ...otherProps
@@ -34,11 +35,16 @@ export function InputField({
       isInvalid={!!errorMessage || isInvalid}
       className="w-full flex flex-col gap-6"
     >
-      {title && <Text text={title} />}
+      {title && <Text text={title} className="font-500" />}
 
       <Input
         {...otherProps}
+        width="w-full"
+        size={size || ['sm', 'sm', 'md']}
+        borderColor="brown.100"
+        errorBorderColor="red.600"
         className={clsx('placeholder-gray-300', className)}
+        backgroundColor="white"
       />
 
       {!errorMessage && !!helperText ? (

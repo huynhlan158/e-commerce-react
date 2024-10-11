@@ -27,9 +27,9 @@ export function Heading(props: HeadingProps) {
     <ElementType
       className={clsx(
         `text-brown-600 font-600`,
-        size === 'lg' && 'text-36',
-        size === 'md' && 'text-28',
-        size === 'sm' && 'text-20',
+        size === 'lg' && 'HeadingFontSizeResponsive--lg',
+        size === 'md' && 'HeadingFontSizeResponsive--md',
+        size === 'sm' && 'HeadingFontSizeResponsive--sm',
         className
       )}
     >
