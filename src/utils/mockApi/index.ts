@@ -1,5 +1,7 @@
 import { createServer } from 'miragejs';
 import { tab1Items, tab2Items, tab3Items, userList } from './mockData';
+import { ServerFetchError } from '~/services/fetch.server';
+import { ErrorType } from '~/types/FetchServer';
 
 export const setupServer = () => {
   const delay = async () => {
@@ -9,6 +11,21 @@ export const setupServer = () => {
   const server = createServer({
     routes() {
       this.namespace = 'mock-api';
+      // ===== Mock API for authentication service ===== //
+      this.post('/token', (schema, request) => {
+        delay();
+        const { username, password } = JSON.parse(request.requestBody);
+        const user = schema.db.userList.findBy({ username, id: password });
+        if (user) {
+          return user;
+        } else {
+          throw new ServerFetchError(
+            ErrorType.AUTHENTICATION_FAILURE,
+            401,
+            'Wrong username or password'
+          );
+        }
+      });
 
       // ===== Mock API for users service ===== //
       this.get('/users', (schema) => {
@@ -19,7 +36,7 @@ export const setupServer = () => {
       this.get('/users/info/:id', (schema, request) => {
         delay();
         const { id } = request.params;
-        return schema.db.userList.find((user) => user.id === id);
+        return schema.db.userList.find(id);
       });
 
       // ===== Mock API for tab 1 ===== //

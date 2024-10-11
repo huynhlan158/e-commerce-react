@@ -1,7 +1,9 @@
 import common from './common.json';
-import login from './login.json';
+import authentication from './authentication.json';
+import zod from './zod.json';
 
 export default {
   common: common,
-  login: login,
+  authentication: authentication,
+  zod: zod,
 };

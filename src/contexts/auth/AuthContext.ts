@@ -1,5 +1,5 @@
 import { createContext, Dispatch, useContext } from 'react';
-import { UserProfile } from '~/services/user/models/user';
+import { UserProfile } from '~/services/user/models/User';
 import { PayloadAction } from '~/types/Contexts';
 
 export enum AuthActionType {

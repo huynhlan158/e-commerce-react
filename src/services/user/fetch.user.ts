@@ -1,5 +1,5 @@
 import { fetchServer } from '~/services/fetch.server';
-import { UserProfile } from './models/user';
+import { UserProfile } from './models/User';
 
 /**
  * Performs a fetch request to the users server and returns

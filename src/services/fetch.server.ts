@@ -13,8 +13,19 @@ const baseURL = '/mock-api';
  * @param options The options for the request.
  * @returns The response from the server.
  */
-export async function fetchServer<TResponse>(options: FetchOptions, request?: Request): Promise<TResponse> {
-  const { contentType, authorization, headers, method, body, path, hasBaseURL = false } = options;
+export async function fetchServer<TResponse>(
+  options: FetchOptions,
+  request?: Request
+): Promise<TResponse> {
+  const {
+    contentType,
+    authorization,
+    headers,
+    method,
+    body,
+    path,
+    hasBaseURL = false,
+  } = options;
   let { debug = false } = options;
 
   /** Handle request header */
@@ -59,7 +70,10 @@ export async function fetchServer<TResponse>(options: FetchOptions, request?: Re
   /** Perform a fetch request to the server and returns the response */
   let response: Response;
   try {
-    response = await fetch(hasBaseURL ? path : `${baseURL}${path}`, requestInit);
+    response = await fetch(
+      hasBaseURL ? path : `${baseURL}${path}`,
+      requestInit
+    );
   } catch (error: unknown) {
     const { success, data: cause } = NetworkErrorSchema.safeParse(error);
     if (success) {
@@ -143,4 +157,16 @@ export class NetworkFetchError extends Error {
   ) {
     super(`Network error - ${errno} ${options}`);
   }
+}
+
+/**
+ * A handler to get error message from the error returned from API.
+ */
+export function getErrorMessage(error: any) {
+  // TODO: i18n
+  let errorMessage = 'Internal server error...';
+  if (isServerFetchError(error)) {
+    errorMessage = error.message;
+  }
+  return errorMessage;
 }

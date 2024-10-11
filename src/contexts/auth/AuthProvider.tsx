@@ -19,9 +19,9 @@ function AuthProvider({ children }: { children?: ReactNode }) {
 
       try {
         const userProfile = await getUserInfo(accessToken);
-        initialize({ isAuthenticated: true, userProfile });
+        authDispatch(initialize({ isAuthenticated: true, userProfile }));
       } catch (error) {
-        initialize({ isAuthenticated: false, userProfile: null });
+        authDispatch(initialize({ isAuthenticated: false, userProfile: null }));
       }
     })();
   }, []);

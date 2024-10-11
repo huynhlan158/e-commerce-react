@@ -1,48 +1,94 @@
 import clsx from 'clsx';
 import { ReactNode } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Stack } from '@chakra-ui/react';
+import {
+  Stack,
+  Button,
+  Avatar,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+} from '@chakra-ui/react';
 
 import routes from '~/config/routes';
 import { useAuthStore } from '~/contexts/auth/AuthContext';
+import { logOut } from '~/contexts/auth/reducers';
 
 /**
  * The main navigation bar that allow users to switch to different tabs.
  */
 export function NavigationBar() {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const { guests, users } = useMainLink();
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, userProfile, authDispatch } = useAuthStore();
+  const { t } = useTranslation('authentication');
 
   const activeUrl = location.pathname;
 
   return (
     <Stack
       direction="row"
-      gap={12}
+      justifyContent="space-between"
+      alignItems="center"
       className={clsx(
         'w-full h-56 px-24 bg-white',
         'border-b-1 border-gray-300'
       )}
     >
-      {isAuthenticated
-        ? users.map((link) => (
-            <NavbarItem
-              key={link.url}
-              url={link.url}
-              activeUrl={activeUrl}
-              content={link.content}
-            />
-          ))
-        : guests.map((link) => (
-            <NavbarItem
-              key={link.url}
-              url={link.url}
-              activeUrl={activeUrl}
-              content={link.content}
-            />
-          ))}
+      <Stack gap={12} direction="row">
+        {isAuthenticated
+          ? users.map((link) => (
+              <NavbarItem
+                key={link.url}
+                url={link.url}
+                activeUrl={activeUrl}
+                content={link.content}
+              />
+            ))
+          : guests.map((link) => (
+              <NavbarItem
+                key={link.url}
+                url={link.url}
+                activeUrl={activeUrl}
+                content={link.content}
+              />
+            ))}
+      </Stack>
+
+      {isAuthenticated ? (
+        <Menu>
+          <MenuButton
+            p={6}
+            borderRadius="50%"
+            _hover={{ bg: 'gray.200' }}
+            _expanded={{
+              bg: 'gray.100',
+              border: '1px',
+              borderColor: 'gray.300',
+            }}
+          >
+            <Avatar size="xs" name={userProfile?.fullName} src="" />
+          </MenuButton>
+
+          <MenuList>
+            <MenuItem onClick={() => authDispatch(logOut())}>
+              {t('logout')}
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      ) : (
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => navigate(routes.login)}
+        >
+          {t('login')}
+        </Button>
+      )}
     </Stack>
   );
 }
