@@ -9,6 +9,13 @@ export const userList: UserProfile[] = [
     isAdmin: true,
   },
   {
+    id: 'kellyatt',
+    username: 'kellyatt',
+    fullName: 'Kacey Ellyatt',
+    email: 'kellyatt3@ameblo.jp',
+    isAdmin: false,
+  },
+  {
     id: 'f82e3674-aaeb-4a3f-ac0b-90a68487a671',
     username: 'raldwinckle1',
     fullName: 'Robin Aldwinckle',
@@ -20,13 +27,6 @@ export const userList: UserProfile[] = [
     username: 'mbesemer2',
     fullName: 'Melicent Besemer',
     email: 'mbesemer2@mtv.com',
-    isAdmin: false,
-  },
-  {
-    id: 'f10ebbe6-7b99-4d04-a19f-5df4763f1724',
-    username: 'kellyatt3',
-    fullName: 'Kacey Ellyatt',
-    email: 'kellyatt3@ameblo.jp',
     isAdmin: false,
   },
   {

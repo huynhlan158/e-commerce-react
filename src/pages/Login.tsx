@@ -72,6 +72,7 @@ export function Login() {
           />
 
           <InputField
+            type="password"
             name="password"
             value={values.password}
             onChange={handleChange}

@@ -273,17 +273,17 @@ export const buttonTheme: ComponentStyleConfig = {
     xs: defineStyle({
       ...commonButtonStyles,
       fontSize: '12px',
-      h: '28px',
+      h: '32px',
     }),
     sm: defineStyle({
       ...commonButtonStyles,
       fontSize: '14px',
-      h: '32px',
+      h: '36px',
     }),
     md: defineStyle({
       ...commonButtonStyles,
       fontSize: '16px',
-      h: '36px',
+      h: '40px',
     }),
   },
 };

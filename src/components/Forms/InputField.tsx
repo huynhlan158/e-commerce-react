@@ -1,6 +1,15 @@
 import clsx from 'clsx';
-import { FormControl, Input, InputProps } from '@chakra-ui/react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import {
+  FormControl,
+  Input,
+  InputGroup,
+  InputProps,
+  InputRightElement,
+} from '@chakra-ui/react';
 
+import { Button } from './Button';
 import { Text } from '../TypoGraphy';
 
 interface InputFieldProps extends InputProps {
@@ -25,27 +34,59 @@ export function InputField({
   title,
   helperText,
   errorMessage,
-  size,
+  type,
   isInvalid = false,
+  size = ['sm', 'sm', 'md'],
   className,
   ...otherProps
 }: InputFieldProps) {
+  const { t } = useTranslation('authentication');
+
+  const [showingPassword, setShowingPassword] = useState(false);
+  const handleToggleShowingPassword = () =>
+    setShowingPassword(!showingPassword);
+
   return (
     <FormControl
       isInvalid={!!errorMessage || isInvalid}
-      className="w-full flex flex-col gap-6"
+      className="w-full flex flex-col gap-4 md:gap-6"
     >
       {title && <Text text={title} className="font-500" />}
 
-      <Input
-        {...otherProps}
-        width="w-full"
-        size={size || ['sm', 'sm', 'md']}
-        borderColor="brown.100"
-        errorBorderColor="red.600"
-        className={clsx('placeholder-gray-300', className)}
-        backgroundColor="white"
-      />
+      {type === 'password' ? (
+        <InputGroup size={size} width="100%">
+          <Input
+            type={showingPassword ? 'text' : 'password'}
+            width="100%"
+            pr={[52, 56]}
+            borderColor="brown.100"
+            errorBorderColor="red.600"
+            className={clsx('placeholder-gray-300', className)}
+            backgroundColor="white"
+            {...otherProps}
+          />
+          <InputRightElement right={10}>
+            <Button
+              size="xs"
+              variant="ghost"
+              height={30}
+              label={showingPassword ? t('hide') : t('show')}
+              onClick={handleToggleShowingPassword}
+            />
+          </InputRightElement>
+        </InputGroup>
+      ) : (
+        <Input
+          type={type}
+          size={size}
+          width="100%"
+          borderColor="brown.100"
+          errorBorderColor="red.600"
+          className={clsx('placeholder-gray-300', className)}
+          backgroundColor="white"
+          {...otherProps}
+        />
+      )}
 
       {!errorMessage && !!helperText ? (
         <Text text={helperText} />

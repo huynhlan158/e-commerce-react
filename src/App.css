@@ -30,7 +30,7 @@
 
 /* ===== Responsive Stack ===== */
 .StackPaddingResponsive {
-  @apply p-12 md:p-24;
+  @apply px-12 md:px-24 py-24 md:py-28;
 }
 
 .StackPxResponsive {
