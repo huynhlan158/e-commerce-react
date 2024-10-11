@@ -1,5 +1,7 @@
 import { PayloadAction } from '~/types/Contexts';
 import { AuthActionType, AuthState } from './AuthContext';
+import { UserProfile } from '~/services/user/models/User';
+import { deleteCookie, StorageKeys } from '~/utils/cookie';
 
 // ===== REDUCERS ===== //
 const reducerHandlers = {
@@ -18,14 +20,12 @@ const reducerHandlers = {
     state: AuthState,
     action: PayloadAction<AuthActionType, Partial<AuthState>>
   ): AuthState {
-    const {
-      isAuthenticated = state.isAuthenticated,
-      userProfile = state.userProfile,
-    } = action.payload;
-    return { ...state, isAuthenticated, userProfile };
+    const { userProfile = state.userProfile } = action.payload;
+    return { ...state, isAuthenticated: true, userProfile };
   },
 
   LOG_OUT(state: AuthState): AuthState {
+    deleteCookie(StorageKeys.ACCESS_TOKEN);
     return { ...state, isAuthenticated: false, userProfile: null };
   },
 };
@@ -53,19 +53,17 @@ export function initialize({
 }
 
 export function logIn(
-  payload: AuthState
+  userProfile: UserProfile
 ): PayloadAction<AuthActionType, Partial<AuthState>> {
   return {
     type: AuthActionType.LOG_IN,
-    payload,
+    payload: { userProfile },
   };
 }
 
-export function logOut(
-  payload: AuthState
-): PayloadAction<AuthActionType, Partial<AuthState>> {
+export function logOut(): PayloadAction<AuthActionType, Partial<AuthState>> {
   return {
     type: AuthActionType.LOG_OUT,
-    payload,
+    payload: { userProfile: null },
   };
 }

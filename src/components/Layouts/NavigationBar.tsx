@@ -14,6 +14,7 @@ import {
 
 import routes from '~/config/routes';
 import { useAuthStore } from '~/contexts/auth/AuthContext';
+import { logOut } from '~/contexts/auth/reducers';
 
 /**
  * The main navigation bar that allow users to switch to different tabs.
@@ -23,7 +24,7 @@ export function NavigationBar() {
   const navigate = useNavigate();
 
   const { guests, users } = useMainLink();
-  const { isAuthenticated, userProfile } = useAuthStore();
+  const { isAuthenticated, userProfile, authDispatch } = useAuthStore();
   const { t } = useTranslation('authentication');
 
   const activeUrl = location.pathname;
@@ -74,7 +75,9 @@ export function NavigationBar() {
           </MenuButton>
 
           <MenuList>
-            <MenuItem>{t('logout')}</MenuItem>
+            <MenuItem onClick={() => authDispatch(logOut())}>
+              {t('logout')}
+            </MenuItem>
           </MenuList>
         </Menu>
       ) : (

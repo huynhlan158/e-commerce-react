@@ -1,4 +1,5 @@
 import { fetchServer } from '~/services/fetch.server';
+import { UserProfile } from '../user/models/User';
 import { LoginRequest } from './models/LoginRequest';
 
 /**
@@ -6,6 +7,8 @@ import { LoginRequest } from './models/LoginRequest';
  * the access token if the credential is valid.
  * @returns The response from the server.
  */
-export async function getAccessToken(modal: LoginRequest): Promise<string> {
+export async function getAccessToken(
+  modal: LoginRequest
+): Promise<UserProfile> {
   return fetchServer({ path: '/token', method: 'POST', body: modal });
 }
