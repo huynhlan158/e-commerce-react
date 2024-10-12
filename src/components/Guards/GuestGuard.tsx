@@ -1,10 +1,10 @@
+import clsx from 'clsx';
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Stack } from '@chakra-ui/react';
 
 import routes, { privateRoutes } from '~/config/routes';
 import { useAuthStore } from '~/contexts/auth/AuthContext';
-import { LoadingState, NavigationBar } from '../Layouts';
+import { LoadingState, NavigationBar, Stack } from '../Layouts';
 
 /**
  * A route guard that restricts access to guests (unauthenticated users).
@@ -35,7 +35,11 @@ export function GuestGuard() {
   return (
     <Stack gap={0} className="min-h-screen">
       <NavigationBar />
-      <Stack className="p-24">
+      <Stack
+        alignItems="center"
+        justifyContent="center"
+        className={clsx('StackPaddingResponsive', 'flex-1')}
+      >
         <Outlet />
       </Stack>
     </Stack>

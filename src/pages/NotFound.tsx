@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Stack } from '@chakra-ui/react';
+import { Stack } from '~/components/Layouts';
 
 import { Heading } from '~/components/TypoGraphy';
 

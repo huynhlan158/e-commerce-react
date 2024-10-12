@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import toast from 'react-hot-toast';
-import { Stack } from '@chakra-ui/react';
 import {
   ExclamationCircleIcon,
   CheckCircleIcon,
@@ -9,6 +8,7 @@ import {
 
 import { Status } from '~/types/Styles';
 import { Text } from '../TypoGraphy';
+import { Stack } from '../Layouts';
 import './index.css';
 
 interface ToastProps {
@@ -32,32 +32,35 @@ export function useToast() {
         <Stack
           direction="row"
           justifyContent="space-between"
+          alignItems="center"
           gap={10}
           className={clsx(
             `ToastContainer ToastContainer--${status}`,
             t.visible ? 'top-0' : '-top-96'
           )}
         >
-          {status === Status.ERROR && (
-            <ExclamationCircleIcon color="red-600" className="size-20" />
-          )}
+          <Stack direction="row" alignItems="center" gap={[8, 12]}>
+            {status === Status.ERROR && (
+              <ExclamationCircleIcon className="size-16 md:size-20 text-red-600" />
+            )}
 
-          {status === Status.SUCCESS && (
-            <CheckCircleIcon color="green-600" className="size-20" />
-          )}
+            {status === Status.SUCCESS && (
+              <CheckCircleIcon className="size-16 md:size-20 text-green-600" />
+            )}
 
-          <Text text={text} className="flex-1" />
+            <Text text={text} />
+          </Stack>
 
           <button type="button" onClick={() => toast.dismiss(t.id)}>
             <XMarkIcon
-              color={
+              className={clsx(
+                'size-16 md:size-20',
                 status === Status.ERROR
-                  ? 'red-900'
+                  ? 'text-red-900'
                   : status === Status.SUCCESS
-                    ? 'green-900'
-                    : 'gray-900'
-              }
-              className="size-20"
+                    ? 'text-green-900'
+                    : 'text-gray-900'
+              )}
             />
           </button>
         </Stack>

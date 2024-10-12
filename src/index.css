@@ -8,8 +8,7 @@
   font-weight: 400;
   font-display: swap;
   font-style: italic;
-  src: url('./public/fonts/Montserrat-Italic-VariableFont_wght.ttf')
-    format('truetype');
+  src: url('./fonts/Montserrat-Italic-VariableFont_wght.ttf') format('truetype');
 }
 
 @font-face {
@@ -17,7 +16,7 @@
   font-weight: 300 400 600 700;
   font-display: swap;
   font-style: normal;
-  src: url('/public/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
+  src: url('/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
 }
 
 /* MS Edge web: avoid input fields with password type to display the default eye icon of the browser when inputting value. */

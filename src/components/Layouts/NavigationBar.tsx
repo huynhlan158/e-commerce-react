@@ -2,19 +2,15 @@ import clsx from 'clsx';
 import { ReactNode } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import {
-  Stack,
-  Button,
-  Avatar,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-} from '@chakra-ui/react';
+import { Avatar, Menu, MenuButton } from '@chakra-ui/react';
+import { Bars3Icon } from '@heroicons/react/24/outline';
 
 import routes from '~/config/routes';
 import { useAuthStore } from '~/contexts/auth/AuthContext';
 import { logOut } from '~/contexts/auth/reducers';
+import { Stack } from './Stack';
+import { Button } from '../Forms';
+import { MenuItem, MenuList } from '../Overlay';
 
 /**
  * The main navigation bar that allow users to switch to different tabs.
@@ -35,11 +31,12 @@ export function NavigationBar() {
       justifyContent="space-between"
       alignItems="center"
       className={clsx(
-        'w-full h-56 px-24 bg-white',
+        'StackPxResponsive',
+        'w-full bg-white py-4 md:py-0',
         'border-b-1 border-gray-300'
       )}
     >
-      <Stack gap={12} direction="row">
+      <div className="hidden sm:flex md:gap-12">
         {isAuthenticated
           ? users.map((link) => (
               <NavbarItem
@@ -57,18 +54,21 @@ export function NavigationBar() {
                 content={link.content}
               />
             ))}
-      </Stack>
+      </div>
+
+      <Bars3Icon className="block size-20 sm:hidden text-brown-600" />
 
       {isAuthenticated ? (
         <Menu>
           <MenuButton
-            p={6}
+            p={[4, 6]}
             borderRadius="50%"
+            border="1px"
+            borderColor="transparent"
             _hover={{ bg: 'gray.200' }}
             _expanded={{
               bg: 'gray.100',
-              border: '1px',
-              borderColor: 'gray.300',
+              borderColor: 'gray.400',
             }}
           >
             <Avatar size="xs" name={userProfile?.fullName} src="" />
@@ -80,15 +80,13 @@ export function NavigationBar() {
             </MenuItem>
           </MenuList>
         </Menu>
-      ) : (
+      ) : activeUrl !== routes.login ? (
         <Button
-          variant="ghost"
-          size="sm"
+          variant={['ghost', 'outline']}
+          label={t('login')}
           onClick={() => navigate(routes.login)}
-        >
-          {t('login')}
-        </Button>
-      )}
+        />
+      ) : undefined}
     </Stack>
   );
 }
@@ -117,7 +115,7 @@ function NavbarItem({ url, activeUrl, content }: NavbarItemProps) {
       to={url}
       className={clsx(
         'relative flex justify-center items-center',
-        'cursor-pointer px-16 py-8 rounded-t-8',
+        'cursor-pointer px-12 md:px-16 py-6 md:py-8 rounded-t-8',
         routes.home === url ? 'hover:scale-110' : 'hover:bg-gray-100',
         activeUrl === url && routes.home !== url && 'text-brown-600 font-600'
       )}
@@ -189,8 +187,8 @@ function Logo() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 64 64"
-      width="40px"
-      height="40px"
+      width="36px"
+      height="36px"
     >
       <path
         fill="#c2cde7"

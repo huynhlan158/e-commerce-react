@@ -1,3 +1,5 @@
+import { ComponentStyleConfig, defineStyle } from '@chakra-ui/react';
+
 /** ===== General custom theme ===== */
 export const commonTheme = {
   colors: {
@@ -228,4 +230,60 @@ export const borderWidth = {
   2: '2px',
   3: '3px',
   4: '4px',
+};
+
+/** ===== Button theme ===== */
+const commonButtonStyles = {
+  borderRadius: '4px',
+  minWidth: '50px',
+  fontWeight: '600',
+  lineHeight: '20px',
+  px: '20px',
+};
+
+export const buttonTheme: ComponentStyleConfig = {
+  variants: {
+    solid: defineStyle({
+      color: 'white',
+      backgroundColor: 'gray.500',
+      _hover: {
+        backgroundColor: 'gray.700',
+      },
+      _focus: {
+        backgroundColor: 'gray.500',
+      },
+    }),
+    outline: defineStyle({
+      borderColor: 'brown.500',
+      color: 'brown.500',
+      backgroundColor: 'white',
+      _hover: {
+        color: 'brown.700',
+        borderColor: 'brown.700',
+        backgroundColor: 'gray.50',
+      },
+      _focus: {
+        color: 'brown.500',
+        borderColor: 'brown.700',
+        backgroundColor: 'white',
+      },
+    }),
+  },
+  sizes: {
+    xs: defineStyle({
+      ...commonButtonStyles,
+      fontSize: '12px',
+      h: '32px',
+    }),
+    sm: defineStyle({
+      ...commonButtonStyles,
+      fontSize: '14px',
+      h: '36px',
+    }),
+    md: defineStyle({
+      ...commonButtonStyles,
+      fontSize: '16px',
+      h: '40px',
+    }),
+  },
 };
