@@ -24,6 +24,7 @@ export function Tab1() {
   return (
     <>
       <Heading text={t('navbar-tab1')} />
+
       {items.map((item) => (
         <div key={item.id}>
           <Heading level={5} text={item.name} size="sm" />
