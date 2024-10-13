@@ -11,6 +11,7 @@ export const setupServer = () => {
   const server = createServer({
     routes() {
       this.namespace = 'mock-api';
+
       // ===== Mock API for authentication service ===== //
       this.post('/token', (schema, request) => {
         delay();
