@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" },
-    { "source": "/mock-api", "destination": "/mock-api" }
+    { "source": "/mock-api/(.*)", "destination": "/mock-api/$1" },
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
