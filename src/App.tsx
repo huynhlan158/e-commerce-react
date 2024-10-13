@@ -10,10 +10,8 @@ import '~/App.css';
 
 export default function App() {
   useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      const server = setupServer();
-      return () => server.shutdown();
-    }
+    const server = setupServer();
+    return () => server.shutdown();
   }, []);
 
   return (
