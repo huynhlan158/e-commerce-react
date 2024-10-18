@@ -1,6 +1,6 @@
-import { Tab1Item } from '~/services/tab1/models/tab1Item';
+import { Tab1 } from '~/services/tab1/models/Tab1';
 
-export const tab3Items: Tab1Item[] = [
+export const tab3Items: Tab1[] = [
   {
     id: 'T3-001',
     name: 'Tab3 item 3.1',

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Toaster } from 'react-hot-toast';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 
 import App from '~/App.tsx';
@@ -24,11 +25,15 @@ const ChakraTheme = extendTheme({
   },
 });
 
+const queryClient = new QueryClient();
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ChakraProvider theme={ChakraTheme}>
       <AuthProvider>
-        <App />
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
         <Toaster gutter={16} />
       </AuthProvider>
     </ChakraProvider>
