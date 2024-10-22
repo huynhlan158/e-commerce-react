@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { fetchServer, getErrorMessage } from '~/services/fetch.server';
@@ -21,12 +22,18 @@ export async function createTab1(model: CreateTab1Request): Promise<Tab1> {
  * automatically refresh the list of Tab1 items when the request is successful.
  */
 export function useCreateTab1() {
+  const { t } = useTranslation();
+
   const queryClient = useQueryClient();
   const toast = useToast();
 
   return useMutation({
     mutationFn: createTab1,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      toast({
+        text: t('result-add-item-success', { item: data.name }),
+        status: Status.SUCCESS,
+      });
       queryClient.invalidateQueries({ queryKey: [Tab1QueryKeys.TAB1_ITEMS] });
     },
     onError: (error) => {

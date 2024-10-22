@@ -48,15 +48,17 @@ export const setupServer = () => {
       });
 
       this.delete('/tab1-items/delete/:id', (schema, request) => {
-        const id = request.params.id;
+        const { id } = request.params;
+        const deleteItem = schema.db.tab1Items.find(id);
         schema.db.tab1Items.remove(id);
-        return id;
+        return deleteItem;
       });
 
       // ===== Mock API for tab 2 ===== //
       this.get('/tab2-items', (schema) => {
         return schema.db.tab2Items;
       });
+
       // ===== Mock API for tab 3 ===== //
       this.get('/tab3-items', (schema) => {
         return schema.db.tab3Items;
