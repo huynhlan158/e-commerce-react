@@ -142,7 +142,7 @@ export const commonTheme = {
   styles: {
     global: {
       body: {
-        fontFamily: '"Montserrat", sans-serif',
+        fontFamily: '"Nunito", sans-serif',
         color: 'var(--gray-900)',
       },
     },
