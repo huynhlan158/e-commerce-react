@@ -3,5 +3,8 @@
   "not-found": "Page not found!",
   "navbar-tab1": "Navbar tab 1",
   "navbar-tab2": "Navbar tab 2",
-  "navbar-tab3": "Navbar tab 3"
+  "navbar-tab3": "Navbar tab 3",
+  "action-add": "Add",
+  "result-add-item-success": "Add new {{item}} successfully",
+  "result-delete-item-success": "Delete {{item}} successfully"
 }

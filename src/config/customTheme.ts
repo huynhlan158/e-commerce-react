@@ -235,10 +235,10 @@ export const borderWidth = {
 /** ===== Button theme ===== */
 const commonButtonStyles = {
   borderRadius: '4px',
-  minWidth: '50px',
   fontWeight: '600',
   lineHeight: '20px',
-  px: '20px',
+  px: '12px',
+  w: 'fit-content',
 };
 
 export const buttonTheme: ComponentStyleConfig = {
