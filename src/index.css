@@ -107,6 +107,7 @@
 
 body {
   font-family: 'Nunito', sans-serif;
+  font-size: 14px;
   color: var(--gray-900);
 }
 
@@ -114,7 +115,7 @@ body {
   --white: rgb(255, 255, 255);
   --black: rgb(0, 0, 0);
   --bg-body: rgb(245, 245, 244);
-  --gray-900: #212121;
+  --gray-900: #1f1c17;
 
   /* Safari web: avoid the font weight in Safari web to be darker than the other browsers. */
   font-synthesis: none;
