@@ -3,7 +3,13 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { ServerFetchError } from '~/services/fetch.server';
 import { ErrorType } from '~/types/FetchServer';
-import { tab1Items, tab2Items, tab3Items, userList } from './mockData';
+import {
+  tab1Items,
+  tab2Items,
+  tab3Items,
+  userList,
+  configList,
+} from './mockData';
 
 export const setupServer = () => {
   const server = createServer({
@@ -23,6 +29,16 @@ export const setupServer = () => {
             'Wrong username or password'
           );
         }
+      });
+
+      // ===== Mock API for config service ===== //
+      this.get('/config', (schema) => {
+        return schema.db.configList;
+      });
+
+      this.get('/config/:key', (schema, request) => {
+        const { key } = request.params;
+        return schema.db.configList.findBy({ key });
       });
 
       // ===== Mock API for users service ===== //
@@ -67,6 +83,7 @@ export const setupServer = () => {
 
     seeds(server) {
       server.db.loadData({
+        configList: configList,
         userList: userList,
         tab1Items: tab1Items,
         tab2Items: tab2Items,

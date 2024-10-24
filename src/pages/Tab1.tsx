@@ -31,7 +31,7 @@ export function Tab1() {
       <Button
         size={['sm', 'md']}
         variant="outline"
-        leftIcon={<PlusIcon className="size-16 md:size-20" />}
+        leftIcon={<PlusIcon className="size-16 laptop:size-20" />}
         onClick={() =>
           createMutate({
             name: 'New item',
@@ -59,13 +59,15 @@ export function Tab1() {
               aria-label="Edit"
               variant="ghost"
               size={['xs', 'sm']}
-              icon={<PencilSquareIcon className="size-16 md:size-20" />}
+              icon={<PencilSquareIcon className="size-16 laptop:size-20" />}
             />
             <IconButton
               aria-label="Edit"
               variant="ghost"
               size={['xs', 'sm']}
-              icon={<TrashIcon className="size-16 md:size-20 text-red-600" />}
+              icon={
+                <TrashIcon className="size-16 laptop:size-20 text-red-600" />
+              }
               onClick={() => deleteMutate(item.id)}
             />
           </Stack>

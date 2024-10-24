@@ -49,7 +49,7 @@ export function InputField({
   return (
     <FormControl
       isInvalid={!!errorMessage || isInvalid}
-      className="w-full flex flex-col gap-4 md:gap-6"
+      className="w-full flex flex-col gap-4 laptop:gap-6"
     >
       {title && <Text text={title} className="font-500" />}
 

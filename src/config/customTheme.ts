@@ -9,16 +9,17 @@ export const commonTheme = {
     white: 'rgb(255, 255, 255)',
     black: 'rgb(0, 0, 0)',
     gray: {
-      50: '#fafafa',
-      100: '#f5f5f5',
-      200: '#eeeeee',
-      300: '#e0e0e0',
-      400: '#bdbdbd',
-      500: '#9e9e9e',
-      600: '#757575',
-      700: '#616161',
-      800: '#424242',
-      900: '#212121',
+      500: '#414548',
+      900: '#1f1c17',
+    },
+    peach: {
+      200: '#fefbf4',
+    },
+    beige: {
+      200: '#EDE0CC',
+    },
+    gold: {
+      500: '#c5a25d',
     },
     blue: {
       50: '#e3f2fd',
@@ -79,29 +80,6 @@ export const commonTheme = {
       800: '#2e7d32',
       900: '#1b5e20',
     },
-    peach: {
-      100: '#FFFAF0',
-      200: '#FFF4E0',
-      300: '#FFF1D1',
-      400: '#FFE8C8',
-      500: '#FFF8E8',
-      600: '#F7E1D1',
-      700: '#E7CFC1',
-      800: '#D7BBAE',
-      900: '#C7A49B',
-    },
-    beige: {
-      50: '#FFE7D8',
-      100: '#FFFBEB',
-      200: '#F4E6C2',
-      300: '#F1DDB1',
-      400: '#E1D6B4',
-      500: '#F7EED3',
-      600: '#D1C2A3',
-      700: '#C1AE92',
-      800: '#B19A81',
-      900: '#A18670',
-    },
     brown: {
       50: '#8C6B5A',
       100: '#785B48',
@@ -142,7 +120,7 @@ export const commonTheme = {
   styles: {
     global: {
       body: {
-        fontFamily: '"Montserrat", sans-serif',
+        fontFamily: '"Nunito", sans-serif',
         color: 'var(--gray-900)',
       },
     },

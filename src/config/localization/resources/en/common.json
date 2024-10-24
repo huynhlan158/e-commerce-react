@@ -6,5 +6,8 @@
   "navbar-tab3": "Navbar tab 3",
   "action-add": "Add",
   "result-add-item-success": "Add new {{item}} successfully",
-  "result-delete-item-success": "Delete {{item}} successfully"
+  "result-delete-item-success": "Delete {{item}} successfully",
+
+  "language-vi": "VI",
+  "language-en": "EN"
 }
