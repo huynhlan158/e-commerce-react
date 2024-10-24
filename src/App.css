@@ -1,42 +1,38 @@
 /* ===== Responsive Fontsize ===== */
 .TextFontSizeResponsive--sm {
-  @apply text-10 md:text-12 leading-20;
+  @apply text-10 laptop:text-12 leading-20;
 }
 
 .TextFontSizeResponsive--md {
-  @apply text-12 md:text-14 leading-20;
+  @apply text-12 laptop:text-14 leading-20;
 }
 
 .TextFontSizeResponsive--lg {
-  @apply text-16 md:text-20 leading-24;
+  @apply text-16 laptop:text-20 leading-24;
 }
 
 .HeadingFontSizeResponsive--sm {
-  @apply text-18 md:text-20 leading-24 md:leading-28;
+  @apply text-18 laptop:text-20 leading-24 laptop:leading-28;
 }
 
 .HeadingFontSizeResponsive--md {
-  @apply text-22 md:text-24 leading-28 md:leading-32;
+  @apply text-22 laptop:text-24 leading-28 laptop:leading-32;
 }
 
 .HeadingFontSizeResponsive--lg {
-  @apply text-24 md:text-28 leading-28 md:leading-32;
+  @apply text-24 laptop:text-28 leading-28 laptop:leading-32;
 }
 
 /* ===== Responsive Modal ===== */
 .ModalWidthResponsive {
-  @apply min-w-288 sm:min-w-368 md:min-w-480;
+  @apply min-w-288 tablet:min-w-368 laptop:min-w-480;
 }
 
 /* ===== Responsive Stack ===== */
 .StackPaddingResponsive {
-  @apply px-12 md:px-24 py-24 md:py-28;
-}
-
-.StackPxResponsive {
-  @apply px-12 md:px-24;
+  @apply px-12 laptop:px-24 py-24 laptop:py-28;
 }
 
 .StackPyResponsive {
-  @apply py-12 md:py-24;
+  @apply py-12 laptop:py-24;
 }

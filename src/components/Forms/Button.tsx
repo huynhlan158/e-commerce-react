@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import clsx from 'clsx';
 import {
   Button as ChakraButton,
@@ -8,7 +9,7 @@ interface ButtonProps extends ChakraButtonProps {
   /**
    * The label of the button.
    */
-  label: string;
+  label: string | ReactNode;
   /**
    * The variant of the button's lable.
    * @default 'dark'
@@ -25,21 +26,24 @@ export function Button({
   lableVariant = 'dark',
   size,
   className,
+  onClick,
   ...otherProps
 }: ButtonProps) {
   switch (variant) {
     case 'ghost':
       return (
         <button
+          onClick={onClick}
           className={clsx(
-            'relative',
+            'relative h-fit',
             'after:content-[""] after:absolute after:left-0 after:bottom-0',
             'after:w-full after:h-1',
-            'after:transition-[transform] after:transform after:scale-x-0 after:hover:scale-x-100 after:duration-200',
+            'after:transition-[transform] after:transform after:scale-x-0 hover:after:scale-x-100 after:duration-200',
             size === 'sx' && 'text-12 leading-14',
             size === 'sm' && 'text-14 leading-16',
             size === 'md' && 'text-16 leading-18',
-            size === undefined && 'text-12 md:text-14',
+            size === undefined &&
+              'text-12 leading-14 laptop:text-14 laptop:leading-16',
             lableVariant === 'light' && 'text-peach-200 after:bg-peach-200',
             lableVariant === 'dark' && 'text-gray-900 after:bg-gray-900',
             className
@@ -53,6 +57,7 @@ export function Button({
         <ChakraButton
           size={size || ['xs', 'sm']}
           variant={variant}
+          onClick={onClick}
           className={className}
           {...otherProps}
         >

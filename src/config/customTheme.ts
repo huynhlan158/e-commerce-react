@@ -15,6 +15,9 @@ export const commonTheme = {
     peach: {
       200: '#fefbf4',
     },
+    beige: {
+      200: '#EDE0CC',
+    },
     gold: {
       500: '#c5a25d',
     },
@@ -76,18 +79,6 @@ export const commonTheme = {
       700: '#388e3c',
       800: '#2e7d32',
       900: '#1b5e20',
-    },
-    beige: {
-      50: '#FFE7D8',
-      100: '#FFFBEB',
-      200: '#F4E6C2',
-      300: '#F1DDB1',
-      400: '#E1D6B4',
-      500: '#F7EED3',
-      600: '#D1C2A3',
-      700: '#C1AE92',
-      800: '#B19A81',
-      900: '#A18670',
     },
     brown: {
       50: '#8C6B5A',

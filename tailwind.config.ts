@@ -14,6 +14,10 @@ export default {
       fontSize,
       spacing,
       borderWidth,
+      screens: {
+        tablet: '640px',
+        laptop: '1024px',
+      },
     },
   },
   plugins: [],

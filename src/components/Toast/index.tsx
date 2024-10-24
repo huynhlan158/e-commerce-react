@@ -41,11 +41,11 @@ export function useToast() {
         >
           <Stack direction="row" alignItems="center" gap={[8, 12]}>
             {status === Status.ERROR && (
-              <ExclamationCircleIcon className="size-16 md:size-20 text-red-600" />
+              <ExclamationCircleIcon className="size-16 laptop:size-20 text-red-600" />
             )}
 
             {status === Status.SUCCESS && (
-              <CheckCircleIcon className="size-16 md:size-20 text-green-600" />
+              <CheckCircleIcon className="size-16 laptop:size-20 text-green-600" />
             )}
 
             <Text text={text} />
@@ -54,7 +54,7 @@ export function useToast() {
           <button type="button" onClick={() => toast.dismiss(t.id)}>
             <XMarkIcon
               className={clsx(
-                'size-16 md:size-20',
+                'size-16 laptop:size-20',
                 status === Status.ERROR
                   ? 'text-red-900'
                   : status === Status.SUCCESS
