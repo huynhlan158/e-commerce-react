@@ -3,13 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { ServerFetchError } from '~/services/fetch.server';
 import { ErrorType } from '~/types/FetchServer';
-import {
-  tab1Items,
-  tab2Items,
-  tab3Items,
-  userList,
-  configList,
-} from './mockData';
+import { tab1Items, userList, configList, shoppingCartList } from './mockData';
 
 export const setupServer = () => {
   const server = createServer({
@@ -51,6 +45,13 @@ export const setupServer = () => {
         return schema.db.userList.find(id);
       });
 
+      // ===== Mock API for cart service ===== //
+      this.get('/findMyCart', (schema, request) => {
+        const { Authorization } = request.requestHeaders;
+        const userId = Authorization.replace('Bearer ', '');
+        return schema.db.shoppingCartList.findBy({ user_id: userId });
+      });
+
       // ===== Mock API for tab 1 ===== //
       this.get('/tab1-items', (schema) => {
         return schema.db.tab1Items;
@@ -69,25 +70,14 @@ export const setupServer = () => {
         schema.db.tab1Items.remove(id);
         return deleteItem;
       });
-
-      // ===== Mock API for tab 2 ===== //
-      this.get('/tab2-items', (schema) => {
-        return schema.db.tab2Items;
-      });
-
-      // ===== Mock API for tab 3 ===== //
-      this.get('/tab3-items', (schema) => {
-        return schema.db.tab3Items;
-      });
     },
 
     seeds(server) {
       server.db.loadData({
         configList: configList,
         userList: userList,
+        shoppingCartList: shoppingCartList,
         tab1Items: tab1Items,
-        tab2Items: tab2Items,
-        tab3Items: tab3Items,
       });
     },
   });

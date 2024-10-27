@@ -15,6 +15,10 @@ interface ButtonProps extends ChakraButtonProps {
    * @default 'dark'
    */
   lableVariant?: 'light' | 'dark';
+  /**
+   * Whether the button is currently active.
+   */
+  isActive?: boolean;
 }
 
 /**
@@ -24,6 +28,7 @@ export function Button({
   variant,
   label,
   lableVariant = 'dark',
+  isActive = false,
   size,
   className,
   onClick,
@@ -38,12 +43,13 @@ export function Button({
             'relative h-fit',
             'after:content-[""] after:absolute after:left-0 after:bottom-0',
             'after:w-full after:h-1',
-            'after:transition-[transform] after:transform after:scale-x-0 hover:after:scale-x-100 after:duration-200',
-            size === 'sx' && 'text-12 leading-14',
-            size === 'sm' && 'text-14 leading-16',
-            size === 'md' && 'text-16 leading-18',
-            size === undefined &&
-              'text-12 leading-14 laptop:text-14 laptop:leading-16',
+            !isActive &&
+              'after:transition-[transform] after:transform after:scale-x-0 hover:after:scale-x-100 after:duration-200',
+            size === 'sx' && 'TextFontSizeResponsive--xs',
+            size === 'sm' && 'TextFontSizeResponsive--sm',
+            size === 'md' && 'TextFontSizeResponsive--md',
+            size === 'lg' && 'TextFontSizeResponsive--lg',
+            size === undefined && 'TextFontSizeResponsive--default',
             lableVariant === 'light' && 'text-peach-200 after:bg-peach-200',
             lableVariant === 'dark' && 'text-gray-900 after:bg-gray-900',
             className

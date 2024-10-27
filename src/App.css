@@ -1,14 +1,22 @@
 /* ===== Responsive Fontsize ===== */
+.TextFontSizeResponsive--default {
+  @apply text-12 leading-14 laptop:text-14 laptop:leading-16;
+}
+
+.TextFontSizeResponsive--xs {
+  @apply text-12 leading-14;
+}
+
 .TextFontSizeResponsive--sm {
-  @apply text-10 laptop:text-12 leading-20;
+  @apply text-14 leading-16;
 }
 
 .TextFontSizeResponsive--md {
-  @apply text-12 laptop:text-14 leading-20;
+  @apply text-16 leading-18;
 }
 
 .TextFontSizeResponsive--lg {
-  @apply text-16 laptop:text-20 leading-24;
+  @apply text-18 leading-20;
 }
 
 .HeadingFontSizeResponsive--sm {

@@ -48,6 +48,7 @@ export function Text(props: TextProps) {
         size === 'lg' && 'TextFontSizeResponsive--lg',
         size === 'md' && 'TextFontSizeResponsive--md',
         size === 'sm' && 'TextFontSizeResponsive--sm',
+        size === 'xs' && 'TextFontSizeResponsive--xs',
         className
       )}
     >

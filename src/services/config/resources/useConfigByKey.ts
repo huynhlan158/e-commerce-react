@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchServer } from '~/services/fetch.server';
 
-import { Config, ConfigKeys, ConfigQueryKeys } from '../models/Config';
+import { fetchServer } from '~/services/fetch.server';
+import { Config } from '../models/Config';
+import { ConfigKeys, ConfigQueryKeys } from '../models/Keys';
 
 /**
  * Performs a fetch request to the config server and retrieve the list of system config items.

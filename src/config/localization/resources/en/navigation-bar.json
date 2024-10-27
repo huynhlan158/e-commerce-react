@@ -1,5 +1,6 @@
 {
-  "action-free-ship": "Miễn phí giao hàng với hoá đơn từ {{price}} đ",
+  "action-free-ship--mobile": "Miễn phí giao hàng với hoá đơn từ {{price}} đ",
+  "action-free-ship--laptop": "Tận hưởng giao hàng miễn phí toàn quốc với hoá đơn từ  {{price}} đ",
   "navbar-products": "Sản phẩm",
   "navbar-promotion": "Khuyến mãi",
   "navbar-cocoon": "Cocoon",
