@@ -21,7 +21,6 @@ export function Tab1() {
   const { data: items, isFetching } = useTab1();
 
   const { mutate: createMutate, isPending: isPendingCreate } = useCreateTab1();
-
   const { mutate: deleteMutate, isPending: isPendingDelete } = useDeleteTab1();
 
   return (

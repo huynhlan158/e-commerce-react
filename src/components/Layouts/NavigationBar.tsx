@@ -285,7 +285,7 @@ function useNavbarItems(): {
         action: () => {},
       },
       {
-        content: t('navbar-cart'),
+        content: `${t('navbar-cart')}${myCart?.items.length ? ' (' + myCart?.items.length + ')' : ''}`,
         action: () => {},
       },
       {
