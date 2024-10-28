@@ -3,7 +3,8 @@ import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 import routes, { privateRoutes } from '~/config/routes';
-import { useAuthStore } from '~/contexts/auth/AuthContext';
+import { useAuthStore } from '~/state/auth/useAuthStore';
+
 import { LoadingState, NavigationBar, Stack } from '../Layouts';
 
 /**
@@ -13,7 +14,7 @@ import { LoadingState, NavigationBar, Stack } from '../Layouts';
 export function GuestGuard() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isInitialized, isAuthenticated } = useAuthStore();
+  const { isAuthenticated, isInitialized } = useAuthStore();
 
   useEffect(() => {
     /**

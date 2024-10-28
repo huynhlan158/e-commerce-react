@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider as ReduxProvider } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 
 import App from '~/App.tsx';
-import AuthProvider from '~/contexts/auth/AuthProvider';
+import { store } from '~/state/store';
 import {
   commonTheme,
   fontSize,
@@ -30,12 +31,12 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ChakraProvider theme={ChakraTheme}>
-      <AuthProvider>
+      <ReduxProvider store={store}>
         <QueryClientProvider client={queryClient}>
           <App />
         </QueryClientProvider>
         <Toaster gutter={16} />
-      </AuthProvider>
+      </ReduxProvider>
     </ChakraProvider>
   </React.StrictMode>
 );

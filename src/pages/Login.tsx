@@ -4,14 +4,14 @@ import { useFormik } from 'formik';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import { setCookie, StorageKeys } from '~/utils/cookie';
-import { logIn } from '~/contexts/auth/reducers';
-import { useAuthStore } from '~/contexts/auth/AuthContext';
 import { getErrorMessage } from '~/services/fetch.server';
 import { getAccessToken } from '~/services/auth/fetch.auth';
 import {
   loginInitialValues,
   LoginRequestSchema,
 } from '~/services/auth/models/LoginRequest';
+import { useAuthStore } from '~/state/auth/useAuthStore';
+import { logIn } from '~/state/auth/authSlice';
 
 import { Heading } from '~/components/TypoGraphy';
 import { useToast } from '~/components/Toast';

@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
 import routes from '~/config/routes';
-import { useAuthStore } from '~/contexts/auth/AuthContext';
+import { useAuthStore } from '~/state/auth/useAuthStore';
+
 import { LoadingState, NavigationBar, Stack } from '../Layouts';
 
 /**
