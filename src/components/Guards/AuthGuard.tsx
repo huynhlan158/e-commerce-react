@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
 import routes from '~/config/routes';
-import { useAuthStore } from '~/contexts/auth/AuthContext';
+import { useStore } from '~/state/useStore';
+
 import { LoadingState, NavigationBar, Stack } from '../Layouts';
 
 /**
@@ -9,7 +10,7 @@ import { LoadingState, NavigationBar, Stack } from '../Layouts';
  * It prevents navigation to the route if the user is already authenticated.
  */
 export function AuthGuard() {
-  const { isAuthenticated, isInitialized } = useAuthStore();
+  const { isAuthenticated, isInitialized } = useStore('auth');
 
   if (!isInitialized) return <LoadingState />;
 

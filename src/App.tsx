@@ -2,14 +2,22 @@ import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import routes, { privateRoutes, publicRoutes } from '~/config/routes';
+import { authInitialize } from '~/state/auth/authSlice';
+import { useStore } from '~/state/useStore';
 import { setupServer } from '~/utils/mockApi';
+
 import { PageNotFound } from '~/pages';
 import { GuestGuard } from '~/components/Guards/GuestGuard';
 import { AuthGuard } from '~/components/Guards/AuthGuard';
 import '~/App.css';
 
 export default function App() {
+  const { dispatch } = useStore('auth');
+
   useEffect(() => {
+    // Setup the mock API server.
+    const server = setupServer();
+
     // Stop the auto-zooming in Safari web on iPhone when focusing a text input,
     // but still leave users with the full ability to pinch and zoom.
     if (navigator.userAgent.indexOf('iPhone') > -1) {
@@ -21,8 +29,12 @@ export default function App() {
         );
     }
 
-    // Setup the mock API server.
-    const server = setupServer();
+    // If there is an active login session in the cookies,
+    // allow the user to continue using it.
+    dispatch(authInitialize());
+
+    // Shutdown the server when the component is unmounted
+    // to avoid running two Pretender servers at once that will lead to unexpected results.
     return () => server.shutdown();
   }, []);
 

@@ -42,8 +42,8 @@ export async function fetchServer<TResponse>(
    * Automatically takes care of appending the authorization headers,
    * if the user is authenticated
    */
-  const accessToken = getCookie(StorageKeys.ACCESS_TOKEN);
   if (authorization === undefined) {
+    const accessToken = getCookie(StorageKeys.ACCESS_TOKEN);
     if (accessToken) requestHeaders['Authorization'] = `Bearer ${accessToken}`;
   } else if (authorization !== null) {
     requestHeaders['Authorization'] = authorization;
@@ -70,10 +70,8 @@ export async function fetchServer<TResponse>(
   /** Perform a fetch request to the server and returns the response */
   let response: Response;
   try {
-    response = await fetch(
-      hasBaseURL ? path : `${baseURL}${path}`,
-      requestInit
-    );
+    const url = hasBaseURL ? path : `${baseURL}${path}`;
+    response = await fetch(url, requestInit);
   } catch (error: unknown) {
     const { success, data: cause } = NetworkErrorSchema.safeParse(error);
     if (success) {
