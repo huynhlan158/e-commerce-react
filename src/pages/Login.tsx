@@ -4,14 +4,14 @@ import { useFormik } from 'formik';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import { setCookie, StorageKeys } from '~/utils/cookie';
-import { logIn } from '~/contexts/auth/reducers';
-import { useAuthStore } from '~/contexts/auth/AuthContext';
 import { getErrorMessage } from '~/services/fetch.server';
 import { getAccessToken } from '~/services/auth/fetch.auth';
 import {
   loginInitialValues,
   LoginRequestSchema,
 } from '~/services/auth/models/LoginRequest';
+import { useStore } from '~/state/useStore';
+import { logIn } from '~/state/auth/authSlice';
 
 import { Heading } from '~/components/TypoGraphy';
 import { useToast } from '~/components/Toast';
@@ -21,7 +21,7 @@ import { Status } from '~/types/Styles';
 
 export function Login() {
   const { t } = useTranslation(['authentication', 'zod']);
-  const { authDispatch } = useAuthStore();
+  const { dispatch } = useStore('auth');
 
   const toast = useToast();
 
@@ -40,7 +40,7 @@ export function Login() {
       try {
         const userProfile = await getAccessToken(values);
         setCookie(StorageKeys.ACCESS_TOKEN, userProfile.id);
-        authDispatch(logIn(userProfile));
+        dispatch(logIn(userProfile));
       } catch (error) {
         const errorMessage = getErrorMessage(error);
         setValues(loginInitialValues);
