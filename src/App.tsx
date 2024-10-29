@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import routes, { privateRoutes, publicRoutes } from '~/config/routes';
 import { authInitialize } from '~/state/auth/authSlice';
-import { useAuthStore } from '~/state/auth/useAuthStore';
+import { useStore } from '~/state/useStore';
 import { setupServer } from '~/utils/mockApi';
 
 import { PageNotFound } from '~/pages';
@@ -12,7 +12,7 @@ import { AuthGuard } from '~/components/Guards/AuthGuard';
 import '~/App.css';
 
 export default function App() {
-  const { authDispatch } = useAuthStore();
+  const { dispatch } = useStore('auth');
 
   useEffect(() => {
     // Setup the mock API server.
@@ -31,7 +31,7 @@ export default function App() {
 
     // If there is an active login session in the cookies,
     // allow the user to continue using it.
-    authDispatch(authInitialize());
+    dispatch(authInitialize());
 
     // Shutdown the server when the component is unmounted
     // to avoid running two Pretender servers at once that will lead to unexpected results.

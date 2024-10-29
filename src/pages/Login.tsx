@@ -10,7 +10,7 @@ import {
   loginInitialValues,
   LoginRequestSchema,
 } from '~/services/auth/models/LoginRequest';
-import { useAuthStore } from '~/state/auth/useAuthStore';
+import { useStore } from '~/state/useStore';
 import { logIn } from '~/state/auth/authSlice';
 
 import { Heading } from '~/components/TypoGraphy';
@@ -21,7 +21,7 @@ import { Status } from '~/types/Styles';
 
 export function Login() {
   const { t } = useTranslation(['authentication', 'zod']);
-  const { authDispatch } = useAuthStore();
+  const { dispatch } = useStore('auth');
 
   const toast = useToast();
 
@@ -40,7 +40,7 @@ export function Login() {
       try {
         const userProfile = await getAccessToken(values);
         setCookie(StorageKeys.ACCESS_TOKEN, userProfile.id);
-        authDispatch(logIn(userProfile));
+        dispatch(logIn(userProfile));
       } catch (error) {
         const errorMessage = getErrorMessage(error);
         setValues(loginInitialValues);
