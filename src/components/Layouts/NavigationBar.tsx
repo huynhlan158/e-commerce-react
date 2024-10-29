@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { ReactNode, useMemo } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -165,6 +165,10 @@ export function NavigationBar() {
 
 interface NavbarItemProps extends StyleProps {
   /**
+   * The id of the navbar item to determine which navbar item should be highlighted as active.
+   */
+  activeId?: string;
+  /**
    * The main content of the navbar item.
    */
   content: string | ReactNode;
@@ -209,6 +213,18 @@ function NavbarItem({
   }
 }
 
+enum NavbarItemId {
+  NAVBAR_PRODUCTS = 'NAVBAR_PRODUCTS',
+  NAVBAR_PROMOTION = 'NAVBAR_PROMOTION',
+  NAVBAR_COCOON = 'NAVBAR_COCOON',
+  NAVBAR_ARTICLES = 'NAVBAR_ARTICLES',
+  NAVBAR_ACCOUNT = 'NAVBAR_ACCOUNT',
+  NAVBAR_CONTACT = 'NAVBAR_CONTACT',
+  NAVBAR_SHOPPING_CART = 'NAVBAR_SHOPPING_CART',
+  NAVBAR_LANGUAGE_VI = 'NAVBAR_LANGUAGE_VI',
+  NAVBAR_LANGUAGE_EN = 'NAVBAR_LANGUAGE_EN',
+}
+
 /**
  * A custom hook to get the list for the main menu of the navigation bar.
  */
@@ -224,6 +240,8 @@ function useNavbarItems(): {
   const { isAuthenticated } = useAuthStore();
   const { onOpen } = useDrawer();
 
+  const [activeNavbar, setActiveNavbar] = useState<NavbarItemId | null>(null);
+
   // TODO: move this API call to a initiate provider
   // which will load all needed values and show the loading icon during that process.
   const { data: myCart } = useMyCart();
@@ -232,33 +250,55 @@ function useNavbarItems(): {
     () => [
       {
         content: <Icon size="lg" type="MAGNIFYING_GLASS" />,
-        action: onOpen,
+        action: () => {
+          onOpen();
+          setActiveNavbar(null);
+        },
       },
       {
+        activeId: NavbarItemId.NAVBAR_PRODUCTS,
         content: t('navbar-products'),
-        action: () => {},
+        action: () => {
+          setActiveNavbar(NavbarItemId.NAVBAR_PRODUCTS);
+        },
+        isActive: activeNavbar === NavbarItemId.NAVBAR_PRODUCTS,
       },
       {
+        activeId: NavbarItemId.NAVBAR_PROMOTION,
         content: t('navbar-promotion'),
-        action: () => {},
+        action: () => {
+          setActiveNavbar(NavbarItemId.NAVBAR_PROMOTION);
+        },
+        isActive: activeNavbar === NavbarItemId.NAVBAR_PROMOTION,
       },
       {
+        activeId: NavbarItemId.NAVBAR_COCOON,
         content: t('navbar-cocoon'),
-        action: () => {},
+        action: () => {
+          setActiveNavbar(NavbarItemId.NAVBAR_COCOON);
+        },
+        isActive: activeNavbar === NavbarItemId.NAVBAR_COCOON,
       },
       {
-        action: () => navigate(routes.article),
+        activeId: NavbarItemId.NAVBAR_ARTICLES,
+        action: () => {
+          navigate(routes.article);
+          setActiveNavbar(NavbarItemId.NAVBAR_ARTICLES);
+        },
         content: t('navbar-articles'),
+        isActive: activeNavbar === NavbarItemId.NAVBAR_ARTICLES,
       },
     ],
-    []
+    [activeNavbar]
   );
 
   const mobileLeftItems: NavbarItemProps[] = useMemo(
     () => [
       {
         content: <Icon size="2xl" type="BARS_2" />,
-        action: () => {},
+        action: () => {
+          setActiveNavbar(null);
+        },
       },
     ],
     []
@@ -268,7 +308,10 @@ function useNavbarItems(): {
     () => [
       {
         content: <img src={headingLogo} className="h-60 laptop:h-full" />,
-        action: () => navigate(routes.home),
+        action: () => {
+          navigate(routes.home);
+          setActiveNavbar(null);
+        },
       },
     ],
     []
@@ -277,42 +320,63 @@ function useNavbarItems(): {
   const rightItems: NavbarItemProps[] = useMemo(
     () => [
       {
+        activeId: NavbarItemId.NAVBAR_ACCOUNT,
         content: isAuthenticated ? t('navbar-account') : t('navbar-login'),
-        action: () => {},
+        action: () => {
+          setActiveNavbar(NavbarItemId.NAVBAR_ACCOUNT);
+        },
+        isActive: activeNavbar === NavbarItemId.NAVBAR_ACCOUNT,
       },
       {
+        activeId: NavbarItemId.NAVBAR_CONTACT,
         content: t('navbar-contact'),
-        action: () => {},
+        action: () => {
+          setActiveNavbar(NavbarItemId.NAVBAR_CONTACT);
+        },
+        isActive: activeNavbar === NavbarItemId.NAVBAR_CONTACT,
       },
       {
+        activeId: NavbarItemId.NAVBAR_SHOPPING_CART,
         content: `${t('navbar-cart')}${myCart?.items.length ? ' (' + myCart?.items.length + ')' : ''}`,
-        action: () => {},
+        action: () => {
+          setActiveNavbar(NavbarItemId.NAVBAR_SHOPPING_CART);
+        },
+        isActive: activeNavbar === NavbarItemId.NAVBAR_SHOPPING_CART,
       },
       {
         content: t('language-vi', { ns: 'common' }),
         action: () => {},
+        isActive: true,
       },
     ],
-    [isAuthenticated]
+    [isAuthenticated, activeNavbar]
   );
 
   const mobileRightItems: NavbarItemProps[] = useMemo(
     () => [
       {
+        activeId: NavbarItemId.NAVBAR_CONTACT,
         content: <Icon size="lg" type="MAGNIFYING_GLASS" />,
-        action: () => {},
+        action: () => {
+          setActiveNavbar(NavbarItemId.NAVBAR_CONTACT);
+        },
+        isActive: activeNavbar === NavbarItemId.NAVBAR_CONTACT,
       },
       {
+        activeId: NavbarItemId.NAVBAR_SHOPPING_CART,
         content: (
           <Stack direction="row" gap={4} alignItems="center">
             <Icon size="lg" type="SHOPPING_BAG" />
             <Text text={`(${myCart?.items.length})`} />
           </Stack>
         ),
-        action: () => {},
+        action: () => {
+          setActiveNavbar(NavbarItemId.NAVBAR_SHOPPING_CART);
+        },
+        isActive: activeNavbar === NavbarItemId.NAVBAR_SHOPPING_CART,
       },
     ],
-    [isAuthenticated, myCart]
+    [myCart, activeNavbar]
   );
 
   return {
