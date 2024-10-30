@@ -5,6 +5,7 @@ const routes = {
   product: '/san-pham',
   promotion: '/khuyen-mai',
   article: '/bai-viet',
+  login: '/dang-nhap',
 };
 
 export const publicRoutes = [

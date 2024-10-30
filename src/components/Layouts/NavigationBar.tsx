@@ -10,11 +10,11 @@ import { ConfigKeys } from '~/services/config/models/Keys';
 import { useMyCart } from '~/services/cart/resources';
 
 import { StyleProps } from '~/types/Styles';
-import { Stack } from './Stack';
 import { Button } from '../Forms';
 import { Icon } from '../Icons';
 import { Drawer, useDrawer } from '../Drawer';
 import { Text } from '../TypoGraphy';
+import { HStack, Stack } from './Stack';
 import headingLogo from '/images/logo-heading.png';
 
 /**
@@ -36,10 +36,9 @@ export function NavigationBar() {
 
   return (
     <Stack>
-      <Stack
+      <HStack
         justifyContent="center"
         alignItems="center"
-        direction="row"
         gap={16}
         className={clsx('bg-gray-900 text-peach-200', 'h-32 desktop:h-44')}
       >
@@ -72,10 +71,9 @@ export function NavigationBar() {
         />
 
         <Text text="+" size="sm" className="select-none" />
-      </Stack>
+      </HStack>
 
-      <Stack
-        direction="row"
+      <HStack
         justifyContent="space-between"
         alignItems="center"
         className={clsx(
@@ -90,25 +88,19 @@ export function NavigationBar() {
             'w-full h-full px-40'
           )}
         >
-          <Stack
-            direction="row"
-            gap={32}
-            alignItems="center"
-            className="desktop:flex-1"
-          >
+          <HStack gap={32} alignItems="center" className="desktop:flex-1">
             {leftItems.map((item, idx) => (
               <NavbarItem key={idx} {...item} />
             ))}
-          </Stack>
+          </HStack>
 
-          <Stack direction="row">
+          <HStack>
             {centerItems.map((item, idx) => (
               <NavbarItem key={idx} {...item} />
             ))}
-          </Stack>
+          </HStack>
 
-          <Stack
-            direction="row"
+          <HStack
             alignItems="center"
             justifyContent="flex-end"
             gap={32}
@@ -117,46 +109,40 @@ export function NavigationBar() {
             {rightItems.map((item, idx) => (
               <NavbarItem key={idx} {...item} />
             ))}
-          </Stack>
+          </HStack>
         </div>
 
         {/* Tablet and Mobile navigation bar */}
         <div
           className={clsx(
-            'flex justify-between items-center laptop:hidden',
-            'w-full h-full px-20'
+            'flex justify-center items-center laptop:hidden',
+            'w-full h-full'
           )}
         >
-          <Stack
-            direction="row"
-            alignItems="center"
-            gap={12}
-            className="flex-1"
-          >
+          <HStack alignItems="center" gap={12} className="absolute left-20">
             {mobileLeftItems.map((item, idx) => (
               <NavbarItem key={idx} {...item} />
             ))}
-          </Stack>
+          </HStack>
 
-          <Stack direction="row">
+          <HStack>
             {centerItems.map((item, idx) => (
               <NavbarItem key={idx} {...item} />
             ))}
-          </Stack>
+          </HStack>
 
-          <Stack
-            direction="row"
+          <HStack
             alignItems="center"
             justifyContent="flex-end"
-            gap={20}
-            className="flex-1"
+            gap={16}
+            className="absolute right-20"
           >
             {mobileRightItems.map((item, idx) => (
               <NavbarItem key={idx} {...item} />
             ))}
-          </Stack>
+          </HStack>
         </div>
-      </Stack>
+      </HStack>
 
       <Drawer header="header" body={<span>body</span>} />
     </Stack>
@@ -365,10 +351,10 @@ function useNavbarItems(): {
       {
         activeId: NavbarItemId.NAVBAR_SHOPPING_CART,
         content: (
-          <Stack direction="row" gap={4} alignItems="center">
+          <HStack gap={4} alignItems="center">
             <Icon size="lg" type="SHOPPING_BAG" />
             <Text text={`(${myCart?.items.length})`} />
-          </Stack>
+          </HStack>
         ),
         action: () => {
           setActiveNavbar(NavbarItemId.NAVBAR_SHOPPING_CART);
