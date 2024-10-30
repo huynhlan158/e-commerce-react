@@ -55,7 +55,7 @@ export function Login() {
         onSubmit={handleSubmit}
         className={clsx(
           'ModalWidthResponsive StackPaddingResponsive',
-          'bg-peach-50 gap-16 md:gap-24',
+          'bg-peach-50 gap-16 laptop:gap-24',
           'flex flex-col items-center justify-center',
           'border-1 rounded-4 border-brown-200'
         )}

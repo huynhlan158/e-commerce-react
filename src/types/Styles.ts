@@ -14,7 +14,7 @@ export interface StyleProps {
 /**
  * The type of font size used in the app.
  */
-export type FontSize = 'sm' | 'md' | 'lg';
+export type FontSize = 'xs' | 'sm' | 'md' | 'lg';
 
 /**
  * The status of an action.

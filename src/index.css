@@ -4,19 +4,99 @@
 
 /* ===== Fonts ===== */
 @font-face {
-  font-family: 'Montserrat';
-  font-weight: 400;
+  font-family: 'Nunito';
+  font-weight: 300 400 600;
   font-display: swap;
   font-style: italic;
-  src: url('./fonts/Montserrat-Italic-VariableFont_wght.ttf') format('truetype');
+  src: url('./fonts/Nunito-Italic-VariableFont_wght.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Montserrat';
+  font-family: 'Nunito';
   font-weight: 300 400 600 700;
   font-display: swap;
   font-style: normal;
-  src: url('/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
+  src: url('/fonts/Nunito-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Vollkorn';
+  font-weight: 300 400 600 700;
+  font-display: swap;
+  font-style: italic;
+  src: url('./fonts/Vollkorn-Italic-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Vollkorn';
+  font-weight: 300 400 600 700;
+  font-display: swap;
+  font-style: normal;
+  src: url('/fonts/Vollkorn-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Vollkorn';
+  font-weight: 300 400 600 700;
+  font-display: swap;
+  font-style: italic;
+  src: url('./fonts/Vollkorn-Italic-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Vollkorn';
+  font-weight: 300 400 600 700;
+  font-display: swap;
+  font-style: normal;
+  src: url('/fonts/Vollkorn-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+  src: url('/fonts/BarlowCondensed-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-weight: 700;
+  font-display: swap;
+  font-style: italic;
+  src: url('/fonts/BarlowCondensed-BoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Barlow';
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+  src: url('/fonts/Barlow-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Barlow';
+  font-weight: 500;
+  font-display: swap;
+  font-style: italic;
+  src: url('/fonts/Barlow-MediumItalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Barlow';
+  font-weight: 600;
+  font-display: swap;
+  font-style: normal;
+  src: url('/fonts/Barlow-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Barlow';
+  font-weight: 600;
+  font-display: swap;
+  font-style: italic;
+  src: url('/fonts/Barlow-SemiBoldItalic.ttf') format('truetype');
 }
 
 /* MS Edge web: avoid input fields with password type to display the default eye icon of the browser when inputting value. */
@@ -26,7 +106,8 @@
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
   color: var(--gray-900);
 }
 
@@ -34,7 +115,7 @@ body {
   --white: rgb(255, 255, 255);
   --black: rgb(0, 0, 0);
   --bg-body: rgb(245, 245, 244);
-  --gray-900: #212121;
+  --gray-900: #1f1c17;
 
   /* Safari web: avoid the font weight in Safari web to be darker than the other browsers. */
   font-synthesis: none;

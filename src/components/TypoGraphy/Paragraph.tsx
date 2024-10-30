@@ -23,6 +23,7 @@ export function Paragraph(props: ParagraphProps) {
         size === 'lg' && 'TextFontSizeResponsive--lg',
         size === 'md' && 'TextFontSizeResponsive--md',
         size === 'sm' && 'TextFontSizeResponsive--sm',
+        size === 'xs' && 'TextFontSizeResponsive--xs',
         className
       )}
     >

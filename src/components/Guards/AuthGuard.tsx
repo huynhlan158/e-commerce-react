@@ -17,7 +17,7 @@ export function AuthGuard() {
   if (!isAuthenticated) return <Navigate to={routes.home} />;
 
   return (
-    <Stack gap={0} className="min-h-screen">
+    <Stack className="min-h-screen">
       <NavigationBar />
       <Stack className="StackPaddingResponsive">
         <Outlet />

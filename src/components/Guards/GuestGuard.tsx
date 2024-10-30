@@ -34,7 +34,7 @@ export function GuestGuard() {
   if (!isInitialized) return <LoadingState />;
 
   return (
-    <Stack gap={0} className="min-h-screen">
+    <Stack className="min-h-screen">
       <NavigationBar />
       <Stack
         alignItems="center"
