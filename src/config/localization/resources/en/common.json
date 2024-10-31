@@ -9,5 +9,7 @@
   "result-delete-item-success": "Delete {{item}} successfully",
 
   "language-vi": "VI",
-  "language-en": "EN"
+  "language-en": "EN",
+  "save": "Save",
+  "cancel": "Cancel"
 }

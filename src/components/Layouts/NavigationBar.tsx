@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { ReactNode, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useDisclosure } from '@chakra-ui/react';
 
 import routes from '~/config/routes';
 import { useAuthStore } from '~/contexts/auth/AuthContext';
@@ -12,7 +13,7 @@ import { useMyCart } from '~/services/cart/resources';
 import { StyleProps } from '~/types/Styles';
 import { Button } from '../Forms';
 import { Icon } from '../Icons';
-import { Drawer, useDrawer } from '../Drawer';
+import { MenuBarDrawer } from '../Drawer';
 import { Text } from '../TypoGraphy';
 import { HStack, Stack } from './Stack';
 import headingLogo from '/images/logo-heading.png';
@@ -28,7 +29,9 @@ export function NavigationBar() {
     centerItems,
     rightItems,
     mobileRightItems,
-  } = useNavbarItems();
+    isDrawerOpen,
+    onDrawerClose,
+  } = useNavbar();
 
   // TODO: move this API call to a initiate provider
   // which will load all needed values and show the loading icon during that process.
@@ -144,7 +147,7 @@ export function NavigationBar() {
         </div>
       </HStack>
 
-      <Drawer header="header" body={<span>body</span>} />
+      <MenuBarDrawer isOpen={isDrawerOpen} onClose={onDrawerClose} />
     </Stack>
   );
 }
@@ -214,17 +217,23 @@ enum NavbarItemId {
 /**
  * A custom hook to get the list for the main menu of the navigation bar.
  */
-function useNavbarItems(): {
+function useNavbar(): {
   leftItems: NavbarItemProps[];
   mobileLeftItems: NavbarItemProps[];
   centerItems: NavbarItemProps[];
   rightItems: NavbarItemProps[];
   mobileRightItems: NavbarItemProps[];
+  isDrawerOpen: boolean;
+  onDrawerClose: () => void;
 } {
   const { t } = useTranslation(['navigation-bar', 'common']);
   const navigate = useNavigate();
   const { isAuthenticated } = useAuthStore();
-  const { onOpen } = useDrawer();
+  const {
+    isOpen: isDrawerOpen,
+    onOpen: onDrawerOpen,
+    onClose: onDrawerClose,
+  } = useDisclosure();
 
   const [activeNavbar, setActiveNavbar] = useState<NavbarItemId | null>(null);
 
@@ -237,7 +246,7 @@ function useNavbarItems(): {
       {
         content: <Icon size="lg" type="MAGNIFYING_GLASS" />,
         action: () => {
-          onOpen();
+          onDrawerOpen();
           setActiveNavbar(null);
         },
       },
@@ -283,6 +292,7 @@ function useNavbarItems(): {
       {
         content: <Icon size="2xl" type="BARS_2" />,
         action: () => {
+          onDrawerOpen();
           setActiveNavbar(null);
         },
       },
@@ -371,5 +381,7 @@ function useNavbarItems(): {
     centerItems,
     rightItems,
     mobileRightItems,
+    isDrawerOpen,
+    onDrawerClose,
   };
 }

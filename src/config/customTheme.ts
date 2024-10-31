@@ -1,4 +1,14 @@
-import { ComponentStyleConfig, defineStyle } from '@chakra-ui/react';
+import {
+  ComponentStyleConfig,
+  createMultiStyleConfigHelpers,
+  defineStyle,
+} from '@chakra-ui/react';
+import { drawerAnatomy } from '@chakra-ui/anatomy';
+
+const {
+  definePartsStyle: defineDrawerPartsStyle,
+  defineMultiStyleConfig: defineDrawerMultiStyleConfig,
+} = createMultiStyleConfigHelpers(drawerAnatomy.keys);
 
 /** ===== General custom theme ===== */
 export const commonTheme = {
@@ -266,3 +276,12 @@ export const buttonTheme: ComponentStyleConfig = {
     }),
   },
 };
+
+/** ===== Drawer theme ===== */
+export const drawerTheme = defineDrawerMultiStyleConfig({
+  baseStyle: defineDrawerPartsStyle({
+    dialog: {
+      bg: 'peach.200',
+    },
+  }),
+});

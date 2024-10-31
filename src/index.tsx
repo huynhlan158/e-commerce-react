@@ -12,6 +12,7 @@ import {
   fontSize,
   spacing,
   buttonTheme,
+  drawerTheme,
 } from '~/config/customTheme';
 import '~/config/localization/i18n';
 import '~/index.css';
@@ -23,6 +24,7 @@ const ChakraTheme = extendTheme({
   space: spacing,
   components: {
     Button: buttonTheme,
+    Drawer: drawerTheme,
   },
 });
 

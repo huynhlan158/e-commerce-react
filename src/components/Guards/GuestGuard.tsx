@@ -1,9 +1,10 @@
 import clsx from 'clsx';
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import routes, { privateRoutes } from '~/config/routes';
-import { useStore } from '~/state/useStore';
+import { RootState } from '~/state/store';
 
 import { LoadingState, NavigationBar, Stack } from '../Layouts';
 
@@ -14,7 +15,9 @@ import { LoadingState, NavigationBar, Stack } from '../Layouts';
 export function GuestGuard() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isAuthenticated, isInitialized } = useStore('auth');
+  const { isAuthenticated, isInitialized } = useSelector(
+    (state: RootState) => state.auth
+  );
 
   useEffect(() => {
     /**

@@ -6,6 +6,8 @@ import {
   PlusIcon,
   ShoppingBagIcon,
   TrashIcon,
+  XMarkIcon,
+  UserIcon,
 } from '@heroicons/react/24/outline';
 
 import { StyleProps } from '~/types/Styles';
@@ -16,7 +18,9 @@ type IconType =
   | 'TRASH'
   | 'MAGNIFYING_GLASS'
   | 'BARS_2'
-  | 'SHOPPING_BAG';
+  | 'SHOPPING_BAG'
+  | 'X_MARK'
+  | 'USER';
 
 type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
@@ -65,5 +69,9 @@ export function Icon({ type, size, variant = 'dark', className }: IconProps) {
       return <Bars2Icon className={iconClassName} />;
     case 'SHOPPING_BAG':
       return <ShoppingBagIcon className={iconClassName} />;
+    case 'X_MARK':
+      return <XMarkIcon className={iconClassName} />;
+    case 'USER':
+      return <UserIcon className={iconClassName} />;
   }
 }
