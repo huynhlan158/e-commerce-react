@@ -40,6 +40,7 @@ export function Button({
         <button
           onClick={onClick}
           className={clsx(
+            'font-700 laptop:font-400',
             'relative h-fit',
             'after:content-[""] after:absolute after:left-0 after:bottom-0',
             'after:w-full after:h-1',

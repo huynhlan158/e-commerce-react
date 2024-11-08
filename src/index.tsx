@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 
 import App from '~/App.tsx';
+import DisclosureProvider from '~/contexts/disclosure/DisclosureProvider';
 import { store } from '~/state/store';
 import {
   commonTheme,
@@ -33,12 +34,14 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ChakraProvider theme={ChakraTheme}>
-      <ReduxProvider store={store}>
-        <QueryClientProvider client={queryClient}>
-          <App />
-        </QueryClientProvider>
-        <Toaster gutter={16} />
-      </ReduxProvider>
+      <QueryClientProvider client={queryClient}>
+        <ReduxProvider store={store}>
+          <DisclosureProvider>
+            <App />
+            <Toaster gutter={16} />
+          </DisclosureProvider>
+        </ReduxProvider>
+      </QueryClientProvider>
     </ChakraProvider>
   </React.StrictMode>
 );

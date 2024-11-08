@@ -24,6 +24,7 @@ export const commonTheme = {
     },
     peach: {
       200: '#fefbf4',
+      400: '#f3ede3',
     },
     beige: {
       200: '#EDE0CC',
@@ -282,6 +283,10 @@ export const drawerTheme = defineDrawerMultiStyleConfig({
   baseStyle: defineDrawerPartsStyle({
     dialog: {
       bg: 'peach.200',
+      // TODO: add transition for dialog when closing
+    },
+    body: {
+      px: '0px',
     },
   }),
 });

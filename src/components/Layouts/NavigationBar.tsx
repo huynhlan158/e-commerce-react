@@ -2,10 +2,11 @@ import clsx from 'clsx';
 import { ReactNode, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useDisclosure } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 
 import routes from '~/config/routes';
-import { useAuthStore } from '~/contexts/auth/AuthContext';
+import { useDisclosureStore } from '~/contexts/disclosure/useDisclosureStore';
+import { RootState } from '~/state/store';
 import { useConfigByKey } from '~/services/config/resources';
 import { ConfigKeys } from '~/services/config/models/Keys';
 import { useMyCart } from '~/services/cart/resources';
@@ -29,8 +30,6 @@ export function NavigationBar() {
     centerItems,
     rightItems,
     mobileRightItems,
-    isDrawerOpen,
-    onDrawerClose,
   } = useNavbar();
 
   // TODO: move this API call to a initiate provider
@@ -147,7 +146,7 @@ export function NavigationBar() {
         </div>
       </HStack>
 
-      <MenuBarDrawer isOpen={isDrawerOpen} onClose={onDrawerClose} />
+      <MenuBarDrawer />
     </Stack>
   );
 }
@@ -223,17 +222,11 @@ function useNavbar(): {
   centerItems: NavbarItemProps[];
   rightItems: NavbarItemProps[];
   mobileRightItems: NavbarItemProps[];
-  isDrawerOpen: boolean;
-  onDrawerClose: () => void;
 } {
   const { t } = useTranslation(['navigation-bar', 'common']);
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuthStore();
-  const {
-    isOpen: isDrawerOpen,
-    onOpen: onDrawerOpen,
-    onClose: onDrawerClose,
-  } = useDisclosure();
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { onDrawerOpen } = useDisclosureStore();
 
   const [activeNavbar, setActiveNavbar] = useState<NavbarItemId | null>(null);
 
@@ -244,7 +237,7 @@ function useNavbar(): {
   const leftItems: NavbarItemProps[] = useMemo(
     () => [
       {
-        content: <Icon size="lg" type="MAGNIFYING_GLASS" />,
+        content: <Icon size="xl" type="MAGNIFYING_GLASS" />,
         action: () => {
           onDrawerOpen();
           setActiveNavbar(null);
@@ -290,7 +283,7 @@ function useNavbar(): {
   const mobileLeftItems: NavbarItemProps[] = useMemo(
     () => [
       {
-        content: <Icon size="2xl" type="BARS_2" />,
+        content: <Icon size="3xl" type="BARS_2" />,
         action: () => {
           onDrawerOpen();
           setActiveNavbar(null);
@@ -352,7 +345,7 @@ function useNavbar(): {
     () => [
       {
         activeId: NavbarItemId.NAVBAR_CONTACT,
-        content: <Icon size="lg" type="MAGNIFYING_GLASS" />,
+        content: <Icon size="xl" type="MAGNIFYING_GLASS" />,
         action: () => {
           setActiveNavbar(NavbarItemId.NAVBAR_CONTACT);
         },
@@ -362,7 +355,7 @@ function useNavbar(): {
         activeId: NavbarItemId.NAVBAR_SHOPPING_CART,
         content: (
           <HStack gap={4} alignItems="center">
-            <Icon size="lg" type="SHOPPING_BAG" />
+            <Icon size="xl" type="SHOPPING_BAG" />
             <Text text={`(${myCart?.items.length})`} />
           </HStack>
         ),
@@ -381,7 +374,5 @@ function useNavbar(): {
     centerItems,
     rightItems,
     mobileRightItems,
-    isDrawerOpen,
-    onDrawerClose,
   };
 }
