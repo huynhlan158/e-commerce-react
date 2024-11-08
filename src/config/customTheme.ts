@@ -10,6 +10,11 @@ const {
   defineMultiStyleConfig: defineDrawerMultiStyleConfig,
 } = createMultiStyleConfigHelpers(drawerAnatomy.keys);
 
+const {
+  definePartsStyle: defineModalPartsStyle,
+  defineMultiStyleConfig: defineModalMultiStyleConfig,
+} = createMultiStyleConfigHelpers(drawerAnatomy.keys);
+
 /** ===== General custom theme ===== */
 export const commonTheme = {
   colors: {
@@ -289,4 +294,25 @@ export const drawerTheme = defineDrawerMultiStyleConfig({
       px: '0px',
     },
   }),
+});
+
+/** ===== Modal theme ===== */
+export const modalTheme = defineModalMultiStyleConfig({
+  sizes: {
+    sm: defineModalPartsStyle({
+      dialog: {
+        minWidth: '520px',
+      },
+    }),
+    md: defineModalPartsStyle({
+      dialog: {
+        minWidth: '640px',
+      },
+    }),
+    xl: defineModalPartsStyle({
+      dialog: {
+        minWidth: '750px',
+      },
+    }),
+  },
 });
