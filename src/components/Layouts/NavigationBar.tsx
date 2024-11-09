@@ -1,12 +1,17 @@
 import clsx from 'clsx';
-import { ReactNode, useMemo, useState } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import routes from '~/config/routes';
 import { useDisclosureStore } from '~/contexts/disclosure/useDisclosureStore';
-import { RootState } from '~/state/store';
+import { AppDispatch, RootState } from '~/state/store';
+import {
+  NavbarItemId,
+  resetActiveNavbar,
+  setActiveNavbar,
+} from '~/state/navigation/navigationSlice';
 import { useConfigByKey } from '~/services/config/resources';
 import { ConfigKeys } from '~/services/config/models/Keys';
 import { useMyCart } from '~/services/cart/resources';
@@ -32,130 +37,130 @@ export function NavigationBar() {
     mobileRightItems,
   } = useNavbar();
 
+  const { activeNavbar } = useSelector((state: RootState) => state.navigation);
+
   // TODO: move this API call to a initiate provider
   // which will load all needed values and show the loading icon during that process.
   const { data: config } = useConfigByKey(ConfigKeys.SHIPMENT);
 
   return (
-    <Stack>
-      <HStack
-        justifyContent="center"
-        alignItems="center"
-        gap={16}
-        className={clsx('bg-gray-900 text-peach-200', 'h-32 desktop:h-44')}
-      >
-        <Button
-          size="sm"
-          variant="ghost"
-          lableVariant="light"
-          className="laptop:hidden"
-          onClick={() => {}}
-          label={t('action-free-ship--mobile', {
-            price:
-              config?.key === ConfigKeys.SHIPMENT
-                ? config.data.freeShipPrice
-                : '',
-          })}
-        />
+    <>
+      <Stack className="laptop:z-[1500]">
+        <HStack
+          justifyContent="center"
+          alignItems="center"
+          gap={16}
+          className={clsx('bg-gray-900 text-peach-200', 'h-32 desktop:h-44')}
+        >
+          <Button
+            size="sm"
+            variant="ghost"
+            lableVariant="light"
+            className="laptop:hidden"
+            onClick={() => {}}
+            label={t('action-free-ship--mobile', {
+              price:
+                config?.key === ConfigKeys.SHIPMENT
+                  ? config.data.freeShipPrice
+                  : '',
+            })}
+          />
 
-        <Button
-          size="sm"
-          variant="ghost"
-          lableVariant="light"
-          className="hidden laptop:block"
-          onClick={() => {}}
-          label={t('action-free-ship--laptop', {
-            price:
-              config?.key === ConfigKeys.SHIPMENT
-                ? config.data.freeShipPrice
-                : '',
-          })}
-        />
+          <Button
+            size="sm"
+            variant="ghost"
+            lableVariant="light"
+            className="hidden laptop:block"
+            onClick={() => {}}
+            label={t('action-free-ship--laptop', {
+              price:
+                config?.key === ConfigKeys.SHIPMENT
+                  ? config.data.freeShipPrice
+                  : '',
+            })}
+          />
 
-        <Text text="+" size="sm" className="select-none" />
-      </HStack>
+          <Text text="+" size="sm" className="select-none" />
+        </HStack>
 
-      <HStack
-        justifyContent="space-between"
-        alignItems="center"
-        className={clsx(
-          'w-full h-60 desktop:h-86 bg-peach-200',
-          'border-b-[0.5px] border-beige-200'
-        )}
-      >
-        {/* Desktop and Laptop navigation bar */}
-        <div
+        <HStack
+          justifyContent="space-between"
+          alignItems="center"
           className={clsx(
-            'hidden laptop:flex laptop:justify-between laptop:items-center',
-            'w-full h-full px-40'
+            'w-full h-60 desktop:h-86 bg-peach-200',
+            'border-b-[0.5px] border-beige-200'
           )}
         >
-          <HStack gap={32} alignItems="center" className="desktop:flex-1">
-            {leftItems.map((item, idx) => (
-              <NavbarItem key={idx} {...item} />
-            ))}
-          </HStack>
-
-          <HStack>
-            {centerItems.map((item, idx) => (
-              <NavbarItem key={idx} {...item} />
-            ))}
-          </HStack>
-
-          <HStack
-            alignItems="center"
-            justifyContent="flex-end"
-            gap={32}
-            className="desktop:flex-1"
+          {/* Desktop and Laptop navigation bar */}
+          <div
+            className={clsx(
+              'hidden laptop:flex justify-center items-center',
+              'w-full h-full'
+            )}
           >
-            {rightItems.map((item, idx) => (
-              <NavbarItem key={idx} {...item} />
-            ))}
-          </HStack>
-        </div>
+            <HStack gap={32} alignItems="center" className="absolute left-40">
+              {leftItems.map((item, idx) => (
+                <NavbarItem key={idx} {...item} />
+              ))}
+            </HStack>
 
-        {/* Tablet and Mobile navigation bar */}
-        <div
-          className={clsx(
-            'flex justify-center items-center laptop:hidden',
-            'w-full h-full'
-          )}
-        >
-          <HStack alignItems="center" gap={12} className="absolute left-20">
-            {mobileLeftItems.map((item, idx) => (
-              <NavbarItem key={idx} {...item} />
-            ))}
-          </HStack>
+            <HStack>
+              {centerItems.map((item, idx) => (
+                <NavbarItem key={idx} {...item} />
+              ))}
+            </HStack>
 
-          <HStack>
-            {centerItems.map((item, idx) => (
-              <NavbarItem key={idx} {...item} />
-            ))}
-          </HStack>
+            <HStack
+              alignItems="center"
+              justifyContent="flex-end"
+              gap={32}
+              className="absolute right-40"
+            >
+              {rightItems.map((item, idx) => (
+                <NavbarItem key={idx} {...item} />
+              ))}
+            </HStack>
+          </div>
 
-          <HStack
-            alignItems="center"
-            justifyContent="flex-end"
-            gap={16}
-            className="absolute right-20"
+          {/* Tablet and Mobile navigation bar */}
+          <div
+            className={clsx(
+              'flex justify-center items-center laptop:hidden',
+              'w-full h-full'
+            )}
           >
-            {mobileRightItems.map((item, idx) => (
-              <NavbarItem key={idx} {...item} />
-            ))}
-          </HStack>
-        </div>
-      </HStack>
+            <HStack alignItems="center" gap={12} className="absolute left-20">
+              {mobileLeftItems.map((item, idx) => (
+                <NavbarItem key={idx} {...item} />
+              ))}
+            </HStack>
 
-      <MenuBarDrawer />
-    </Stack>
+            <HStack>
+              {centerItems.map((item, idx) => (
+                <NavbarItem key={idx} {...item} />
+              ))}
+            </HStack>
+
+            <HStack
+              alignItems="center"
+              justifyContent="flex-end"
+              gap={16}
+              className="absolute right-20"
+            >
+              {mobileRightItems.map((item, idx) => (
+                <NavbarItem key={idx} {...item} />
+              ))}
+            </HStack>
+          </div>
+        </HStack>
+      </Stack>
+
+      {activeNavbar === NavbarItemId.NAVBAR_MOBILE_MENU && <MenuBarDrawer />}
+    </>
   );
 }
 
 interface NavbarItemProps extends StyleProps {
-  /**
-   * The id of the navbar item to determine which navbar item should be highlighted as active.
-   */
-  activeId?: string;
   /**
    * The main content of the navbar item.
    */
@@ -201,18 +206,6 @@ function NavbarItem({
   }
 }
 
-enum NavbarItemId {
-  NAVBAR_PRODUCTS = 'NAVBAR_PRODUCTS',
-  NAVBAR_PROMOTION = 'NAVBAR_PROMOTION',
-  NAVBAR_COCOON = 'NAVBAR_COCOON',
-  NAVBAR_ARTICLES = 'NAVBAR_ARTICLES',
-  NAVBAR_ACCOUNT = 'NAVBAR_ACCOUNT',
-  NAVBAR_CONTACT = 'NAVBAR_CONTACT',
-  NAVBAR_SHOPPING_CART = 'NAVBAR_SHOPPING_CART',
-  NAVBAR_LANGUAGE_VI = 'NAVBAR_LANGUAGE_VI',
-  NAVBAR_LANGUAGE_EN = 'NAVBAR_LANGUAGE_EN',
-}
-
 /**
  * A custom hook to get the list for the main menu of the navigation bar.
  */
@@ -223,12 +216,14 @@ function useNavbar(): {
   rightItems: NavbarItemProps[];
   mobileRightItems: NavbarItemProps[];
 } {
-  const { t } = useTranslation(['navigation-bar', 'common']);
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
-  const { onDrawerOpen } = useDisclosureStore();
+  const { t } = useTranslation(['navigation-bar', 'common']);
 
-  const [activeNavbar, setActiveNavbar] = useState<NavbarItemId | null>(null);
+  const dispatch = useDispatch<AppDispatch>();
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { activeNavbar } = useSelector((state: RootState) => state.navigation);
+
+  const { onDrawerOpen } = useDisclosureStore();
 
   // TODO: move this API call to a initiate provider
   // which will load all needed values and show the loading icon during that process.
@@ -240,38 +235,35 @@ function useNavbar(): {
         content: <Icon size="xl" type="MAGNIFYING_GLASS" />,
         action: () => {
           onDrawerOpen();
-          setActiveNavbar(null);
+          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_SEARCH));
         },
       },
       {
-        activeId: NavbarItemId.NAVBAR_PRODUCTS,
         content: t('navbar-products'),
         action: () => {
-          setActiveNavbar(NavbarItemId.NAVBAR_PRODUCTS);
+          onDrawerOpen();
+          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_PRODUCTS));
         },
         isActive: activeNavbar === NavbarItemId.NAVBAR_PRODUCTS,
       },
       {
-        activeId: NavbarItemId.NAVBAR_PROMOTION,
         content: t('navbar-promotion'),
         action: () => {
-          setActiveNavbar(NavbarItemId.NAVBAR_PROMOTION);
+          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_PROMOTION));
         },
         isActive: activeNavbar === NavbarItemId.NAVBAR_PROMOTION,
       },
       {
-        activeId: NavbarItemId.NAVBAR_COCOON,
         content: t('navbar-cocoon'),
         action: () => {
-          setActiveNavbar(NavbarItemId.NAVBAR_COCOON);
+          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_COCOON));
         },
         isActive: activeNavbar === NavbarItemId.NAVBAR_COCOON,
       },
       {
-        activeId: NavbarItemId.NAVBAR_ARTICLES,
         action: () => {
           navigate(routes.article);
-          setActiveNavbar(NavbarItemId.NAVBAR_ARTICLES);
+          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_ARTICLES));
         },
         content: t('navbar-articles'),
         isActive: activeNavbar === NavbarItemId.NAVBAR_ARTICLES,
@@ -286,7 +278,7 @@ function useNavbar(): {
         content: <Icon size="3xl" type="BARS_2" />,
         action: () => {
           onDrawerOpen();
-          setActiveNavbar(null);
+          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_MOBILE_MENU));
         },
       },
     ],
@@ -299,7 +291,7 @@ function useNavbar(): {
         content: <img src={headingLogo} className="h-60 laptop:h-full" />,
         action: () => {
           navigate(routes.home);
-          setActiveNavbar(null);
+          dispatch(resetActiveNavbar());
         },
       },
     ],
@@ -309,26 +301,23 @@ function useNavbar(): {
   const rightItems: NavbarItemProps[] = useMemo(
     () => [
       {
-        activeId: NavbarItemId.NAVBAR_ACCOUNT,
         content: isAuthenticated ? t('navbar-account') : t('navbar-login'),
         action: () => {
-          setActiveNavbar(NavbarItemId.NAVBAR_ACCOUNT);
+          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_ACCOUNT));
         },
         isActive: activeNavbar === NavbarItemId.NAVBAR_ACCOUNT,
       },
       {
-        activeId: NavbarItemId.NAVBAR_CONTACT,
         content: t('navbar-contact'),
         action: () => {
-          setActiveNavbar(NavbarItemId.NAVBAR_CONTACT);
+          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_CONTACT));
         },
         isActive: activeNavbar === NavbarItemId.NAVBAR_CONTACT,
       },
       {
-        activeId: NavbarItemId.NAVBAR_SHOPPING_CART,
         content: `${t('navbar-cart')}${myCart?.items.length ? ' (' + myCart?.items.length + ')' : ''}`,
         action: () => {
-          setActiveNavbar(NavbarItemId.NAVBAR_SHOPPING_CART);
+          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_SHOPPING_CART));
         },
         isActive: activeNavbar === NavbarItemId.NAVBAR_SHOPPING_CART,
       },
@@ -344,23 +333,23 @@ function useNavbar(): {
   const mobileRightItems: NavbarItemProps[] = useMemo(
     () => [
       {
-        activeId: NavbarItemId.NAVBAR_CONTACT,
         content: <Icon size="xl" type="MAGNIFYING_GLASS" />,
         action: () => {
-          setActiveNavbar(NavbarItemId.NAVBAR_CONTACT);
+          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_CONTACT));
         },
         isActive: activeNavbar === NavbarItemId.NAVBAR_CONTACT,
       },
       {
-        activeId: NavbarItemId.NAVBAR_SHOPPING_CART,
         content: (
           <HStack gap={4} alignItems="center">
             <Icon size="xl" type="SHOPPING_BAG" />
-            <Text text={`(${myCart?.items.length})`} />
+            {myCart?.items.length && (
+              <Text text={`(${myCart?.items.length})`} />
+            )}
           </HStack>
         ),
         action: () => {
-          setActiveNavbar(NavbarItemId.NAVBAR_SHOPPING_CART);
+          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_SHOPPING_CART));
         },
         isActive: activeNavbar === NavbarItemId.NAVBAR_SHOPPING_CART,
       },

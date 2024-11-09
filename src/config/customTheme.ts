@@ -294,6 +294,13 @@ export const drawerTheme = defineDrawerMultiStyleConfig({
       px: '0px',
     },
   }),
+  sizes: {
+    sm: defineModalPartsStyle({
+      dialog: {
+        w: '33.33% !important',
+      },
+    }),
+  },
 });
 
 /** ===== Modal theme ===== */
