@@ -14,23 +14,24 @@ import { AppDispatch, RootState } from '~/state/store';
 import { logOut } from '~/state/auth/authSlice';
 
 import { Icon, IconType } from '../Icons';
-import { Text } from '../TypoGraphy';
-import { HStack } from '../Layouts';
-import { Modal, ModalProps } from '../Modal';
+import { HStack, VStack } from '../Layouts';
 import { IconButton } from '../Forms/IconButton';
+import { Button } from '../Forms';
+import { Modal } from '../Modal';
+import { Text } from '../TypoGraphy';
+import { useMenuList } from './useMenuList';
 
 type MenubarType = 'MENU' | 'CONTACT';
 
 /**
- * The drawer of menu bar.
+ * The drawer of menu bar in mobile view.
  */
-export function MenuBarDrawer() {
+export function MobileMenuDrawer() {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   const { isDrawerOpen, onDrawerClose, onModalOpen } = useDisclosureStore();
 
   const [menuBarType, setMenuBarType] = useState<MenubarType>('MENU');
-  const [openModal, setOpenModal] = useState<ModalProps | undefined>();
 
   useEffect(() => {
     return () => {
@@ -42,13 +43,13 @@ export function MenuBarDrawer() {
     <>
       <ChakraDrawer
         placement="left"
-        size={['full', 'full', 'full', 'sm']}
+        size="full"
         isOpen={isDrawerOpen}
         onClose={onDrawerClose}
       >
         <DrawerOverlay />
-        <DrawerContent>
-          <HStack justifyContent="space-between" className="h-64 px-20">
+        <DrawerContent className="px-20">
+          <HStack justifyContent="space-between" className="h-64">
             <HStack gap={28}>
               <IconButton
                 aria-label="Close"
@@ -86,12 +87,6 @@ export function MenuBarDrawer() {
                 } else {
                   onDrawerClose();
                   onModalOpen();
-                  setOpenModal({
-                    // TODO: Login modal
-                    title: 'Login',
-                    description: 'Login description',
-                    mainContent: <div>Main content</div>,
-                  });
                 }
               }}
             />
@@ -101,28 +96,55 @@ export function MenuBarDrawer() {
             {menuBarType === 'CONTACT' ? (
               <MobileContactContent />
             ) : (
-              <MenubarContent />
+              <MobileMenuContent />
             )}
           </DrawerBody>
         </DrawerContent>
       </ChakraDrawer>
 
-      {openModal && (
-        <Modal resetAction={() => setOpenModal(undefined)} {...openModal} />
-      )}
+      {/* TODO: Login modal */}
+      <Modal
+        title="Login"
+        description="Login description"
+        mainContent={<div>Main content</div>}
+      />
     </>
   );
 }
 
 /**
- * A UI component to render the menu bar drawer content in mobile view.
+ * A UI component to render the menu content in mobile view.
  */
-function MenubarContent() {
-  return <div>Menubar Content</div>;
+function MobileMenuContent() {
+  const menuList = useMenuList();
+
+  return (
+    <>
+      {menuList.map((menu) => (
+        <VStack alignItems="flex-start" key={menu.title} gap={12}>
+          <Button
+            variant="ghost"
+            label={menu.title}
+            lableWeight="bold"
+            className="leading-26"
+          />
+          {menu.data.map((item) => (
+            <Button
+              variant="ghost"
+              size="xl"
+              label={item.title}
+              key={item.title}
+              className="leading-26 text-gray-500"
+            />
+          ))}
+        </VStack>
+      ))}
+    </>
+  );
 }
 
 /**
- * A UI component to render the contact drawer content in mobile view.
+ * A UI component to render the contact content in mobile view.
  */
 function MobileContactContent() {
   const { t } = useTranslation(['navigation-bar']);
@@ -134,17 +156,17 @@ function MobileContactContent() {
 
   return (
     <>
-      <MobileNavigationItem
+      <MobileAccountDetail
         iconType="PHONE"
         label={userProfile?.phoneNumber || ''}
         variant="dark"
       />
-      <MobileNavigationItem iconType="USER" label={t('item-account-info')} />
-      <MobileNavigationItem
+      <MobileAccountDetail iconType="USER" label={t('item-account-info')} />
+      <MobileAccountDetail
         iconType="ARCHIVE_BOX"
         label={t('item-shopping-history')}
       />
-      <MobileNavigationItem
+      <MobileAccountDetail
         iconType="ARROW_RIGHT_START_ON_RECTANGLE"
         label={t('item-log-out')}
         action={() => {
@@ -156,7 +178,7 @@ function MobileContactContent() {
   );
 }
 
-interface MobileNavigationItemProps {
+interface MobileAccountDetailProps {
   /**
    * The label of the navigation item.
    */
@@ -177,14 +199,14 @@ interface MobileNavigationItemProps {
 }
 
 /**
- * A UI component to render the naviation item in mobile view.
+ * A UI component to render the account detail item in mobile view.
  */
-function MobileNavigationItem({
+function MobileAccountDetail({
   label,
   variant = 'light',
   iconType,
   action,
-}: MobileNavigationItemProps) {
+}: MobileAccountDetailProps) {
   return (
     <HStack
       className={clsx(

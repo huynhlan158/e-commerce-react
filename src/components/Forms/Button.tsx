@@ -16,6 +16,11 @@ interface ButtonProps extends ChakraButtonProps {
    */
   lableVariant?: 'light' | 'dark';
   /**
+   * The font weight of the button's lable.
+   * @default 'normal'
+   */
+  lableWeight?: 'normal' | 'bold';
+  /**
    * Whether the button is currently active.
    */
   isActive?: boolean;
@@ -28,8 +33,9 @@ export function Button({
   variant,
   label,
   lableVariant = 'dark',
+  lableWeight = 'normal',
   isActive = false,
-  size,
+  size = 'md',
   className,
   onClick,
   ...otherProps
@@ -40,7 +46,6 @@ export function Button({
         <button
           onClick={onClick}
           className={clsx(
-            'font-700 laptop:font-400',
             'relative h-fit',
             'after:content-[""] after:absolute after:left-0 after:bottom-0',
             'after:w-full after:h-1',
@@ -50,9 +55,11 @@ export function Button({
             size === 'sm' && 'TextFontSizeResponsive--sm',
             size === 'md' && 'TextFontSizeResponsive--md',
             size === 'lg' && 'TextFontSizeResponsive--lg',
+            size === 'xl' && 'TextFontSizeResponsive--xl',
             size === undefined && 'TextFontSizeResponsive--default',
             lableVariant === 'light' && 'text-peach-200 after:bg-peach-200',
             lableVariant === 'dark' && 'text-gray-900 after:bg-gray-900',
+            lableWeight === 'bold' && 'font-700',
             className
           )}
         >

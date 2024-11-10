@@ -118,6 +118,7 @@ export const commonTheme = {
     20: '20px',
     22: '22px',
     24: '24px',
+    26: '26px',
     28: '28px',
     32: '32px',
   },
@@ -126,6 +127,7 @@ export const commonTheme = {
     400: '400',
     500: '500',
     600: '600',
+    700: '700',
   },
   borderRadius: {
     DEFAULT: '4px',

@@ -19,7 +19,7 @@ import { useMyCart } from '~/services/cart/resources';
 import { StyleProps } from '~/types/Styles';
 import { Button } from '../Forms';
 import { Icon } from '../Icons';
-import { MenuBarDrawer } from '../Drawer';
+import { NavbarDrawer } from '../Drawer';
 import { Text } from '../TypoGraphy';
 import { HStack, Stack } from './Stack';
 import headingLogo from '/images/logo-heading.png';
@@ -155,7 +155,7 @@ export function NavigationBar() {
         </HStack>
       </Stack>
 
-      {activeNavbar === NavbarItemId.NAVBAR_MOBILE_MENU && <MenuBarDrawer />}
+      {activeNavbar === NavbarItemId.NAVBAR_MOBILE_MENU && <NavbarDrawer />}
     </>
   );
 }
