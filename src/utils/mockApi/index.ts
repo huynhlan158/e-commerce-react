@@ -3,7 +3,15 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { ServerFetchError } from '~/services/fetch.server';
 import { ErrorType } from '~/types/FetchServer';
-import { tab1Items, userList, configList, shoppingCartList } from './mockData';
+import {
+  tab1Items,
+  userList,
+  configList,
+  shoppingCartList,
+  categoryUnitList,
+  categoryUnit2List,
+  categoryUnit3List,
+} from './mockData';
 
 export const setupServer = () => {
   const server = createServer({
@@ -33,6 +41,27 @@ export const setupServer = () => {
       this.get('/config/:key', (schema, request) => {
         const { key } = request.params;
         return schema.db.configList.findBy({ key });
+      });
+
+      // ===== Mock API for categories service ===== //
+      this.get('/categories/:categoryUnitId', (schema, request) => {
+        const { categoryUnitId } = request.params;
+        const category = schema.db.categoryUnitList.find(categoryUnitId);
+        if (category) {
+          const categoryUnit2List = schema.db.categoryUnit2List.filter(
+            (category2) => category2.ancestor_id === category.id
+          );
+          category.data = categoryUnit2List;
+          if (categoryUnit2List.length) {
+            categoryUnit2List.forEach((category2) => {
+              const categoryUnit3List = schema.db.categoryUnit3List.filter(
+                (category3) => category3.ancestor_id === category2.id
+              );
+              category2.data = categoryUnit3List;
+            });
+          }
+        }
+        return category;
       });
 
       // ===== Mock API for users service ===== //
@@ -75,6 +104,9 @@ export const setupServer = () => {
     seeds(server) {
       server.db.loadData({
         configList: configList,
+        categoryUnitList: categoryUnitList,
+        categoryUnit2List: categoryUnit2List,
+        categoryUnit3List: categoryUnit3List,
         userList: userList,
         shoppingCartList: shoppingCartList,
         tab1Items: tab1Items,

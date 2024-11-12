@@ -1,9 +1,14 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useDisclosure } from '@chakra-ui/react';
 
+import { AppDispatch } from '~/state/store';
+import { updateNavigationPath } from '~/state/navigation/navigationSlice';
 import DisclosureContext from './DisclosureContext';
 
 function DisclosureProvider({ children }: { children?: ReactNode }) {
+  const dispatch = useDispatch<AppDispatch>();
+
   const {
     isOpen: isDrawerOpen,
     onOpen: onDrawerOpen,
@@ -15,6 +20,12 @@ function DisclosureProvider({ children }: { children?: ReactNode }) {
     onOpen: onModalOpen,
     onClose: onModalClose,
   } = useDisclosure();
+
+  useEffect(() => {
+    if (!isDrawerOpen) {
+      dispatch(updateNavigationPath([]));
+    }
+  }, [isDrawerOpen]);
 
   return (
     <DisclosureContext.Provider

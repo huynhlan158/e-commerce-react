@@ -14,7 +14,7 @@ interface ButtonProps extends ChakraButtonProps {
    * The variant of the button's lable.
    * @default 'dark'
    */
-  lableVariant?: 'light' | 'dark';
+  lableVariant?: 'light' | 'dark' | 'gray';
   /**
    * The font weight of the button's lable.
    * @default 'normal'
@@ -56,9 +56,11 @@ export function Button({
             size === 'md' && 'TextFontSizeResponsive--md',
             size === 'lg' && 'TextFontSizeResponsive--lg',
             size === 'xl' && 'TextFontSizeResponsive--xl',
+            size === '2xl' && 'TextFontSizeResponsive--2xl',
             size === undefined && 'TextFontSizeResponsive--default',
             lableVariant === 'light' && 'text-peach-200 after:bg-peach-200',
             lableVariant === 'dark' && 'text-gray-900 after:bg-gray-900',
+            lableVariant === 'gray' && 'text-gray-500 after:bg-gray-500',
             lableWeight === 'bold' && 'font-700',
             className
           )}

@@ -9,8 +9,7 @@ import { useDisclosureStore } from '~/contexts/disclosure/useDisclosureStore';
 import { AppDispatch, RootState } from '~/state/store';
 import {
   NavbarItemId,
-  resetActiveNavbar,
-  setActiveNavbar,
+  updateNavigationPath,
 } from '~/state/navigation/navigationSlice';
 import { useConfigByKey } from '~/services/config/resources';
 import { ConfigKeys } from '~/services/config/models/Keys';
@@ -37,7 +36,9 @@ export function NavigationBar() {
     mobileRightItems,
   } = useNavbar();
 
-  const { activeNavbar } = useSelector((state: RootState) => state.navigation);
+  const { navigationPath } = useSelector(
+    (state: RootState) => state.navigation
+  );
 
   // TODO: move this API call to a initiate provider
   // which will load all needed values and show the loading icon during that process.
@@ -94,11 +95,11 @@ export function NavigationBar() {
           {/* Desktop and Laptop navigation bar */}
           <div
             className={clsx(
-              'hidden laptop:flex justify-center items-center',
-              'w-full h-full'
+              'hidden laptop:flex justify-between items-center',
+              'w-full h-full px-40'
             )}
           >
-            <HStack gap={32} alignItems="center" className="absolute left-40">
+            <HStack gap={32} alignItems="center">
               {leftItems.map((item, idx) => (
                 <NavbarItem key={idx} {...item} />
               ))}
@@ -110,12 +111,7 @@ export function NavigationBar() {
               ))}
             </HStack>
 
-            <HStack
-              alignItems="center"
-              justifyContent="flex-end"
-              gap={32}
-              className="absolute right-40"
-            >
+            <HStack alignItems="center" justifyContent="flex-end" gap={32}>
               {rightItems.map((item, idx) => (
                 <NavbarItem key={idx} {...item} />
               ))}
@@ -155,7 +151,7 @@ export function NavigationBar() {
         </HStack>
       </Stack>
 
-      {activeNavbar === NavbarItemId.NAVBAR_MOBILE_MENU && <NavbarDrawer />}
+      {navigationPath[0] === NavbarItemId.PRODUCTS && <NavbarDrawer />}
     </>
   );
 }
@@ -221,7 +217,9 @@ function useNavbar(): {
 
   const dispatch = useDispatch<AppDispatch>();
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
-  const { activeNavbar } = useSelector((state: RootState) => state.navigation);
+  const { navigationPath } = useSelector(
+    (state: RootState) => state.navigation
+  );
 
   const { onDrawerOpen } = useDisclosureStore();
 
@@ -235,41 +233,41 @@ function useNavbar(): {
         content: <Icon size="xl" type="MAGNIFYING_GLASS" />,
         action: () => {
           onDrawerOpen();
-          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_SEARCH));
+          dispatch(updateNavigationPath([NavbarItemId.SEARCH]));
         },
       },
       {
         content: t('navbar-products'),
         action: () => {
           onDrawerOpen();
-          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_PRODUCTS));
+          dispatch(updateNavigationPath([NavbarItemId.PRODUCTS]));
         },
-        isActive: activeNavbar === NavbarItemId.NAVBAR_PRODUCTS,
+        isActive: navigationPath[0] === NavbarItemId.PRODUCTS,
       },
       {
         content: t('navbar-promotion'),
         action: () => {
-          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_PROMOTION));
+          dispatch(updateNavigationPath([NavbarItemId.PROMOTION]));
         },
-        isActive: activeNavbar === NavbarItemId.NAVBAR_PROMOTION,
+        isActive: navigationPath[0] === NavbarItemId.PROMOTION,
       },
       {
         content: t('navbar-cocoon'),
         action: () => {
-          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_COCOON));
+          dispatch(updateNavigationPath([NavbarItemId.COCOON]));
         },
-        isActive: activeNavbar === NavbarItemId.NAVBAR_COCOON,
+        isActive: navigationPath[0] === NavbarItemId.COCOON,
       },
       {
         action: () => {
           navigate(routes.article);
-          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_ARTICLES));
+          dispatch(updateNavigationPath([NavbarItemId.ARTICLES]));
         },
         content: t('navbar-articles'),
-        isActive: activeNavbar === NavbarItemId.NAVBAR_ARTICLES,
+        isActive: navigationPath[0] === NavbarItemId.ARTICLES,
       },
     ],
-    [activeNavbar]
+    [navigationPath]
   );
 
   const mobileLeftItems: NavbarItemProps[] = useMemo(
@@ -278,7 +276,7 @@ function useNavbar(): {
         content: <Icon size="3xl" type="BARS_2" />,
         action: () => {
           onDrawerOpen();
-          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_MOBILE_MENU));
+          dispatch(updateNavigationPath([NavbarItemId.PRODUCTS]));
         },
       },
     ],
@@ -291,7 +289,7 @@ function useNavbar(): {
         content: <img src={headingLogo} className="h-60 laptop:h-full" />,
         action: () => {
           navigate(routes.home);
-          dispatch(resetActiveNavbar());
+          dispatch(updateNavigationPath([]));
         },
       },
     ],
@@ -303,23 +301,23 @@ function useNavbar(): {
       {
         content: isAuthenticated ? t('navbar-account') : t('navbar-login'),
         action: () => {
-          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_ACCOUNT));
+          dispatch(updateNavigationPath([NavbarItemId.ACCOUNT]));
         },
-        isActive: activeNavbar === NavbarItemId.NAVBAR_ACCOUNT,
+        isActive: navigationPath[0] === NavbarItemId.ACCOUNT,
       },
       {
         content: t('navbar-contact'),
         action: () => {
-          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_CONTACT));
+          dispatch(updateNavigationPath([NavbarItemId.CONTACT]));
         },
-        isActive: activeNavbar === NavbarItemId.NAVBAR_CONTACT,
+        isActive: navigationPath[0] === NavbarItemId.CONTACT,
       },
       {
         content: `${t('navbar-cart')}${myCart?.items.length ? ' (' + myCart?.items.length + ')' : ''}`,
         action: () => {
-          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_SHOPPING_CART));
+          dispatch(updateNavigationPath([NavbarItemId.SHOPPING_CART]));
         },
-        isActive: activeNavbar === NavbarItemId.NAVBAR_SHOPPING_CART,
+        isActive: navigationPath[0] === NavbarItemId.SHOPPING_CART,
       },
       {
         content: t('language-vi', { ns: 'common' }),
@@ -327,7 +325,7 @@ function useNavbar(): {
         isActive: true,
       },
     ],
-    [isAuthenticated, activeNavbar]
+    [isAuthenticated, navigationPath]
   );
 
   const mobileRightItems: NavbarItemProps[] = useMemo(
@@ -335,9 +333,9 @@ function useNavbar(): {
       {
         content: <Icon size="xl" type="MAGNIFYING_GLASS" />,
         action: () => {
-          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_CONTACT));
+          dispatch(updateNavigationPath([NavbarItemId.CONTACT]));
         },
-        isActive: activeNavbar === NavbarItemId.NAVBAR_CONTACT,
+        isActive: navigationPath[0] === NavbarItemId.CONTACT,
       },
       {
         content: (
@@ -349,12 +347,12 @@ function useNavbar(): {
           </HStack>
         ),
         action: () => {
-          dispatch(setActiveNavbar(NavbarItemId.NAVBAR_SHOPPING_CART));
+          dispatch(updateNavigationPath([NavbarItemId.SHOPPING_CART]));
         },
-        isActive: activeNavbar === NavbarItemId.NAVBAR_SHOPPING_CART,
+        isActive: navigationPath[0] === NavbarItemId.SHOPPING_CART,
       },
     ],
-    [myCart, activeNavbar]
+    [myCart, navigationPath]
   );
 
   return {

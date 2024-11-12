@@ -45,6 +45,8 @@ export function Text(props: TextProps) {
   return (
     <span
       className={clsx(
+        size === '2xl' && 'TextFontSizeResponsive--2xl',
+        size === 'xl' && 'TextFontSizeResponsive--xl',
         size === 'lg' && 'TextFontSizeResponsive--lg',
         size === 'md' && 'TextFontSizeResponsive--md',
         size === 'sm' && 'TextFontSizeResponsive--sm',

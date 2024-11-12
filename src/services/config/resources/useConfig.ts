@@ -5,7 +5,7 @@ import { Config } from '../models/Config';
 import { ConfigQueryKeys } from '../models/Keys';
 
 /**
- * Performs a fetch request to the config server and retrieve the list of system config items.
+ * Performs a fetch request to the  server and retrieve the list of system config items.
  * @returns A promise that resolves to the list of system config items.
  */
 export async function getConfig(): Promise<Config[]> {

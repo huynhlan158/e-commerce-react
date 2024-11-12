@@ -1,26 +1,27 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CategoryUnit } from '~/services/config/models/Category';
 
 export enum NavbarItemId {
-  NAVBAR_SEARCH = 'NAVBAR_SEARCH',
-  NAVBAR_PRODUCTS = 'NAVBAR_PRODUCTS',
-  NAVBAR_PROMOTION = 'NAVBAR_PROMOTION',
-  NAVBAR_COCOON = 'NAVBAR_COCOON',
-  NAVBAR_ARTICLES = 'NAVBAR_ARTICLES',
-  NAVBAR_ACCOUNT = 'NAVBAR_ACCOUNT',
-  NAVBAR_CONTACT = 'NAVBAR_CONTACT',
-  NAVBAR_SHOPPING_CART = 'NAVBAR_SHOPPING_CART',
-  NAVBAR_LANGUAGE_VI = 'NAVBAR_LANGUAGE_VI',
-  NAVBAR_LANGUAGE_EN = 'NAVBAR_LANGUAGE_EN',
-
-  NAVBAR_MOBILE_MENU = 'NAVBAR_MOBILE_MENU',
+  SEARCH = 'SEARCH',
+  PRODUCTS = CategoryUnit.PRODUCTS,
+  PROMOTION = 'PROMOTION',
+  COCOON = 'COCOON',
+  ARTICLES = 'ARTICLES',
+  ACCOUNT = 'ACCOUNT',
+  CONTACT = 'CONTACT',
+  SHOPPING_CART = 'SHOPPING_CART',
+  LANGUAGE_VI = 'LANGUAGE_VI',
+  LANGUAGE_EN = 'LANGUAGE_EN',
 }
 
 export interface NavigationState {
   activeNavbar: NavbarItemId | null;
+  navigationPath: string[];
 }
 
 export const initialState: NavigationState = {
   activeNavbar: null,
+  navigationPath: [],
 };
 
 const navigationSlice = createSlice({
@@ -33,9 +34,13 @@ const navigationSlice = createSlice({
     resetActiveNavbar: (state) => {
       state.activeNavbar = null;
     },
+    updateNavigationPath: (state, action: PayloadAction<string[]>) => {
+      state.navigationPath = action.payload;
+    },
   },
 });
 
-export const { setActiveNavbar, resetActiveNavbar } = navigationSlice.actions;
+export const { setActiveNavbar, resetActiveNavbar, updateNavigationPath } =
+  navigationSlice.actions;
 
 export default navigationSlice.reducer;

@@ -3,16 +3,18 @@ import { useSelector } from 'react-redux';
 import { RootState } from '~/state/store';
 
 import { NavbarItemId } from '~/state/navigation/navigationSlice';
-import { MobileMenuDrawer } from './MobileMenuDrawer';
+import { MenuDrawer } from './MenuDrawer';
 
 /**
  * The drawer of menu bar.
  */
 export function NavbarDrawer() {
-  const { activeNavbar } = useSelector((state: RootState) => state.navigation);
+  const { navigationPath } = useSelector(
+    (state: RootState) => state.navigation
+  );
 
-  switch (activeNavbar) {
-    case NavbarItemId.NAVBAR_MOBILE_MENU:
-      return <MobileMenuDrawer />;
+  switch (navigationPath[0]) {
+    case NavbarItemId.PRODUCTS:
+      return <MenuDrawer />;
   }
 }

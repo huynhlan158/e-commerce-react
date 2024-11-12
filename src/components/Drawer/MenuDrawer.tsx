@@ -7,35 +7,44 @@ import {
   DrawerBody,
   DrawerOverlay,
   DrawerContent,
+  useMediaQuery,
 } from '@chakra-ui/react';
 
 import { useDisclosureStore } from '~/contexts/disclosure/useDisclosureStore';
 import { AppDispatch, RootState } from '~/state/store';
 import { logOut } from '~/state/auth/authSlice';
+import { updateNavigationPath } from '~/state/navigation/navigationSlice';
+import { useCategoryById } from '~/services/config/resources';
+import { Category, CategoryUnit } from '~/services/config/models/Category';
 
 import { Icon, IconType } from '../Icons';
 import { HStack, VStack } from '../Layouts';
 import { IconButton } from '../Forms/IconButton';
 import { Button } from '../Forms';
 import { Modal } from '../Modal';
-import { Text } from '../TypoGraphy';
-import { useMenuList } from './useMenuList';
+import { Heading, Text } from '../TypoGraphy';
 
-type MenubarType = 'MENU' | 'CONTACT';
+type MobileMenuType = 'MENU' | 'CONTACT';
 
 /**
- * The drawer of menu bar in mobile view.
+ * The menu drawer of the navigation.
  */
-export function MobileMenuDrawer() {
+export function MenuDrawer() {
+  const [isLaptop] = useMediaQuery('(min-width: 1024px)');
+
+  const dispatch = useDispatch<AppDispatch>();
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { navigationPath } = useSelector(
+    (state: RootState) => state.navigation
+  );
 
   const { isDrawerOpen, onDrawerClose, onModalOpen } = useDisclosureStore();
 
-  const [menuBarType, setMenuBarType] = useState<MenubarType>('MENU');
+  const [menuType, setMenuType] = useState<MobileMenuType>('MENU');
 
   useEffect(() => {
     return () => {
-      if (menuBarType === 'CONTACT') setMenuBarType('MENU');
+      if (menuType === 'CONTACT') setMenuType('MENU');
     };
   }, []);
 
@@ -43,14 +52,17 @@ export function MobileMenuDrawer() {
     <>
       <ChakraDrawer
         placement="left"
-        size="full"
+        size={['full', 'full', 'full', 'sm']}
         isOpen={isDrawerOpen}
         onClose={onDrawerClose}
       >
         <DrawerOverlay />
-        <DrawerContent className="px-20">
-          <HStack justifyContent="space-between" className="h-64">
-            <HStack gap={28}>
+        <DrawerContent>
+          <HStack
+            justifyContent="space-between"
+            className="h-64 laptop:mt-96 px-20"
+          >
+            <HStack gap={28} className="w-full laptop:justify-end">
               <IconButton
                 aria-label="Close"
                 variant="ghost"
@@ -58,17 +70,25 @@ export function MobileMenuDrawer() {
                 icon={<Icon size="2xl" type="X_MARK" />}
                 onClick={onDrawerClose}
               />
-              {menuBarType === 'CONTACT' && (
+              {(menuType === 'CONTACT' || navigationPath[1]) && !isLaptop && (
                 <IconButton
                   aria-label="Back"
                   variant="ghost"
                   size="md"
                   icon={<Icon size="lg" type="ARROW_LEFT" />}
-                  onClick={() => setMenuBarType('MENU')}
+                  onClick={() => {
+                    if (menuType === 'CONTACT') {
+                      setMenuType('MENU');
+                    } else if (navigationPath.length) {
+                      const newNavigationPath = navigationPath.slice(0, -1);
+                      dispatch(updateNavigationPath(newNavigationPath));
+                    }
+                  }}
                 />
               )}
             </HStack>
             <IconButton
+              className="laptop:hidden"
               aria-label="User"
               variant="ghost"
               size="md"
@@ -77,13 +97,13 @@ export function MobileMenuDrawer() {
                   size="2xl"
                   type="USER"
                   iconColorClassname={clsx(
-                    menuBarType === 'CONTACT' && 'text-gold-500'
+                    menuType === 'CONTACT' && 'text-gold-500'
                   )}
                 />
               }
               onClick={() => {
                 if (isAuthenticated) {
-                  setMenuBarType('CONTACT');
+                  setMenuType('CONTACT');
                 } else {
                   onDrawerClose();
                   onModalOpen();
@@ -92,12 +112,8 @@ export function MobileMenuDrawer() {
             />
           </HStack>
 
-          <DrawerBody>
-            {menuBarType === 'CONTACT' ? (
-              <MobileContactContent />
-            ) : (
-              <MobileMenuContent />
-            )}
+          <DrawerBody className="">
+            {menuType === 'CONTACT' ? <ContactContent /> : <MenuContent />}
           </DrawerBody>
         </DrawerContent>
       </ChakraDrawer>
@@ -113,40 +129,94 @@ export function MobileMenuDrawer() {
 }
 
 /**
- * A UI component to render the menu content in mobile view.
+ * A UI component to render the menu content that contains menu lists.
  */
-function MobileMenuContent() {
-  const menuList = useMenuList();
+function MenuContent() {
+  const [isLaptop] = useMediaQuery('(min-width: 1024px)');
+
+  const { navigationPath } = useSelector(
+    (state: RootState) => state.navigation
+  );
+
+  const { data: productCategories } = useCategoryById(CategoryUnit.PRODUCTS);
+
+  let mobileProductCategories = productCategories;
+  for (const id of navigationPath.slice(1)) {
+    mobileProductCategories = productCategories?.data.find(
+      (category) => category.id === id
+    );
+    if (!mobileProductCategories) break;
+  }
+
+  if (isLaptop) {
+    return productCategories && <MenuList category={productCategories} />;
+  }
 
   return (
     <>
-      {menuList.map((menu) => (
-        <VStack alignItems="flex-start" key={menu.title} gap={12}>
-          <Button
-            variant="ghost"
-            label={menu.title}
-            lableWeight="bold"
-            className="leading-26"
-          />
-          {menu.data.map((item) => (
-            <Button
-              variant="ghost"
-              size="xl"
-              label={item.title}
-              key={item.title}
-              className="leading-26 text-gray-500"
-            />
-          ))}
-        </VStack>
-      ))}
+      {productCategories && (
+        <MenuList category={mobileProductCategories || productCategories} />
+      )}
     </>
   );
 }
 
 /**
- * A UI component to render the contact content in mobile view.
+ * A UI component to render the menu list.
  */
-function MobileContactContent() {
+function MenuList({ category }: { category: Category }) {
+  const [isLaptop] = useMediaQuery('(min-width: 1024px)');
+
+  const dispatch = useDispatch<AppDispatch>();
+  const { navigationPath } = useSelector(
+    (state: RootState) => state.navigation
+  );
+
+  const isActive = category.id === navigationPath[category.depth];
+
+  return (
+    <VStack
+      key={category.id}
+      alignItems="flex-start"
+      gap={[12, 12, 12, 16]}
+      className="px-20 laptop:px-40"
+    >
+      {isLaptop && isActive ? (
+        <Heading text={category.name} level={5} variant="gray" size="xs" />
+      ) : (
+        <Button
+          variant="ghost"
+          label={category.name}
+          lableWeight="bold"
+          className="leading-26"
+          isActive={isActive}
+        />
+      )}
+      {isActive &&
+        category.data.map((childCategory) => (
+          <Button
+            key={childCategory.id}
+            variant="ghost"
+            size={isLaptop ? '2xl' : 'xl'}
+            label={childCategory.name}
+            lableVariant="gray"
+            className="leading-26"
+            isActive={navigationPath[category.depth + 1] === childCategory.id}
+            onClick={() => {
+              const newNavigationPath = [...navigationPath];
+              newNavigationPath[category.depth + 1] = childCategory.id;
+              dispatch(updateNavigationPath(newNavigationPath));
+            }}
+          />
+        ))}
+    </VStack>
+  );
+}
+
+/**
+ * A UI component to render the contact content.
+ */
+function ContactContent() {
   const { t } = useTranslation(['navigation-bar']);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -199,7 +269,7 @@ interface MobileAccountDetailProps {
 }
 
 /**
- * A UI component to render the account detail item in mobile view.
+ * A UI component to render the account detail item.
  */
 function MobileAccountDetail({
   label,

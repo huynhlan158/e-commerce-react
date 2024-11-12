@@ -23,20 +23,24 @@
   @apply text-20 leading-22;
 }
 
+.TextFontSizeResponsive--2xl {
+  @apply text-24 leading-26;
+}
+
 .HeadingFontSizeResponsive--xs {
-  @apply text-16 laptop:text-18 leading-22 laptop:leading-28;
+  @apply text-16 leading-22;
 }
 
 .HeadingFontSizeResponsive--sm {
-  @apply text-18 laptop:text-20 leading-24 laptop:leading-28;
+  @apply text-18 leading-24;
 }
 
 .HeadingFontSizeResponsive--md {
-  @apply text-22 laptop:text-24 leading-26 laptop:leading-32;
+  @apply text-22 leading-26;
 }
 
 .HeadingFontSizeResponsive--lg {
-  @apply text-24 laptop:text-28 leading-28 laptop:leading-32;
+  @apply text-24 leading-28;
 }
 
 /* ===== Responsive Modal ===== */

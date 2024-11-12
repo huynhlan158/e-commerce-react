@@ -12,6 +12,7 @@ import {
   commonTheme,
   fontSize,
   spacing,
+  screens,
   buttonTheme,
   drawerTheme,
   modalTheme,
@@ -24,6 +25,7 @@ const ChakraTheme = extendTheme({
   ...commonTheme,
   fontSizes: fontSize,
   space: spacing,
+  breakpoints: screens,
   components: {
     Button: buttonTheme,
     Drawer: drawerTheme,

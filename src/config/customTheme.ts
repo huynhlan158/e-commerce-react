@@ -145,6 +145,15 @@ export const commonTheme = {
   },
 };
 
+/** ===== Custom breakpoints ===== */
+export const screens = {
+  base: '0px',
+  mobile: '410px',
+  tablet: '640px',
+  laptop: '1024px',
+  desktop: '1280px',
+};
+
 /** ===== Custom font size ===== */
 export const fontSize = {
   10: '10px',

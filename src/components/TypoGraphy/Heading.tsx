@@ -19,7 +19,7 @@ interface HeadingProps extends StyleProps {
   /** The variant of the heading text.
    * @default 'primary'
    */
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'gray';
 }
 
 /** The heading component to use for headers */
@@ -36,8 +36,10 @@ export function Heading(props: HeadingProps) {
   return (
     <ElementType
       className={clsx(
-        `font-600`,
+        'font-600 cursor-default',
         variant === 'primary' && 'text-brown-600',
+        variant === 'secondary' && 'text-gray-900',
+        variant === 'gray' && 'text-gray-500',
         size === 'lg' && 'HeadingFontSizeResponsive--lg',
         size === 'md' && 'HeadingFontSizeResponsive--md',
         size === 'sm' && 'HeadingFontSizeResponsive--sm',
