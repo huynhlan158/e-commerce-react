@@ -4,10 +4,14 @@ import zod from './zod.json';
 import navigationBar from './navigation-bar.json';
 import article from './article.json';
 
+import serverCategory from './server-categories.json';
+
 export default {
   common: common,
   authentication: authentication,
   zod: zod,
   'navigation-bar': navigationBar,
   article: article,
+
+  'server-categories': serverCategory,
 };

@@ -60,7 +60,7 @@ export function MenuDrawer() {
         <DrawerContent>
           <HStack
             justifyContent="space-between"
-            className="h-64 laptop:mt-96 px-20"
+            className="h-64 laptop:mt-96 desktop:mt-128 px-20"
           >
             <HStack gap={28} className="w-full laptop:justify-end">
               <IconButton
