@@ -151,7 +151,7 @@ export function NavigationBar() {
         </HStack>
       </Stack>
 
-      {navigationPath[0] === NavbarItemId.PRODUCTS && <NavbarDrawer />}
+      {navigationPath[0].id === NavbarItemId.PRODUCTS && <NavbarDrawer />}
     </>
   );
 }
@@ -233,38 +233,38 @@ function useNavbar(): {
         content: <Icon size="xl" type="MAGNIFYING_GLASS" />,
         action: () => {
           onDrawerOpen();
-          dispatch(updateNavigationPath([NavbarItemId.SEARCH]));
+          dispatch(updateNavigationPath([{ id: NavbarItemId.SEARCH }]));
         },
       },
       {
         content: t('navbar-products'),
         action: () => {
           onDrawerOpen();
-          dispatch(updateNavigationPath([NavbarItemId.PRODUCTS]));
+          dispatch(updateNavigationPath([{ id: NavbarItemId.PRODUCTS }]));
         },
-        isActive: navigationPath[0] === NavbarItemId.PRODUCTS,
+        isActive: navigationPath[0].id === NavbarItemId.PRODUCTS,
       },
       {
         content: t('navbar-promotion'),
         action: () => {
-          dispatch(updateNavigationPath([NavbarItemId.PROMOTION]));
+          dispatch(updateNavigationPath([{ id: NavbarItemId.PROMOTION }]));
         },
-        isActive: navigationPath[0] === NavbarItemId.PROMOTION,
+        isActive: navigationPath[0].id === NavbarItemId.PROMOTION,
       },
       {
         content: t('navbar-cocoon'),
         action: () => {
-          dispatch(updateNavigationPath([NavbarItemId.COCOON]));
+          dispatch(updateNavigationPath([{ id: NavbarItemId.COCOON }]));
         },
-        isActive: navigationPath[0] === NavbarItemId.COCOON,
+        isActive: navigationPath[0].id === NavbarItemId.COCOON,
       },
       {
         action: () => {
           navigate(routes.article);
-          dispatch(updateNavigationPath([NavbarItemId.ARTICLES]));
+          dispatch(updateNavigationPath([{ id: NavbarItemId.ARTICLES }]));
         },
         content: t('navbar-articles'),
-        isActive: navigationPath[0] === NavbarItemId.ARTICLES,
+        isActive: navigationPath[0].id === NavbarItemId.ARTICLES,
       },
     ],
     [navigationPath]
@@ -276,7 +276,7 @@ function useNavbar(): {
         content: <Icon size="3xl" type="BARS_2" />,
         action: () => {
           onDrawerOpen();
-          dispatch(updateNavigationPath([NavbarItemId.PRODUCTS]));
+          dispatch(updateNavigationPath([{ id: NavbarItemId.PRODUCTS }]));
         },
       },
     ],
@@ -301,23 +301,23 @@ function useNavbar(): {
       {
         content: isAuthenticated ? t('navbar-account') : t('navbar-login'),
         action: () => {
-          dispatch(updateNavigationPath([NavbarItemId.ACCOUNT]));
+          dispatch(updateNavigationPath([{ id: NavbarItemId.ACCOUNT }]));
         },
-        isActive: navigationPath[0] === NavbarItemId.ACCOUNT,
+        isActive: navigationPath[0].id === NavbarItemId.ACCOUNT,
       },
       {
         content: t('navbar-contact'),
         action: () => {
-          dispatch(updateNavigationPath([NavbarItemId.CONTACT]));
+          dispatch(updateNavigationPath([{ id: NavbarItemId.CONTACT }]));
         },
-        isActive: navigationPath[0] === NavbarItemId.CONTACT,
+        isActive: navigationPath[0].id === NavbarItemId.CONTACT,
       },
       {
         content: `${t('navbar-cart')}${myCart?.items.length ? ' (' + myCart?.items.length + ')' : ''}`,
         action: () => {
-          dispatch(updateNavigationPath([NavbarItemId.SHOPPING_CART]));
+          dispatch(updateNavigationPath([{ id: NavbarItemId.SHOPPING_CART }]));
         },
-        isActive: navigationPath[0] === NavbarItemId.SHOPPING_CART,
+        isActive: navigationPath[0].id === NavbarItemId.SHOPPING_CART,
       },
       {
         content: t('language-vi', { ns: 'common' }),
@@ -333,9 +333,9 @@ function useNavbar(): {
       {
         content: <Icon size="xl" type="MAGNIFYING_GLASS" />,
         action: () => {
-          dispatch(updateNavigationPath([NavbarItemId.CONTACT]));
+          dispatch(updateNavigationPath([{ id: NavbarItemId.CONTACT }]));
         },
-        isActive: navigationPath[0] === NavbarItemId.CONTACT,
+        isActive: navigationPath[0].id === NavbarItemId.CONTACT,
       },
       {
         content: (
@@ -347,9 +347,9 @@ function useNavbar(): {
           </HStack>
         ),
         action: () => {
-          dispatch(updateNavigationPath([NavbarItemId.SHOPPING_CART]));
+          dispatch(updateNavigationPath([{ id: NavbarItemId.SHOPPING_CART }]));
         },
-        isActive: navigationPath[0] === NavbarItemId.SHOPPING_CART,
+        isActive: navigationPath[0].id === NavbarItemId.SHOPPING_CART,
       },
     ],
     [myCart, navigationPath]

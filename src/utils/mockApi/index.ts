@@ -9,8 +9,6 @@ import {
   configList,
   shoppingCartList,
   categoryUnitList,
-  categoryUnit2List,
-  categoryUnit3List,
 } from './mockData';
 
 export const setupServer = () => {
@@ -46,16 +44,17 @@ export const setupServer = () => {
       // ===== Mock API for categories service ===== //
       this.get('/categories/:categoryUnitId', (schema, request) => {
         const { categoryUnitId } = request.params;
-        const category = schema.db.categoryUnitList.find(categoryUnitId);
+        const categoryUnitList = schema.db.categoryUnitList;
+        const category = categoryUnitList.find(categoryUnitId);
         if (category) {
-          const categoryUnit2List = schema.db.categoryUnit2List.filter(
-            (category2) => category2.ancestor_id === category.id
+          const categoryUnit2List = categoryUnitList.filter(
+            (category2) => category2.group_id === category.id
           );
           category.data = categoryUnit2List;
           if (categoryUnit2List.length) {
             categoryUnit2List.forEach((category2) => {
-              const categoryUnit3List = schema.db.categoryUnit3List.filter(
-                (category3) => category3.ancestor_id === category2.id
+              const categoryUnit3List = categoryUnitList.filter(
+                (category3) => category3.group_id === category2.id
               );
               category2.data = categoryUnit3List;
             });
@@ -105,8 +104,6 @@ export const setupServer = () => {
       server.db.loadData({
         configList: configList,
         categoryUnitList: categoryUnitList,
-        categoryUnit2List: categoryUnit2List,
-        categoryUnit3List: categoryUnit3List,
         userList: userList,
         shoppingCartList: shoppingCartList,
         tab1Items: tab1Items,

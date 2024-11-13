@@ -4,7 +4,8 @@ import zod from './zod.json';
 import navigationBar from './navigation-bar.json';
 import article from './article.json';
 
-import serverCategory from './server-categories.json';
+import serverCategories from './server-categories.json';
+import serverProducts from './server-products.json';
 
 export default {
   common: common,
@@ -13,5 +14,6 @@ export default {
   'navigation-bar': navigationBar,
   article: article,
 
-  'server-categories': serverCategory,
+  'server-categories': serverCategories,
+  'server-products': serverProducts,
 };

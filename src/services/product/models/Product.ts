@@ -10,7 +10,7 @@ type Property =
 
 interface Category {
   id: string;
-  group: ProductGroup;
+  group_id: ProductGroup;
   name: string;
 }
 

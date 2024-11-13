@@ -14,9 +14,15 @@ export enum NavbarItemId {
   LANGUAGE_EN = 'LANGUAGE_EN',
 }
 
+interface NavbarItem {
+  id: string;
+  isFetchingData?: boolean;
+  slug?: string;
+}
+
 export interface NavigationState {
   activeNavbar: NavbarItemId | null;
-  navigationPath: string[];
+  navigationPath: NavbarItem[];
 }
 
 export const initialState: NavigationState = {
@@ -34,7 +40,7 @@ const navigationSlice = createSlice({
     resetActiveNavbar: (state) => {
       state.activeNavbar = null;
     },
-    updateNavigationPath: (state, action: PayloadAction<string[]>) => {
+    updateNavigationPath: (state, action: PayloadAction<NavbarItem[]>) => {
       state.navigationPath = action.payload;
     },
   },

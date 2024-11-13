@@ -13,7 +13,7 @@ export function NavbarDrawer() {
     (state: RootState) => state.navigation
   );
 
-  switch (navigationPath[0]) {
+  switch (navigationPath[0].id) {
     case NavbarItemId.PRODUCTS:
       return <MenuDrawer />;
   }

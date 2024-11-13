@@ -30,8 +30,6 @@ type MobileMenuType = 'MENU' | 'CONTACT';
  * The menu drawer of the navigation.
  */
 export function MenuDrawer() {
-  const [isLaptop] = useMediaQuery('(min-width: 1024px)');
-
   const dispatch = useDispatch<AppDispatch>();
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const { navigationPath } = useSelector(
@@ -41,6 +39,8 @@ export function MenuDrawer() {
   const { isDrawerOpen, onDrawerClose, onModalOpen } = useDisclosureStore();
 
   const [menuType, setMenuType] = useState<MobileMenuType>('MENU');
+
+  const [isLaptop] = useMediaQuery('(min-width: 1024px)');
 
   useEffect(() => {
     return () => {
@@ -132,8 +132,6 @@ export function MenuDrawer() {
  * A UI component to render the menu content that contains menu lists.
  */
 function MenuContent() {
-  const [isLaptop] = useMediaQuery('(min-width: 1024px)');
-
   const { navigationPath } = useSelector(
     (state: RootState) => state.navigation
   );
@@ -141,13 +139,24 @@ function MenuContent() {
   const { data: productCategories } = useCategoryById(CategoryUnit.PRODUCTS);
 
   let mobileProductCategories = productCategories;
-  for (const id of navigationPath.slice(1)) {
+  for (const path of navigationPath.slice(1)) {
     mobileProductCategories = productCategories?.data.find(
-      (category) => category.id === id
+      (category) => category.id === path.id
     );
-    if (!mobileProductCategories) break;
+    if (!mobileProductCategories) {
+      if (path.isFetchingData && path.slug) {
+        try {
+          // TODO: fetching API to get list of products
+        } catch (error) {
+          console.error({ error });
+        }
+      } else {
+        break;
+      }
+    }
   }
 
+  const [isLaptop] = useMediaQuery('(min-width: 1024px)');
   if (isLaptop) {
     return productCategories && <MenuList category={productCategories} />;
   }
@@ -165,14 +174,14 @@ function MenuContent() {
  * A UI component to render the menu list.
  */
 function MenuList({ category }: { category: Category }) {
-  const [isLaptop] = useMediaQuery('(min-width: 1024px)');
-
   const dispatch = useDispatch<AppDispatch>();
   const { navigationPath } = useSelector(
     (state: RootState) => state.navigation
   );
 
-  const isActive = category.id === navigationPath[category.depth];
+  const isActive = category.id === navigationPath[category.depth].id;
+
+  const [isLaptop] = useMediaQuery('(min-width: 1024px)');
 
   return (
     <VStack
@@ -201,10 +210,14 @@ function MenuList({ category }: { category: Category }) {
             label={childCategory.name}
             lableVariant="gray"
             className="leading-26"
-            isActive={navigationPath[category.depth + 1] === childCategory.id}
+            isActive={
+              navigationPath[category.depth + 1].id === childCategory.id
+            }
             onClick={() => {
               const newNavigationPath = [...navigationPath];
-              newNavigationPath[category.depth + 1] = childCategory.id;
+              newNavigationPath[category.depth + 1] = {
+                id: childCategory.id,
+              };
               dispatch(updateNavigationPath(newNavigationPath));
             }}
           />

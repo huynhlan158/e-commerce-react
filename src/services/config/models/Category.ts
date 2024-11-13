@@ -5,7 +5,7 @@ export enum CategoryUnit {
 export interface Category {
   id: CategoryUnit;
   name: string;
-  ancestor_id: string | null;
+  group_id: string | null;
   depth: number;
   data: Category[];
 }
