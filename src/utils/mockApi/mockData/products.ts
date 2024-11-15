@@ -1,5 +1,6 @@
 import i18n from '~/config/localization/i18n';
 import { Product } from '~/services/product/models/Product';
+import { productImages } from './images';
 
 export const productList: Product[] = [
   {
@@ -232,8 +233,7 @@ export const productList: Product[] = [
     certifications: ['PETA', 'CRUELTY_FREE', 'VEGAN'],
     front_image: {
       default: '/',
-      thumbnail:
-        'src/utils/mockApi/mockData/images/products/winter-melon-sunscreen-milk-50ml-thumbnail.png',
+      thumbnail: productImages.winterMelonSunscreenMilk50,
     },
     back_image: {
       default: '/',
@@ -474,8 +474,7 @@ export const productList: Product[] = [
     certifications: ['PETA', 'CRUELTY_FREE', 'VEGAN'],
     front_image: {
       default: '/',
-      thumbnail:
-        'src/utils/mockApi/mockData/images/products/winter-melon-sunscreen-milk-15ml-thumbnail.png',
+      thumbnail: productImages.winterMelonSunscreenMilk15,
     },
     back_image: {
       default: '/',
@@ -708,8 +707,7 @@ export const productList: Product[] = [
     certifications: ['PETA', 'CRUELTY_FREE', 'VEGAN'],
     front_image: {
       default: '/',
-      thumbnail:
-        'src/utils/mockApi/mockData/images/products/winter-melon-sunscreen-50ml-thumbnail.png',
+      thumbnail: productImages.winterMelonSunscreen50,
     },
     back_image: {
       default: '/',

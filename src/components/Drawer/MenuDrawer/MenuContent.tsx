@@ -134,7 +134,7 @@ function MenuList({ category }: { category: Category }) {
                 count: productsByCategory.data.length,
               })}
               size="xl"
-              className="MenuDrawerItem text-gray-500 mt-4"
+              className="Animation--slideIn text-gray-500 mt-4"
             />
             <VStack gap={40} className="w-full my-40">
               {productsByCategory.data.map((product, idx) => (
@@ -143,10 +143,9 @@ function MenuList({ category }: { category: Category }) {
                   to="#"
                   key={product.id}
                   onClick={onDrawerClose}
-                  className="MenuDrawerItem w-full flex justify-between items-center"
+                  className="Animation--slideIn w-full flex justify-between items-center"
                   style={{
                     animationDelay: `${idx * 0.1}s`,
-                    animationFillMode: 'forwards',
                   }}
                 >
                   <VStack alignItems="flex-start" gap={8}>
@@ -193,14 +192,14 @@ function MenuList({ category }: { category: Category }) {
           level={5}
           variant="gray"
           size="xs"
-          className="MenuDrawerItem"
+          className="Animation--slideIn"
         />
       ) : (
         <Button
           variant="ghost"
           label={category.name}
           lableWeight="bold"
-          className="MenuDrawerItem leading-26"
+          className="Animation--slideIn leading-26"
           isActive={isActive}
         />
       )}
@@ -212,7 +211,7 @@ function MenuList({ category }: { category: Category }) {
             size={isLaptop ? '2xl' : 'xl'}
             label={childCategory.name}
             lableVariant="gray"
-            className="MenuDrawerItem leading-26"
+            className="Animation--slideIn leading-26"
             isActive={
               navigationPath[category.depth + 1]?.id === childCategory.id
             }
@@ -235,7 +234,6 @@ function MenuList({ category }: { category: Category }) {
             }}
             style={{
               animationDelay: `${idx * 0.1}s`,
-              animationFillMode: 'forwards',
             }}
           />
         ))}

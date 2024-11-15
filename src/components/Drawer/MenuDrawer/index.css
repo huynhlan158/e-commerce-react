@@ -1,20 +1,17 @@
 @keyframes slideIn {
-  to {
+  0% {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+  100% {
     opacity: 1;
     transform: translateX(0);
+    /* backface-visibility: hidden; */
   }
 }
 
-.animate-slideIn {
+.Animation--slideIn {
+  opacity: 0;
+  transform: translateX(-15px);
   animation: slideIn 0.5s forwards;
-}
-
-.MenuDrawerItem {
-  @apply opacity-0 transform -translate-x-20 animate-slideIn;
-}
-
-@media (max-width: 640px) {
-  .animate-slideIn {
-    animation-duration: 0.3s; /* Faster for mobile */
-  }
 }
