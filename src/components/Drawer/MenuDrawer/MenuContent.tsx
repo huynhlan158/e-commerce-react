@@ -1,144 +1,28 @@
-import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Drawer as ChakraDrawer,
-  DrawerBody,
-  DrawerOverlay,
-  DrawerContent,
-  useMediaQuery,
-  Image,
-} from '@chakra-ui/react';
+import { Image, useMediaQuery, VStack } from '@chakra-ui/react';
 
-import { useDisclosureStore } from '~/contexts/disclosure/useDisclosureStore';
 import { AppDispatch, RootState } from '~/state/store';
-import { logOut } from '~/state/auth/authSlice';
 import {
-  updateNavigationPath,
   setProductsByCategory,
+  updateNavigationPath,
 } from '~/state/navigation/navigationSlice';
-import { useCategoryById } from '~/services/config/resources';
+import { useDisclosureStore } from '~/contexts/disclosure/useDisclosureStore';
 import { Category, CategoryUnitId } from '~/services/config/models/Category';
+import { useCategoryById } from '~/services/config/resources';
 import { useProducts } from '~/services/product/resources';
 
-import { Icon, IconType } from '../Icons';
-import { HStack, LoadingState, VStack } from '../Layouts';
-import { IconButton } from '../Forms/IconButton';
-import { Button } from '../Forms';
-import { Modal } from '../Modal';
-import { Heading, Text } from '../TypoGraphy';
-
-type MobileMenuType = 'MENU' | 'CONTACT';
+import { Button } from '~/components/Forms';
+import { LoadingState } from '~/components/Layouts';
+import { Heading, Text } from '~/components/TypoGraphy';
 
 /**
- * The menu drawer of the navigation.
+ * A UI component to render the menu content that contains list of categories
+ * and/or products by selected category.
  */
-export function MenuDrawer() {
-  const dispatch = useDispatch<AppDispatch>();
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
-  const { navigationPath } = useSelector(
-    (state: RootState) => state.navigation
-  );
-
-  const { isDrawerOpen, onDrawerClose, onModalOpen } = useDisclosureStore();
-
-  const [menuType, setMenuType] = useState<MobileMenuType>('MENU');
-
-  const [isLaptop] = useMediaQuery('min-width: 1024px');
-
-  useEffect(() => {
-    return () => {
-      if (menuType === 'CONTACT') setMenuType('MENU');
-    };
-  }, []);
-
-  return (
-    <>
-      <ChakraDrawer
-        placement="left"
-        size={['full', 'full', 'full', 'sm']}
-        isOpen={isDrawerOpen}
-        onClose={onDrawerClose}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <HStack
-            justifyContent="space-between"
-            className="h-64 laptop:mt-96 desktop:mt-128 px-20"
-          >
-            <HStack gap={28} className="w-full laptop:justify-end">
-              <IconButton
-                aria-label="Close"
-                variant="ghost"
-                size="md"
-                icon={<Icon size="2xl" type="X_MARK" />}
-                onClick={onDrawerClose}
-              />
-              {(menuType === 'CONTACT' || navigationPath[1]) && !isLaptop && (
-                <IconButton
-                  aria-label="Back"
-                  variant="ghost"
-                  size="md"
-                  icon={<Icon size="lg" type="ARROW_LEFT" />}
-                  onClick={() => {
-                    if (menuType === 'CONTACT') {
-                      setMenuType('MENU');
-                    } else if (navigationPath.length) {
-                      const newNavigationPath = navigationPath.slice(0, -1);
-                      dispatch(updateNavigationPath(newNavigationPath));
-                      dispatch(setProductsByCategory(null));
-                    }
-                  }}
-                />
-              )}
-            </HStack>
-            <IconButton
-              className="laptop:hidden"
-              aria-label="User"
-              variant="ghost"
-              size="md"
-              icon={
-                <Icon
-                  size="2xl"
-                  type="USER"
-                  iconColorClassname={clsx(
-                    menuType === 'CONTACT' && 'text-gold-500'
-                  )}
-                />
-              }
-              onClick={() => {
-                if (isAuthenticated) {
-                  setMenuType('CONTACT');
-                } else {
-                  onDrawerClose();
-                  onModalOpen();
-                }
-              }}
-            />
-          </HStack>
-
-          <DrawerBody className="">
-            {menuType === 'CONTACT' ? <ContactContent /> : <MenuContent />}
-          </DrawerBody>
-        </DrawerContent>
-      </ChakraDrawer>
-
-      {/* TODO: Login modal */}
-      <Modal
-        title="Login"
-        description="Login description"
-        mainContent={<div>Login content</div>}
-      />
-    </>
-  );
-}
-
-/**
- * A UI component to render the menu content that contains menu lists.
- */
-function MenuContent() {
+export function MenuContent() {
   const { navigationPath } = useSelector(
     (state: RootState) => state.navigation
   );
@@ -341,92 +225,5 @@ function MenuList({ category }: { category: Category }) {
           />
         ))}
     </>
-  );
-}
-
-/**
- * A UI component to render the contact content.
- */
-function ContactContent() {
-  const { t } = useTranslation(['navigation-bar']);
-
-  const dispatch = useDispatch<AppDispatch>();
-  const { userProfile } = useSelector((state: RootState) => state.auth);
-
-  const { onDrawerClose } = useDisclosureStore();
-
-  return (
-    <>
-      <MobileAccountDetail
-        iconType="PHONE"
-        label={userProfile?.phoneNumber || ''}
-        variant="dark"
-      />
-      <MobileAccountDetail iconType="USER" label={t('item-account-info')} />
-      <MobileAccountDetail
-        iconType="ARCHIVE_BOX"
-        label={t('item-shopping-history')}
-      />
-      <MobileAccountDetail
-        iconType="ARROW_RIGHT_START_ON_RECTANGLE"
-        label={t('item-log-out')}
-        action={() => {
-          onDrawerClose();
-          dispatch(logOut());
-        }}
-      />
-    </>
-  );
-}
-
-interface MobileAccountDetailProps {
-  /**
-   * The label of the navigation item.
-   */
-  label: string;
-  /**
-   * The icon type of the navigation item.
-   */
-  iconType: IconType;
-  /**
-   * The variant of the icon.
-   * @default 'light'
-   */
-  variant?: 'dark' | 'light';
-  /**
-   * The handler for onClick event of the navbar item.
-   */
-  action?: () => void;
-}
-
-/**
- * A UI component to render the account detail item.
- */
-function MobileAccountDetail({
-  label,
-  variant = 'light',
-  iconType,
-  action,
-}: MobileAccountDetailProps) {
-  return (
-    <HStack
-      className={clsx(
-        'px-22 py-24',
-        variant === 'dark'
-          ? 'bg-gray-900 text-peach-200'
-          : 'hover:bg-peach-400',
-        action && 'cursor-pointer'
-      )}
-      gap={24}
-      alignItems="center"
-      onClick={action}
-    >
-      <Icon
-        size="md"
-        type={iconType}
-        iconColorClassname={clsx(variant === 'dark' && 'text-peach-200')}
-      />
-      <Text size="md" text={label} className="font-600" />
-    </HStack>
   );
 }
