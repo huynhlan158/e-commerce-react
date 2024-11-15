@@ -38,6 +38,7 @@ export function Button({
   size = 'md',
   className,
   onClick,
+  style,
   ...otherProps
 }: ButtonProps) {
   switch (variant) {
@@ -45,6 +46,7 @@ export function Button({
       return (
         <button
           onClick={onClick}
+          style={style}
           className={clsx(
             'relative h-fit',
             'after:content-[""] after:absolute after:left-0 after:bottom-0',
@@ -74,6 +76,7 @@ export function Button({
           size={size || ['xs', 'sm']}
           variant={variant}
           onClick={onClick}
+          style={style}
           className={className}
           {...otherProps}
         >

@@ -17,6 +17,7 @@ import { useProducts } from '~/services/product/resources';
 import { Button } from '~/components/Forms';
 import { LoadingState } from '~/components/Layouts';
 import { Heading, Text } from '~/components/TypoGraphy';
+import './index.css';
 
 /**
  * A UI component to render the menu content that contains list of categories
@@ -133,16 +134,20 @@ function MenuList({ category }: { category: Category }) {
                 count: productsByCategory.data.length,
               })}
               size="xl"
-              className="text-gray-500 mt-4"
+              className="MenuDrawerItem text-gray-500 mt-4"
             />
             <VStack gap={40} className="w-full my-40">
-              {productsByCategory.data.map((product) => (
+              {productsByCategory.data.map((product, idx) => (
                 // TODO: navigate to the product detail page
                 <NavLink
                   to="#"
                   key={product.id}
                   onClick={onDrawerClose}
-                  className="w-full flex justify-between items-center"
+                  className="MenuDrawerItem w-full flex justify-between items-center"
+                  style={{
+                    animationDelay: `${idx * 0.1}s`,
+                    animationFillMode: 'forwards',
+                  }}
                 >
                   <VStack alignItems="flex-start" gap={8}>
                     <Heading
@@ -183,25 +188,31 @@ function MenuList({ category }: { category: Category }) {
   return (
     <>
       {isLaptop && isActive ? (
-        <Heading text={category.name} level={5} variant="gray" size="xs" />
+        <Heading
+          text={category.name}
+          level={5}
+          variant="gray"
+          size="xs"
+          className="MenuDrawerItem"
+        />
       ) : (
         <Button
           variant="ghost"
           label={category.name}
           lableWeight="bold"
-          className="leading-26"
+          className="MenuDrawerItem leading-26"
           isActive={isActive}
         />
       )}
       {isActive &&
-        category.data.map((childCategory) => (
+        category.data.map((childCategory, idx) => (
           <Button
             key={childCategory.id}
             variant="ghost"
             size={isLaptop ? '2xl' : 'xl'}
             label={childCategory.name}
             lableVariant="gray"
-            className="leading-26"
+            className="MenuDrawerItem leading-26"
             isActive={
               navigationPath[category.depth + 1]?.id === childCategory.id
             }
@@ -221,6 +232,10 @@ function MenuList({ category }: { category: Category }) {
                   });
                 }
               }
+            }}
+            style={{
+              animationDelay: `${idx * 0.1}s`,
+              animationFillMode: 'forwards',
             }}
           />
         ))}

@@ -39,13 +39,13 @@ export function MenuDrawer() {
 
   const [menuType, setMenuType] = useState<MobileMenuType>('MENU');
 
-  const [isLaptop] = useMediaQuery('min-width: 1024px');
-
   useEffect(() => {
     return () => {
       if (menuType === 'CONTACT') setMenuType('MENU');
     };
   }, []);
+
+  const [isLaptop] = useMediaQuery('min-width: 1024px');
 
   return (
     <>
