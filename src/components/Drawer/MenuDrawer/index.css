@@ -12,3 +12,9 @@
 .MenuDrawerItem {
   @apply opacity-0 transform -translate-x-20 animate-slideIn;
 }
+
+@media (max-width: 640px) {
+  .animate-slideIn {
+    animation-duration: 0.3s; /* Faster for mobile */
+  }
+}
