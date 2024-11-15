@@ -11,5 +11,7 @@
   "language-vi": "VI",
   "language-en": "EN",
   "save": "Save",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "no-results": "Không có kết quả",
+  "result-count": "{{count}} kết quả"
 }

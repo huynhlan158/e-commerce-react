@@ -3,7 +3,10 @@ import { useDispatch } from 'react-redux';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { AppDispatch } from '~/state/store';
-import { updateNavigationPath } from '~/state/navigation/navigationSlice';
+import {
+  updateNavigationPath,
+  setProductsByCategory,
+} from '~/state/navigation/navigationSlice';
 import DisclosureContext from './DisclosureContext';
 
 function DisclosureProvider({ children }: { children?: ReactNode }) {
@@ -24,6 +27,7 @@ function DisclosureProvider({ children }: { children?: ReactNode }) {
   useEffect(() => {
     if (!isDrawerOpen) {
       dispatch(updateNavigationPath([]));
+      dispatch(setProductsByCategory(null));
     }
   }, [isDrawerOpen]);
 

@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CategoryUnit } from '~/services/config/models/Category';
+
+import { CategoryUnitId } from '~/services/config/models/Category';
+import { Product } from '~/services/product/models/Product';
 
 export enum NavbarItemId {
   SEARCH = 'SEARCH',
-  PRODUCTS = CategoryUnit.PRODUCTS,
+  PRODUCTS = CategoryUnitId.PRODUCTS,
   PROMOTION = 'PROMOTION',
   COCOON = 'COCOON',
   ARTICLES = 'ARTICLES',
@@ -20,14 +22,22 @@ interface NavbarItem {
   slug?: string;
 }
 
+interface ProductsByCategory {
+  depth: number;
+  data: Product[];
+}
+
+// TODO: refactor and remove redundant states
 export interface NavigationState {
   activeNavbar: NavbarItemId | null;
   navigationPath: NavbarItem[];
+  productsByCategory: ProductsByCategory | null;
 }
 
 export const initialState: NavigationState = {
   activeNavbar: null,
   navigationPath: [],
+  productsByCategory: null,
 };
 
 const navigationSlice = createSlice({
@@ -43,10 +53,20 @@ const navigationSlice = createSlice({
     updateNavigationPath: (state, action: PayloadAction<NavbarItem[]>) => {
       state.navigationPath = action.payload;
     },
+    setProductsByCategory: (
+      state,
+      action: PayloadAction<ProductsByCategory | null>
+    ) => {
+      state.productsByCategory = action.payload;
+    },
   },
 });
 
-export const { setActiveNavbar, resetActiveNavbar, updateNavigationPath } =
-  navigationSlice.actions;
+export const {
+  setActiveNavbar,
+  resetActiveNavbar,
+  updateNavigationPath,
+  setProductsByCategory,
+} = navigationSlice.actions;
 
 export default navigationSlice.reducer;

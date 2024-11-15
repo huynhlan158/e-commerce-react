@@ -2,6 +2,7 @@ import { createServer } from 'miragejs';
 import { v4 as uuidv4 } from 'uuid';
 
 import { ServerFetchError } from '~/services/fetch.server';
+import { Product } from '~/services/product/models/Product';
 import { ErrorType } from '~/types/FetchServer';
 import {
   tab1Items,
@@ -9,6 +10,7 @@ import {
   configList,
   shoppingCartList,
   categoryUnitList,
+  productList,
 } from './mockData';
 
 export const setupServer = () => {
@@ -63,6 +65,18 @@ export const setupServer = () => {
         return category;
       });
 
+      // ===== Mock API for products service ===== //
+      this.get('/products', (schema, request) => {
+        if (request.queryParams.categoryId) {
+          const categoryId = request.queryParams.categoryId;
+          return schema.db.productList.where((product: Product) =>
+            product.categories.some((category) => category.id === categoryId)
+          );
+        } else {
+          return schema.db.productList;
+        }
+      });
+
       // ===== Mock API for users service ===== //
       this.get('/users', (schema) => {
         return schema.db.userList;
@@ -104,6 +118,7 @@ export const setupServer = () => {
       server.db.loadData({
         configList: configList,
         categoryUnitList: categoryUnitList,
+        productList: productList,
         userList: userList,
         shoppingCartList: shoppingCartList,
         tab1Items: tab1Items,

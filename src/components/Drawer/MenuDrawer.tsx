@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -8,17 +9,22 @@ import {
   DrawerOverlay,
   DrawerContent,
   useMediaQuery,
+  Image,
 } from '@chakra-ui/react';
 
 import { useDisclosureStore } from '~/contexts/disclosure/useDisclosureStore';
 import { AppDispatch, RootState } from '~/state/store';
 import { logOut } from '~/state/auth/authSlice';
-import { updateNavigationPath } from '~/state/navigation/navigationSlice';
+import {
+  updateNavigationPath,
+  setProductsByCategory,
+} from '~/state/navigation/navigationSlice';
 import { useCategoryById } from '~/services/config/resources';
-import { Category, CategoryUnit } from '~/services/config/models/Category';
+import { Category, CategoryUnitId } from '~/services/config/models/Category';
+import { useProducts } from '~/services/product/resources';
 
 import { Icon, IconType } from '../Icons';
-import { HStack, VStack } from '../Layouts';
+import { HStack, LoadingState, VStack } from '../Layouts';
 import { IconButton } from '../Forms/IconButton';
 import { Button } from '../Forms';
 import { Modal } from '../Modal';
@@ -40,7 +46,7 @@ export function MenuDrawer() {
 
   const [menuType, setMenuType] = useState<MobileMenuType>('MENU');
 
-  const [isLaptop] = useMediaQuery('(min-width: 1024px)');
+  const [isLaptop] = useMediaQuery('min-width: 1024px');
 
   useEffect(() => {
     return () => {
@@ -82,6 +88,7 @@ export function MenuDrawer() {
                     } else if (navigationPath.length) {
                       const newNavigationPath = navigationPath.slice(0, -1);
                       dispatch(updateNavigationPath(newNavigationPath));
+                      dispatch(setProductsByCategory(null));
                     }
                   }}
                 />
@@ -122,7 +129,7 @@ export function MenuDrawer() {
       <Modal
         title="Login"
         description="Login description"
-        mainContent={<div>Main content</div>}
+        mainContent={<div>Login content</div>}
       />
     </>
   );
@@ -136,37 +143,31 @@ function MenuContent() {
     (state: RootState) => state.navigation
   );
 
-  const { data: productCategories } = useCategoryById(CategoryUnit.PRODUCTS);
+  const { data: productCategories } = useCategoryById(CategoryUnitId.PRODUCTS);
 
   let mobileProductCategories = productCategories;
   for (const path of navigationPath.slice(1)) {
     mobileProductCategories = productCategories?.data.find(
       (category) => category.id === path.id
     );
-    if (!mobileProductCategories) {
-      if (path.isFetchingData && path.slug) {
-        try {
-          // TODO: fetching API to get list of products
-        } catch (error) {
-          console.error({ error });
-        }
-      } else {
-        break;
-      }
-    }
+    if (!mobileProductCategories) break;
   }
 
-  const [isLaptop] = useMediaQuery('(min-width: 1024px)');
+  const [isLaptop] = useMediaQuery('min-width: 1024px');
   if (isLaptop) {
-    return productCategories && <MenuList category={productCategories} />;
+    return (
+      <VStack alignItems="flex-start" gap={16} className="px-40">
+        {productCategories && <MenuList category={productCategories} />}
+      </VStack>
+    );
   }
 
   return (
-    <>
+    <VStack alignItems="flex-start" gap={12} className="px-20">
       {productCategories && (
         <MenuList category={mobileProductCategories || productCategories} />
       )}
-    </>
+    </VStack>
   );
 }
 
@@ -174,22 +175,129 @@ function MenuContent() {
  * A UI component to render the menu list.
  */
 function MenuList({ category }: { category: Category }) {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch<AppDispatch>();
-  const { navigationPath } = useSelector(
+  const { navigationPath, productsByCategory } = useSelector(
     (state: RootState) => state.navigation
   );
 
+  const { onDrawerClose } = useDisclosureStore();
+
+  const [currentCategory, setCurrentCategory] = useState<{
+    id: string;
+    name: string;
+  }>();
+
+  const {
+    data: productList,
+    refetch: refetchProductList,
+    isFetching,
+  } = useProducts(
+    currentCategory ? { categoryId: currentCategory?.id } : undefined
+  );
+
+  useEffect(() => {
+    if (productList) {
+      dispatch(
+        setProductsByCategory({
+          depth: category.depth + 2,
+          data: productList,
+        })
+      );
+    }
+  }, [isFetching]);
+
+  const [isLaptop] = useMediaQuery('min-width: 1024px');
   const isActive = category.id === navigationPath[category.depth].id;
 
-  const [isLaptop] = useMediaQuery('(min-width: 1024px)');
+  /**
+   * Loading state when fetching product list in mobile view.
+   */
+  if (isFetching && currentCategory && !isLaptop) {
+    return (
+      <>
+        <Heading
+          text={currentCategory.name}
+          level={5}
+          variant="secondary"
+          size="xs"
+        />
+        <LoadingState />
+      </>
+    );
+  }
 
+  /**
+   * Product list by category in mobile view.
+   */
+  if (productsByCategory && currentCategory && !isLaptop) {
+    return (
+      <>
+        <Heading
+          text={currentCategory.name}
+          level={5}
+          variant="secondary"
+          size="xs"
+          weight={700}
+        />
+
+        {productsByCategory.data.length ? (
+          <>
+            <Text
+              text={t('result-count', {
+                count: productsByCategory.data.length,
+              })}
+              size="xl"
+              className="text-gray-500 mt-4"
+            />
+            <VStack gap={40} className="w-full my-40">
+              {productsByCategory.data.map((product) => (
+                // TODO: navigate to the product detail page
+                <NavLink
+                  to="#"
+                  key={product.id}
+                  onClick={onDrawerClose}
+                  className="w-full flex justify-between items-center"
+                >
+                  <VStack alignItems="flex-start" gap={8}>
+                    <Heading
+                      text={product.name}
+                      level={6}
+                      size="xs"
+                      variant="secondary"
+                    />
+                    <Text text={product.functionality} size="sm" />
+                    {/* TODO: monetary format */}
+                    <Text
+                      text={product.price.toString()}
+                      size="sm"
+                      variant="gray"
+                      className="mt-4"
+                    />
+                  </VStack>
+
+                  <Image
+                    src={product.front_image.thumbnail}
+                    h="72px"
+                    w="72px"
+                  />
+                </NavLink>
+              ))}
+            </VStack>
+          </>
+        ) : (
+          <Text text={t('no-results')} size="xl" className="text-gray-500" />
+        )}
+      </>
+    );
+  }
+
+  /**
+   * Product category list in drawer menu for all screen sizes.
+   */
   return (
-    <VStack
-      key={category.id}
-      alignItems="flex-start"
-      gap={[12, 12, 12, 16]}
-      className="px-20 laptop:px-40"
-    >
+    <>
       {isLaptop && isActive ? (
         <Heading text={category.name} level={5} variant="gray" size="xs" />
       ) : (
@@ -211,7 +319,7 @@ function MenuList({ category }: { category: Category }) {
             lableVariant="gray"
             className="leading-26"
             isActive={
-              navigationPath[category.depth + 1].id === childCategory.id
+              navigationPath[category.depth + 1]?.id === childCategory.id
             }
             onClick={() => {
               const newNavigationPath = [...navigationPath];
@@ -219,10 +327,20 @@ function MenuList({ category }: { category: Category }) {
                 id: childCategory.id,
               };
               dispatch(updateNavigationPath(newNavigationPath));
+              if (childCategory.fetch_data_for_product_list) {
+                if (childCategory.id === currentCategory?.id) {
+                  refetchProductList();
+                } else {
+                  setCurrentCategory({
+                    id: childCategory.id,
+                    name: childCategory.name,
+                  });
+                }
+              }
             }}
           />
         ))}
-    </VStack>
+    </>
   );
 }
 

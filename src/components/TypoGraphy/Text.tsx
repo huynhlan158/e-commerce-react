@@ -15,13 +15,17 @@ interface TextProps extends StyleProps {
    * The param values of the text.
    */
   params?: string[];
+  /** The variant of the heading text.
+   * @default 'secondary'
+   */
+  variant?: 'secondary' | 'gray';
 }
 
 /**
  * The text component to render text.
  */
 export function Text(props: TextProps) {
-  const { className, text, size = 'md', params } = props;
+  const { className, text, size = 'md', variant = 'secondary', params } = props;
   if (!text || typeof text !== 'string') return text;
 
   const textArray = text.split('{}');
@@ -45,6 +49,7 @@ export function Text(props: TextProps) {
   return (
     <span
       className={clsx(
+        variant === 'gray' && 'text-gray-500',
         size === '2xl' && 'TextFontSizeResponsive--2xl',
         size === 'xl' && 'TextFontSizeResponsive--xl',
         size === 'lg' && 'TextFontSizeResponsive--lg',

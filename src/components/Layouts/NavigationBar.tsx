@@ -151,7 +151,7 @@ export function NavigationBar() {
         </HStack>
       </Stack>
 
-      {navigationPath[0].id === NavbarItemId.PRODUCTS && <NavbarDrawer />}
+      {navigationPath[0]?.id === NavbarItemId.PRODUCTS && <NavbarDrawer />}
     </>
   );
 }
@@ -242,21 +242,21 @@ function useNavbar(): {
           onDrawerOpen();
           dispatch(updateNavigationPath([{ id: NavbarItemId.PRODUCTS }]));
         },
-        isActive: navigationPath[0].id === NavbarItemId.PRODUCTS,
+        isActive: navigationPath[0]?.id === NavbarItemId.PRODUCTS,
       },
       {
         content: t('navbar-promotion'),
         action: () => {
           dispatch(updateNavigationPath([{ id: NavbarItemId.PROMOTION }]));
         },
-        isActive: navigationPath[0].id === NavbarItemId.PROMOTION,
+        isActive: navigationPath[0]?.id === NavbarItemId.PROMOTION,
       },
       {
         content: t('navbar-cocoon'),
         action: () => {
           dispatch(updateNavigationPath([{ id: NavbarItemId.COCOON }]));
         },
-        isActive: navigationPath[0].id === NavbarItemId.COCOON,
+        isActive: navigationPath[0]?.id === NavbarItemId.COCOON,
       },
       {
         action: () => {
@@ -264,7 +264,7 @@ function useNavbar(): {
           dispatch(updateNavigationPath([{ id: NavbarItemId.ARTICLES }]));
         },
         content: t('navbar-articles'),
-        isActive: navigationPath[0].id === NavbarItemId.ARTICLES,
+        isActive: navigationPath[0]?.id === NavbarItemId.ARTICLES,
       },
     ],
     [navigationPath]
@@ -303,21 +303,21 @@ function useNavbar(): {
         action: () => {
           dispatch(updateNavigationPath([{ id: NavbarItemId.ACCOUNT }]));
         },
-        isActive: navigationPath[0].id === NavbarItemId.ACCOUNT,
+        isActive: navigationPath[0]?.id === NavbarItemId.ACCOUNT,
       },
       {
         content: t('navbar-contact'),
         action: () => {
           dispatch(updateNavigationPath([{ id: NavbarItemId.CONTACT }]));
         },
-        isActive: navigationPath[0].id === NavbarItemId.CONTACT,
+        isActive: navigationPath[0]?.id === NavbarItemId.CONTACT,
       },
       {
         content: `${t('navbar-cart')}${myCart?.items.length ? ' (' + myCart?.items.length + ')' : ''}`,
         action: () => {
           dispatch(updateNavigationPath([{ id: NavbarItemId.SHOPPING_CART }]));
         },
-        isActive: navigationPath[0].id === NavbarItemId.SHOPPING_CART,
+        isActive: navigationPath[0]?.id === NavbarItemId.SHOPPING_CART,
       },
       {
         content: t('language-vi', { ns: 'common' }),
@@ -335,7 +335,7 @@ function useNavbar(): {
         action: () => {
           dispatch(updateNavigationPath([{ id: NavbarItemId.CONTACT }]));
         },
-        isActive: navigationPath[0].id === NavbarItemId.CONTACT,
+        isActive: navigationPath[0]?.id === NavbarItemId.CONTACT,
       },
       {
         content: (
@@ -349,7 +349,7 @@ function useNavbar(): {
         action: () => {
           dispatch(updateNavigationPath([{ id: NavbarItemId.SHOPPING_CART }]));
         },
-        isActive: navigationPath[0].id === NavbarItemId.SHOPPING_CART,
+        isActive: navigationPath[0]?.id === NavbarItemId.SHOPPING_CART,
       },
     ],
     [myCart, navigationPath]

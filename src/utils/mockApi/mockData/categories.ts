@@ -1,7 +1,10 @@
 import i18n from '~/config/localization/i18n';
-import { CategoryUnit } from '~/services/config/models/Category';
+import {
+  CategoryUnit,
+  CategoryUnitId,
+} from '~/services/config/models/Category';
 
-enum CategoryUnit2 {
+enum CategoryUnit2Id {
   PRODUCTS_NEW = 'PRODUCTS_NEW',
   SKIN_CARE = 'SKIN_CARE',
   BODY_LOTION = 'BODY_LOTION',
@@ -10,7 +13,7 @@ enum CategoryUnit2 {
   COMBO = 'COMBO',
 }
 
-// enum CategoryUnit2Slug {
+// enum CategoryUnit2IdSlug {
 //   PRODUCTS_NEW = 'products-new',
 //   SKIN_CARE = 'skin-care',
 //   BODY_LOTION = 'body-lotion',
@@ -19,7 +22,7 @@ enum CategoryUnit2 {
 //   COMBO = 'combo',
 // }
 
-enum CategoryUnit3 {
+enum CategoryUnit3Id {
   SKIN_CARE_ALL = 'SKIN_CARE_ALL',
   SKIN_CARE_SUNSCREEN = 'SKIN_CARE_SUNSCREEN',
   SKIN_CARE_MAKEUP_REMOVER = 'SKIN_CARE_MAKEUP_REMOVER',
@@ -51,7 +54,7 @@ enum CategoryUnit3 {
   COMBO_LIP_CARE = 'COMBO_LIP_CARE',
 }
 
-// enum CategoryUnit3Slug {
+// enum CategoryUnit3IdSlug {
 //   SKIN_CARE_ALL = 'skin-care',
 //   SKIN_CARE_SUNSCREEN = 'skin-care-sunscreen',
 //   SKIN_CARE_MAKEUP_REMOVER = 'skin-care-makeup-remover',
@@ -83,10 +86,10 @@ enum CategoryUnit3 {
 //   COMBO_LIP_CARE = 'combo-lip-care',
 // }
 
-export const categoryUnitList = [
+export const categoryUnitList: CategoryUnit[] = [
   // Unit1
   {
-    id: CategoryUnit.PRODUCTS,
+    id: CategoryUnitId.PRODUCTS,
     name: i18n.t('products', { ns: 'server-categories' }),
     group_id: null,
     depth: 0,
@@ -94,230 +97,259 @@ export const categoryUnitList = [
 
   // Unit2
   {
-    id: CategoryUnit2.PRODUCTS_NEW,
+    id: CategoryUnit2Id.PRODUCTS_NEW,
     name: i18n.t('products-new', { ns: 'server-categories' }),
-    group_id: CategoryUnit.PRODUCTS,
+    group_id: CategoryUnitId.PRODUCTS,
     depth: 1,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit2.SKIN_CARE,
+    id: CategoryUnit2Id.SKIN_CARE,
     name: i18n.t('products-skin-care', { ns: 'server-categories' }),
-    group_id: CategoryUnit.PRODUCTS,
+    group_id: CategoryUnitId.PRODUCTS,
     depth: 1,
   },
   {
-    id: CategoryUnit2.BODY_LOTION,
+    id: CategoryUnit2Id.BODY_LOTION,
     name: i18n.t('products-body-lotion', { ns: 'server-categories' }),
-    group_id: CategoryUnit.PRODUCTS,
+    group_id: CategoryUnitId.PRODUCTS,
     depth: 1,
   },
   {
-    id: CategoryUnit2.HAIR_CARE,
+    id: CategoryUnit2Id.HAIR_CARE,
     name: i18n.t('products-hair-care', { ns: 'server-categories' }),
-    group_id: CategoryUnit.PRODUCTS,
+    group_id: CategoryUnitId.PRODUCTS,
     depth: 1,
   },
   {
-    id: CategoryUnit2.LIP_CARE,
+    id: CategoryUnit2Id.LIP_CARE,
     name: i18n.t('products-lip-care', { ns: 'server-categories' }),
-    group_id: CategoryUnit.PRODUCTS,
+    group_id: CategoryUnitId.PRODUCTS,
     depth: 1,
   },
   {
-    id: CategoryUnit2.COMBO,
+    id: CategoryUnit2Id.COMBO,
     name: i18n.t('products-combo', { ns: 'server-categories' }),
-    group_id: CategoryUnit.PRODUCTS,
+    group_id: CategoryUnitId.PRODUCTS,
     depth: 1,
   },
 
   // Unit3: skin-care
   {
-    id: CategoryUnit3.SKIN_CARE_ALL,
+    id: CategoryUnit3Id.SKIN_CARE_ALL,
     name: i18n.t('all', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.SKIN_CARE,
+    group_id: CategoryUnit2Id.SKIN_CARE,
     depth: 2,
-    slug: '',
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.SKIN_CARE_SUNSCREEN,
+    id: CategoryUnit3Id.SKIN_CARE_SUNSCREEN,
     name: i18n.t('skin-care-sunscreen', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.SKIN_CARE,
+    group_id: CategoryUnit2Id.SKIN_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.SKIN_CARE_MAKEUP_REMOVER,
+    id: CategoryUnit3Id.SKIN_CARE_MAKEUP_REMOVER,
     name: i18n.t('skin-care-makeup-remover', {
       ns: 'server-categories',
     }),
-    group_id: CategoryUnit2.SKIN_CARE,
+    group_id: CategoryUnit2Id.SKIN_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.SKIN_CARE_CLEANSER,
+    id: CategoryUnit3Id.SKIN_CARE_CLEANSER,
     name: i18n.t('skin-care-cleanser', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.SKIN_CARE,
+    group_id: CategoryUnit2Id.SKIN_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.SKIN_CARE_FACIAL_EXFOLIATION,
+    id: CategoryUnit3Id.SKIN_CARE_FACIAL_EXFOLIATION,
     name: i18n.t('skin-care-facial-exfoliation', {
       ns: 'server-categories',
     }),
-    group_id: CategoryUnit2.SKIN_CARE,
+    group_id: CategoryUnit2Id.SKIN_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.SKIN_CARE_MASK,
+    id: CategoryUnit3Id.SKIN_CARE_MASK,
     name: i18n.t('skin-care-mask', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.SKIN_CARE,
+    group_id: CategoryUnit2Id.SKIN_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.SKIN_CARE_BALANCING_WATER,
+    id: CategoryUnit3Id.SKIN_CARE_BALANCING_WATER,
     name: i18n.t('skin-care-balancing-water', {
       ns: 'server-categories',
     }),
-    group_id: CategoryUnit2.SKIN_CARE,
+    group_id: CategoryUnit2Id.SKIN_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.SKIN_CARE_SERUM,
+    id: CategoryUnit3Id.SKIN_CARE_SERUM,
     name: i18n.t('skin-care-serum', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.SKIN_CARE,
+    group_id: CategoryUnit2Id.SKIN_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.SKIN_CARE_CREAM,
+    id: CategoryUnit3Id.SKIN_CARE_CREAM,
     name: i18n.t('skin-care-cream', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.SKIN_CARE,
+    group_id: CategoryUnit2Id.SKIN_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.SKIN_CARE_MINERAL_SPRAY,
+    id: CategoryUnit3Id.SKIN_CARE_MINERAL_SPRAY,
     name: i18n.t('skin-care-mineral-spray', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.SKIN_CARE,
+    group_id: CategoryUnit2Id.SKIN_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
 
   // Unit3: body-lotion
   {
-    id: CategoryUnit3.BODY_LOTION_ALL,
+    id: CategoryUnit3Id.BODY_LOTION_ALL,
     name: i18n.t('all', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.BODY_LOTION,
+    group_id: CategoryUnit2Id.BODY_LOTION,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.BODY_LOTION_BODY_SCRUB,
+    id: CategoryUnit3Id.BODY_LOTION_BODY_SCRUB,
     name: i18n.t('body-lotion-body-scrub', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.BODY_LOTION,
+    group_id: CategoryUnit2Id.BODY_LOTION,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.BODY_LOTION_SHOWER_GEL,
+    id: CategoryUnit3Id.BODY_LOTION_SHOWER_GEL,
     name: i18n.t('body-lotion-shower-gel', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.BODY_LOTION,
+    group_id: CategoryUnit2Id.BODY_LOTION,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.BODY_LOTION_BODY_SPRAY,
+    id: CategoryUnit3Id.BODY_LOTION_BODY_SPRAY,
     name: i18n.t('body-lotion-body-spray', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.BODY_LOTION,
+    group_id: CategoryUnit2Id.BODY_LOTION,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.BODY_LOTION_BODY_CARE,
+    id: CategoryUnit3Id.BODY_LOTION_BODY_CARE,
     name: i18n.t('body-lotion-body-care', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.BODY_LOTION,
+    group_id: CategoryUnit2Id.BODY_LOTION,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
 
   // Unit3: hair-care
   {
-    id: CategoryUnit3.HAIR_CARE_ALL,
+    id: CategoryUnit3Id.HAIR_CARE_ALL,
     name: i18n.t('all', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.HAIR_CARE,
+    group_id: CategoryUnit2Id.HAIR_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.HAIR_CARE_SHAMPOO,
+    id: CategoryUnit3Id.HAIR_CARE_SHAMPOO,
     name: i18n.t('hair-care-shampoo', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.HAIR_CARE,
+    group_id: CategoryUnit2Id.HAIR_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.HAIR_CARE_HAIR_CREAM,
+    id: CategoryUnit3Id.HAIR_CARE_HAIR_CREAM,
     name: i18n.t('hair-care-hair-cream', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.HAIR_CARE,
+    group_id: CategoryUnit2Id.HAIR_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.HAIR_CARE_CONDITIONER,
+    id: CategoryUnit3Id.HAIR_CARE_CONDITIONER,
     name: i18n.t('hair-care-conditioner', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.HAIR_CARE,
+    group_id: CategoryUnit2Id.HAIR_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.HAIR_CARE_HAIR_TONER,
+    id: CategoryUnit3Id.HAIR_CARE_HAIR_TONER,
     name: i18n.t('hair-care-hair-toner', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.HAIR_CARE,
+    group_id: CategoryUnit2Id.HAIR_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.HAIR_CARE_HAIR_ESSENCE,
+    id: CategoryUnit3Id.HAIR_CARE_HAIR_ESSENCE,
     name: i18n.t('hair-care-hair-essence', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.HAIR_CARE,
+    group_id: CategoryUnit2Id.HAIR_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
 
   // Unit3: lip-care
   {
-    id: CategoryUnit3.LIP_CARE_ALL,
+    id: CategoryUnit3Id.LIP_CARE_ALL,
     name: i18n.t('all', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.LIP_CARE,
+    group_id: CategoryUnit2Id.LIP_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.LIP_CARE_LIP_SCRUB,
+    id: CategoryUnit3Id.LIP_CARE_LIP_SCRUB,
     name: i18n.t('lip-care-lip-scrub', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.LIP_CARE,
+    group_id: CategoryUnit2Id.LIP_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.LIP_CARE_LIP_MOISTURIZER,
+    id: CategoryUnit3Id.LIP_CARE_LIP_MOISTURIZER,
     name: i18n.t('lip-care-lip-moisturizer', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.LIP_CARE,
+    group_id: CategoryUnit2Id.LIP_CARE,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
 
   // Unit3: combo
   {
-    id: CategoryUnit3.COMBO_ALL,
+    id: CategoryUnit3Id.COMBO_ALL,
     name: i18n.t('all', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.COMBO,
+    group_id: CategoryUnit2Id.COMBO,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.COMBO_FACIAL_CARE,
+    id: CategoryUnit3Id.COMBO_FACIAL_CARE,
     name: i18n.t('combo-facial-care', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.COMBO,
+    group_id: CategoryUnit2Id.COMBO,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.COMBO_BODY_CARE,
+    id: CategoryUnit3Id.COMBO_BODY_CARE,
     name: i18n.t('combo-body-care', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.COMBO,
+    group_id: CategoryUnit2Id.COMBO,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.COMBO_HAIR_CARE,
+    id: CategoryUnit3Id.COMBO_HAIR_CARE,
     name: i18n.t('combo-hair-care', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.COMBO,
+    group_id: CategoryUnit2Id.COMBO,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
   {
-    id: CategoryUnit3.COMBO_LIP_CARE,
+    id: CategoryUnit3Id.COMBO_LIP_CARE,
     name: i18n.t('combo-lip-care', { ns: 'server-categories' }),
-    group_id: CategoryUnit2.COMBO,
+    group_id: CategoryUnit2Id.COMBO,
     depth: 2,
+    fetch_data_for_product_list: true,
   },
 ];
