@@ -1,5 +1,7 @@
 export enum CategoryUnitId {
   PRODUCTS = 'PRODUCTS',
+  PROBLEMS = 'PROBLEMS',
+  INGREDIENTS = 'INGREDIENTS',
 }
 
 export interface CategoryUnit {

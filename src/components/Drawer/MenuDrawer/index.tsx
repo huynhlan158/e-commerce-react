@@ -112,7 +112,7 @@ export function MenuDrawer() {
             />
           </HStack>
 
-          <DrawerBody className="mt-64">
+          <DrawerBody>
             {menuType === 'CONTACT' ? <ContactContent /> : <MenuContent />}
           </DrawerBody>
         </DrawerContent>
