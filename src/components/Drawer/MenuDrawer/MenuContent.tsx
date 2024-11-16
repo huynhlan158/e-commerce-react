@@ -17,7 +17,6 @@ import { useProducts } from '~/services/product/resources';
 import { Button } from '~/components/Forms';
 import { LoadingState } from '~/components/Layouts';
 import { Heading, Text } from '~/components/TypoGraphy';
-import './index.css';
 
 /**
  * A UI component to render the menu content that contains list of categories
@@ -134,7 +133,7 @@ function MenuList({ category }: { category: Category }) {
                 count: productsByCategory.data.length,
               })}
               size="xl"
-              className="Animation--slideIn text-gray-500 mt-4"
+              className="Animation--fadeSlideIn text-gray-500 mt-4"
             />
             <VStack gap={40} className="w-full my-40">
               {productsByCategory.data.map((product, idx) => (
@@ -143,9 +142,9 @@ function MenuList({ category }: { category: Category }) {
                   to="#"
                   key={product.id}
                   onClick={onDrawerClose}
-                  className="Animation--slideIn w-full flex justify-between items-center"
+                  className="Animation--fadeSlideIn w-full flex justify-between items-center"
                   style={{
-                    animationDelay: `${idx * 0.1}s`,
+                    animationDelay: `${idx * 0.2}s`,
                   }}
                 >
                   <VStack alignItems="flex-start" gap={8}>
@@ -192,14 +191,14 @@ function MenuList({ category }: { category: Category }) {
           level={5}
           variant="gray"
           size="xs"
-          className="Animation--slideIn"
+          className="Animation--fadeSlideIn"
         />
       ) : (
         <Button
           variant="ghost"
           label={category.name}
           lableWeight="bold"
-          className="Animation--slideIn leading-26"
+          className="Animation--fadeSlideIn leading-26"
           isActive={isActive}
         />
       )}
@@ -211,8 +210,9 @@ function MenuList({ category }: { category: Category }) {
             size={isLaptop ? '2xl' : 'xl'}
             label={childCategory.name}
             lableVariant="gray"
-            className="Animation--slideIn leading-26"
+            className="Animation--fadeSlideIn leading-26"
             isActive={
+              isLaptop &&
               navigationPath[category.depth + 1]?.id === childCategory.id
             }
             onClick={() => {

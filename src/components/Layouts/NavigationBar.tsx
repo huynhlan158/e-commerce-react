@@ -46,7 +46,14 @@ export function NavigationBar() {
 
   return (
     <>
-      <Stack className="laptop:z-[1500]">
+      <Stack
+        className={clsx(
+          'laptop:z-[1500]',
+          'fixed top-0 left-0 right-0',
+          'transition-transform duration-300'
+          // visible ? 'translate-y-0' : 'translate-y-full'
+        )}
+      >
         <HStack
           justifyContent="center"
           alignItems="center"
