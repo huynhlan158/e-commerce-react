@@ -22,7 +22,8 @@ interface NavbarItem {
   slug?: string;
 }
 
-interface ProductsByCategory {
+export interface ProductsByCategory {
+  categoryName: string;
   depth: number;
   data: Product[];
 }
@@ -44,13 +45,13 @@ const navigationSlice = createSlice({
   name: 'navigation',
   initialState,
   reducers: {
-    setActiveNavbar: (state, action: PayloadAction<NavbarItemId>) => {
-      state.activeNavbar = action.payload;
-    },
-    resetActiveNavbar: (state) => {
-      state.activeNavbar = null;
-    },
-    updateNavigationPath: (state, action: PayloadAction<NavbarItem[]>) => {
+    // setActiveNavbar: (state, action: PayloadAction<NavbarItemId>) => {
+    //   state.activeNavbar = action.payload;
+    // },
+    // resetActiveNavbar: (state) => {
+    //   state.activeNavbar = null;
+    // },
+    setNavigationPath: (state, action: PayloadAction<NavbarItem[]>) => {
       state.navigationPath = action.payload;
     },
     setProductsByCategory: (
@@ -62,11 +63,7 @@ const navigationSlice = createSlice({
   },
 });
 
-export const {
-  setActiveNavbar,
-  resetActiveNavbar,
-  updateNavigationPath,
-  setProductsByCategory,
-} = navigationSlice.actions;
+export const { setNavigationPath, setProductsByCategory } =
+  navigationSlice.actions;
 
 export default navigationSlice.reducer;

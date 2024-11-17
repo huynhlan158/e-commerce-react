@@ -12,7 +12,7 @@ import {
 import { useDisclosureStore } from '~/contexts/disclosure/useDisclosureStore';
 import { AppDispatch, RootState } from '~/state/store';
 import {
-  updateNavigationPath,
+  setNavigationPath,
   setProductsByCategory,
 } from '~/state/navigation/navigationSlice';
 
@@ -45,7 +45,7 @@ export function MenuDrawer() {
     };
   }, []);
 
-  const [isLaptop] = useMediaQuery('min-width: 1024px');
+  const [isLaptop] = useMediaQuery('(min-width: 1024px)');
 
   return (
     <>
@@ -80,7 +80,7 @@ export function MenuDrawer() {
                       setMenuType('MENU');
                     } else if (navigationPath.length) {
                       const newNavigationPath = navigationPath.slice(0, -1);
-                      dispatch(updateNavigationPath(newNavigationPath));
+                      dispatch(setNavigationPath(newNavigationPath));
                       dispatch(setProductsByCategory(null));
                     }
                   }}

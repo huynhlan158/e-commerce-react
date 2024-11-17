@@ -52,7 +52,7 @@ export function Button({
             'after:content-[""] after:absolute after:left-0 after:bottom-0',
             'after:w-full after:h-1',
             !isActive &&
-              'after:transition-[transform] after:transform after:scale-x-0 hover:after:scale-x-100 after:duration-200',
+              'after:transition-[transform] after:transform after:scale-x-0 hover:after:scale-x-100 hover:after:duration-500 after:duration-200',
             size === 'sx' && 'TextFontSizeResponsive--xs',
             size === 'sm' && 'TextFontSizeResponsive--sm',
             size === 'md' && 'TextFontSizeResponsive--md',

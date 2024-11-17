@@ -1,5 +1,5 @@
 {
-  "products": "Sản Phẩm",
+  "products": "Sản phẩm",
   "products-new": "Sản Phẩm Mới",
   "products-skin-care": "Chăm Sóc Da",
   "products-body-lotion": "Tắm & Dưỡng Thể",
@@ -31,9 +31,15 @@
   "combo-body-care": "Chăm Sóc Cơ Thể",
   "combo-hair-care": "Chăm Sóc Tóc",
   "combo-lip-care": "Chăm Sóc Môi",
+  "problems": "Có thể bạn quan tâm",
+  "problems-skin": "Vấn Đề Về Da",
+  "problems-dry-skin": "Da Khô",
   "problems-oily-acne-skin": "Da Dầu Mụn",
-  "problems-skin-problems": "Vấn Đề Về Da",
+  "problems-sensitive-skin": "Da Nhạy Cảm",
   "problems-dull-skin": "Da Xỉn Màu",
+  "problems-hair": "Vấn Đề Về Tóc",
+  "problems-dry-frizzy-hair": "Tóc Khô, Xơ",
+  "problems-hair-loss": "Rụng Tóc",
   "ingredients-squash": "Bí Đao",
   "ingredients-daklak-coffee": "Cà Phê Đắk Lắk",
   "ingredients-hungyen-turmeric": "Nghệ Hưng Yên"

@@ -1093,9 +1093,9 @@ export const productList: Product[] = [
         name: i18n.t('skin-care-cleanser', { ns: 'server-categories' }),
       },
       {
-        id: CategoryUnit3Id.PROBLEMS_SKIN_PROBLEMS,
+        id: CategoryUnit2Id.PROBLEMS_SKIN,
         group_id: CategoryUnitId.PROBLEMS,
-        name: i18n.t('problems-skin-problems', { ns: 'server-categories' }),
+        name: i18n.t('problems-skin', { ns: 'server-categories' }),
       },
       {
         id: CategoryUnit3Id.PROBLEMS_DULL_SKIN,
@@ -1312,9 +1312,9 @@ export const productList: Product[] = [
         name: i18n.t('skin-care-cleanser', { ns: 'server-categories' }),
       },
       {
-        id: CategoryUnit3Id.PROBLEMS_SKIN_PROBLEMS,
+        id: CategoryUnit2Id.PROBLEMS_SKIN,
         group_id: CategoryUnitId.PROBLEMS,
-        name: i18n.t('problems-skin-problems', { ns: 'server-categories' }),
+        name: i18n.t('problems-skin', { ns: 'server-categories' }),
       },
       {
         id: CategoryUnit3Id.PROBLEMS_DULL_SKIN,

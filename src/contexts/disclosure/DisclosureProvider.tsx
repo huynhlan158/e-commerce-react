@@ -4,7 +4,7 @@ import { useDisclosure } from '@chakra-ui/react';
 
 import { AppDispatch } from '~/state/store';
 import {
-  updateNavigationPath,
+  setNavigationPath,
   setProductsByCategory,
 } from '~/state/navigation/navigationSlice';
 import DisclosureContext from './DisclosureContext';
@@ -26,7 +26,7 @@ function DisclosureProvider({ children }: { children?: ReactNode }) {
 
   useEffect(() => {
     if (!isDrawerOpen) {
-      dispatch(updateNavigationPath([]));
+      dispatch(setNavigationPath([]));
       dispatch(setProductsByCategory(null));
     }
   }, [isDrawerOpen]);

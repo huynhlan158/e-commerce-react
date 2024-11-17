@@ -9,7 +9,7 @@ import { useDisclosureStore } from '~/contexts/disclosure/useDisclosureStore';
 import { AppDispatch, RootState } from '~/state/store';
 import {
   NavbarItemId,
-  updateNavigationPath,
+  setNavigationPath,
 } from '~/state/navigation/navigationSlice';
 import { useConfigByKey } from '~/services/config/resources';
 import { ConfigKeys } from '~/services/config/models/Keys';
@@ -35,10 +35,6 @@ export function NavigationBar() {
     rightItems,
     mobileRightItems,
   } = useNavbar();
-
-  const { navigationPath } = useSelector(
-    (state: RootState) => state.navigation
-  );
 
   // TODO: move this API call to a initiate provider
   // which will load all needed values and show the loading icon during that process.
@@ -158,7 +154,7 @@ export function NavigationBar() {
         </HStack>
       </Stack>
 
-      {navigationPath[0]?.id === NavbarItemId.PRODUCTS && <NavbarDrawer />}
+      <NavbarDrawer />
     </>
   );
 }
@@ -240,35 +236,35 @@ function useNavbar(): {
         content: <Icon size="xl" type="MAGNIFYING_GLASS" />,
         action: () => {
           onDrawerOpen();
-          dispatch(updateNavigationPath([{ id: NavbarItemId.SEARCH }]));
+          dispatch(setNavigationPath([{ id: NavbarItemId.SEARCH }]));
         },
       },
       {
         content: t('navbar-products'),
         action: () => {
           onDrawerOpen();
-          dispatch(updateNavigationPath([{ id: NavbarItemId.PRODUCTS }]));
+          dispatch(setNavigationPath([{ id: NavbarItemId.PRODUCTS }]));
         },
         isActive: navigationPath[0]?.id === NavbarItemId.PRODUCTS,
       },
       {
         content: t('navbar-promotion'),
         action: () => {
-          dispatch(updateNavigationPath([{ id: NavbarItemId.PROMOTION }]));
+          dispatch(setNavigationPath([{ id: NavbarItemId.PROMOTION }]));
         },
         isActive: navigationPath[0]?.id === NavbarItemId.PROMOTION,
       },
       {
         content: t('navbar-cocoon'),
         action: () => {
-          dispatch(updateNavigationPath([{ id: NavbarItemId.COCOON }]));
+          dispatch(setNavigationPath([{ id: NavbarItemId.COCOON }]));
         },
         isActive: navigationPath[0]?.id === NavbarItemId.COCOON,
       },
       {
         action: () => {
           navigate(routes.article);
-          dispatch(updateNavigationPath([{ id: NavbarItemId.ARTICLES }]));
+          dispatch(setNavigationPath([{ id: NavbarItemId.ARTICLES }]));
         },
         content: t('navbar-articles'),
         isActive: navigationPath[0]?.id === NavbarItemId.ARTICLES,
@@ -283,7 +279,7 @@ function useNavbar(): {
         content: <Icon size="3xl" type="BARS_2" />,
         action: () => {
           onDrawerOpen();
-          dispatch(updateNavigationPath([{ id: NavbarItemId.PRODUCTS }]));
+          dispatch(setNavigationPath([{ id: NavbarItemId.PRODUCTS }]));
         },
       },
     ],
@@ -296,7 +292,7 @@ function useNavbar(): {
         content: <img src={headingLogo} className="h-60 laptop:h-full" />,
         action: () => {
           navigate(routes.home);
-          dispatch(updateNavigationPath([]));
+          dispatch(setNavigationPath([]));
         },
       },
     ],
@@ -308,21 +304,21 @@ function useNavbar(): {
       {
         content: isAuthenticated ? t('navbar-account') : t('navbar-login'),
         action: () => {
-          dispatch(updateNavigationPath([{ id: NavbarItemId.ACCOUNT }]));
+          dispatch(setNavigationPath([{ id: NavbarItemId.ACCOUNT }]));
         },
         isActive: navigationPath[0]?.id === NavbarItemId.ACCOUNT,
       },
       {
         content: t('navbar-contact'),
         action: () => {
-          dispatch(updateNavigationPath([{ id: NavbarItemId.CONTACT }]));
+          dispatch(setNavigationPath([{ id: NavbarItemId.CONTACT }]));
         },
         isActive: navigationPath[0]?.id === NavbarItemId.CONTACT,
       },
       {
         content: `${t('navbar-cart')}${myCart?.items.length ? ' (' + myCart?.items.length + ')' : ''}`,
         action: () => {
-          dispatch(updateNavigationPath([{ id: NavbarItemId.SHOPPING_CART }]));
+          dispatch(setNavigationPath([{ id: NavbarItemId.SHOPPING_CART }]));
         },
         isActive: navigationPath[0]?.id === NavbarItemId.SHOPPING_CART,
       },
@@ -340,7 +336,7 @@ function useNavbar(): {
       {
         content: <Icon size="xl" type="MAGNIFYING_GLASS" />,
         action: () => {
-          dispatch(updateNavigationPath([{ id: NavbarItemId.CONTACT }]));
+          dispatch(setNavigationPath([{ id: NavbarItemId.CONTACT }]));
         },
         isActive: navigationPath[0]?.id === NavbarItemId.CONTACT,
       },
@@ -354,7 +350,7 @@ function useNavbar(): {
           </HStack>
         ),
         action: () => {
-          dispatch(updateNavigationPath([{ id: NavbarItemId.SHOPPING_CART }]));
+          dispatch(setNavigationPath([{ id: NavbarItemId.SHOPPING_CART }]));
         },
         isActive: navigationPath[0]?.id === NavbarItemId.SHOPPING_CART,
       },

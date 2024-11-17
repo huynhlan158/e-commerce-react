@@ -11,6 +11,9 @@ export enum CategoryUnit2Id {
   HAIR_CARE = 'HAIR_CARE',
   LIP_CARE = 'LIP_CARE',
   COMBO = 'COMBO',
+
+  PROBLEMS_SKIN = 'PROBLEMS_SKIN',
+  PROBLEMS_HAIR = 'PROBLEMS_HAIR',
 }
 
 // enum CategoryUnit2IdSlug {
@@ -53,9 +56,14 @@ export enum CategoryUnit3Id {
   COMBO_HAIR_CARE = 'COMBO_HAIR_CARE',
   COMBO_LIP_CARE = 'COMBO_LIP_CARE',
 
+  PROBLEMS_SKIN_ALL = 'PROBLEMS_SKIN_ALL',
+  PROBLEMS_DRY_SKIN = 'PROBLEMS_DRY_SKIN',
   PROBLEMS_OILY_ACNE_SKIN = 'PROBLEMS_OILY_ACNE_SKIN',
-  PROBLEMS_SKIN_PROBLEMS = 'PROBLEMS_SKIN_PROBLEMS',
+  PROBLEMS_SENSITIVE_SKIN = 'PROBLEMS_SENSITIVE_SKIN',
   PROBLEMS_DULL_SKIN = 'PROBLEMS_DULL_SKIN',
+  PROBLEMS_HAIR_ALL = 'PROBLEMS_HAIR_ALL',
+  PROBLEMS_DRY_FRIZZY_HAIR = 'PROBLEMS_DRY_FRIZZY_HAIR',
+  PROBLEMS_HAIR_LOSS = 'PROBLEMS_HAIR_LOSS',
 
   INGREDIENTS_SQUASH = 'INGREDIENTS_SQUASH',
   INGREDIENTS_DAKLAK_COFFEE = 'INGREDIENTS_DAKLAK_COFFEE',
@@ -102,8 +110,14 @@ export const categoryUnitList: CategoryUnit[] = [
     group_id: null,
     depth: 0,
   },
+  {
+    id: CategoryUnitId.PROBLEMS,
+    name: i18n.t('problems', { ns: 'server-categories' }),
+    group_id: null,
+    depth: 0,
+  },
 
-  // Unit2
+  // Unit2: PRODUCTS
   {
     id: CategoryUnit2Id.PRODUCTS_NEW,
     name: i18n.t('products-new', { ns: 'server-categories' }),
@@ -142,7 +156,21 @@ export const categoryUnitList: CategoryUnit[] = [
     depth: 1,
   },
 
-  // Unit3: skin-care
+  // Unit2: PROBLEMS
+  {
+    id: CategoryUnit2Id.PROBLEMS_SKIN,
+    name: i18n.t('problems-skin', { ns: 'server-categories' }),
+    group_id: CategoryUnitId.PROBLEMS,
+    depth: 1,
+  },
+  {
+    id: CategoryUnit2Id.PROBLEMS_HAIR,
+    name: i18n.t('problems-hair', { ns: 'server-categories' }),
+    group_id: CategoryUnitId.PROBLEMS,
+    depth: 1,
+  },
+
+  // Unit3-PRODUCTS: skin-care
   {
     id: CategoryUnit3Id.SKIN_CARE_ALL,
     name: i18n.t('all', { ns: 'server-categories' }),
@@ -220,7 +248,7 @@ export const categoryUnitList: CategoryUnit[] = [
     fetch_data_for_product_list: true,
   },
 
-  // Unit3: body-lotion
+  // Unit3-PRODUCTS: body-lotion
   {
     id: CategoryUnit3Id.BODY_LOTION_ALL,
     name: i18n.t('all', { ns: 'server-categories' }),
@@ -257,7 +285,7 @@ export const categoryUnitList: CategoryUnit[] = [
     fetch_data_for_product_list: true,
   },
 
-  // Unit3: hair-care
+  // Unit3-PRODUCTS: hair-care
   {
     id: CategoryUnit3Id.HAIR_CARE_ALL,
     name: i18n.t('all', { ns: 'server-categories' }),
@@ -301,7 +329,7 @@ export const categoryUnitList: CategoryUnit[] = [
     fetch_data_for_product_list: true,
   },
 
-  // Unit3: lip-care
+  // Unit3-PRODUCTS: lip-care
   {
     id: CategoryUnit3Id.LIP_CARE_ALL,
     name: i18n.t('all', { ns: 'server-categories' }),
@@ -324,7 +352,7 @@ export const categoryUnitList: CategoryUnit[] = [
     fetch_data_for_product_list: true,
   },
 
-  // Unit3: combo
+  // Unit3-PRODUCTS: combo
   {
     id: CategoryUnit3Id.COMBO_ALL,
     name: i18n.t('all', { ns: 'server-categories' }),
@@ -357,6 +385,66 @@ export const categoryUnitList: CategoryUnit[] = [
     id: CategoryUnit3Id.COMBO_LIP_CARE,
     name: i18n.t('combo-lip-care', { ns: 'server-categories' }),
     group_id: CategoryUnit2Id.COMBO,
+    depth: 2,
+    fetch_data_for_product_list: true,
+  },
+
+  // Unit3-PROBLEMS: skin
+  {
+    id: CategoryUnit3Id.PROBLEMS_SKIN_ALL,
+    name: i18n.t('all', { ns: 'server-categories' }),
+    group_id: CategoryUnit2Id.PROBLEMS_SKIN,
+    depth: 2,
+    fetch_data_for_product_list: true,
+  },
+  {
+    id: CategoryUnit3Id.PROBLEMS_DRY_SKIN,
+    name: i18n.t('problems-dry-skin', { ns: 'server-categories' }),
+    group_id: CategoryUnit2Id.PROBLEMS_SKIN,
+    depth: 2,
+    fetch_data_for_product_list: true,
+  },
+  {
+    id: CategoryUnit3Id.PROBLEMS_OILY_ACNE_SKIN,
+    name: i18n.t('problems-oily-acne-skin', { ns: 'server-categories' }),
+    group_id: CategoryUnit2Id.PROBLEMS_SKIN,
+    depth: 2,
+    fetch_data_for_product_list: true,
+  },
+  {
+    id: CategoryUnit3Id.PROBLEMS_SENSITIVE_SKIN,
+    name: i18n.t('problems-sensitive-skin', { ns: 'server-categories' }),
+    group_id: CategoryUnit2Id.PROBLEMS_SKIN,
+    depth: 2,
+    fetch_data_for_product_list: true,
+  },
+  {
+    id: CategoryUnit3Id.PROBLEMS_DULL_SKIN,
+    name: i18n.t('problems-dull-skin', { ns: 'server-categories' }),
+    group_id: CategoryUnit2Id.PROBLEMS_SKIN,
+    depth: 2,
+    fetch_data_for_product_list: true,
+  },
+
+  // Unit3-PROBLEMS: hair
+  {
+    id: CategoryUnit3Id.PROBLEMS_HAIR_ALL,
+    name: i18n.t('all', { ns: 'server-categories' }),
+    group_id: CategoryUnit2Id.PROBLEMS_HAIR,
+    depth: 2,
+    fetch_data_for_product_list: true,
+  },
+  {
+    id: CategoryUnit3Id.PROBLEMS_DRY_FRIZZY_HAIR,
+    name: i18n.t('problems-dry-frizzy-hair', { ns: 'server-categories' }),
+    group_id: CategoryUnit2Id.PROBLEMS_HAIR,
+    depth: 2,
+    fetch_data_for_product_list: true,
+  },
+  {
+    id: CategoryUnit3Id.PROBLEMS_HAIR_LOSS,
+    name: i18n.t('problems-hair-loss', { ns: 'server-categories' }),
+    group_id: CategoryUnit2Id.PROBLEMS_HAIR,
     depth: 2,
     fetch_data_for_product_list: true,
   },

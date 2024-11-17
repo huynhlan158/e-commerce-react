@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 
 import { RootState } from '~/state/store';
+import { CategoryUnitId } from '~/services/config/models/Category';
 
-import { NavbarItemId } from '~/state/navigation/navigationSlice';
 import { MenuDrawer } from './MenuDrawer';
 
 /**
@@ -13,8 +13,9 @@ export function NavbarDrawer() {
     (state: RootState) => state.navigation
   );
 
-  switch (navigationPath[0].id) {
-    case NavbarItemId.PRODUCTS:
+  switch (navigationPath[0]?.id) {
+    case CategoryUnitId.PRODUCTS:
+    case CategoryUnitId.PROBLEMS:
       return <MenuDrawer />;
   }
 }
