@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { CategoryUnitId } from '~/services/config/models/Category';
+import { Category, CategoryUnitId } from '~/services/config/models/Category';
 import { Product } from '~/services/product/models/Product';
 
 export enum NavbarItemId {
@@ -18,8 +18,7 @@ export enum NavbarItemId {
 
 interface NavbarItem {
   id: string;
-  isFetchingData?: boolean;
-  slug?: string;
+  selectedCategory?: Category;
 }
 
 export interface ProductsByCategory {
@@ -28,42 +27,33 @@ export interface ProductsByCategory {
   data: Product[];
 }
 
-// TODO: refactor and remove redundant states
 export interface NavigationState {
-  activeNavbar: NavbarItemId | null;
   navigationPath: NavbarItem[];
-  productsByCategory: ProductsByCategory | null;
+  categoryIdForProductList: string | null;
 }
 
 export const initialState: NavigationState = {
-  activeNavbar: null,
   navigationPath: [],
-  productsByCategory: null,
+  categoryIdForProductList: null,
 };
 
 const navigationSlice = createSlice({
   name: 'navigation',
   initialState,
   reducers: {
-    // setActiveNavbar: (state, action: PayloadAction<NavbarItemId>) => {
-    //   state.activeNavbar = action.payload;
-    // },
-    // resetActiveNavbar: (state) => {
-    //   state.activeNavbar = null;
-    // },
     setNavigationPath: (state, action: PayloadAction<NavbarItem[]>) => {
       state.navigationPath = action.payload;
     },
-    setProductsByCategory: (
+    setCategoryIdForProductList: (
       state,
-      action: PayloadAction<ProductsByCategory | null>
+      action: PayloadAction<string | null>
     ) => {
-      state.productsByCategory = action.payload;
+      state.categoryIdForProductList = action.payload;
     },
   },
 });
 
-export const { setNavigationPath, setProductsByCategory } =
+export const { setNavigationPath, setCategoryIdForProductList } =
   navigationSlice.actions;
 
 export default navigationSlice.reducer;

@@ -11,15 +11,11 @@ import {
 
 import { useDisclosureStore } from '~/contexts/disclosure/useDisclosureStore';
 import { AppDispatch, RootState } from '~/state/store';
-import {
-  setNavigationPath,
-  setProductsByCategory,
-} from '~/state/navigation/navigationSlice';
+import { setNavigationPath } from '~/state/navigation/navigationSlice';
 
 import { Icon } from '~/components/Icons';
 import { HStack } from '~/components/Layouts';
 import { IconButton } from '~/components/Forms/IconButton';
-import { Modal } from '~/components/Modal';
 import { ContactContent } from './ContactContent';
 import { MenuContent } from './MenuContent';
 
@@ -81,7 +77,6 @@ export function MenuDrawer() {
                     } else if (navigationPath.length) {
                       const newNavigationPath = navigationPath.slice(0, -1);
                       dispatch(setNavigationPath(newNavigationPath));
-                      dispatch(setProductsByCategory(null));
                     }
                   }}
                 />
@@ -117,13 +112,6 @@ export function MenuDrawer() {
           </DrawerBody>
         </DrawerContent>
       </ChakraDrawer>
-
-      {/* TODO: Login modal */}
-      <Modal
-        title="Login"
-        description="Login description"
-        mainContent={<div>Login content</div>}
-      />
     </>
   );
 }
