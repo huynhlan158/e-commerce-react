@@ -21,16 +21,15 @@ import { useProducts } from '~/services/product/resources';
 import { Icon } from '~/components/Icons';
 import { HStack, LoadingState, VStack } from '~/components/Layouts';
 import { IconButton } from '~/components/Forms/IconButton';
-import { Modal } from '~/components/Modal';
 import { Heading } from '~/components/TypoGraphy';
-import { ContactContent } from '../ContactContent';
-import { MenuCategoryList } from '../MenuContent/MenuCategoryList';
-import { MenuProductList } from '../MenuContent/MenuProductList';
+import { MenuCategoryList } from './components/MenuCategoryList';
+import { MenuProductList } from './components/MenuProductList';
+import { UserProfile } from './components/UserProfile';
 
 type MenuDrawerType = 'MENU' | 'PROFILE';
 
 /**
- * The menu drawer of the navigation in mobile view.
+ * The menu drawer content of the navigation in mobile view.
  */
 export function MobileMenuDrawer() {
   const dispatch = useDispatch<AppDispatch>();
@@ -150,7 +149,7 @@ export function MobileMenuDrawer() {
 
           <DrawerBody>
             {menuDrawerType === 'PROFILE' ? (
-              <ContactContent />
+              <UserProfile />
             ) : (
               <VStack alignItems="flex-start" gap={12} className="px-20">
                 {/*
@@ -214,13 +213,6 @@ export function MobileMenuDrawer() {
           </DrawerBody>
         </DrawerContent>
       </ChakraDrawer>
-
-      {/* TODO: Login modal */}
-      <Modal
-        title="Login"
-        description="Login description"
-        mainContent={<div>Login content</div>}
-      />
     </>
   );
 }

@@ -8,7 +8,13 @@ import { Heading, Text } from '~/components/TypoGraphy';
 import { HStack, VStack } from '~/components/Layouts';
 
 interface MenuProductListProps {
+  /**
+   * The current category name.
+   */
   categoryName: string;
+  /**
+   * The product list of the current category.
+   */
   productList: Product[];
 }
 

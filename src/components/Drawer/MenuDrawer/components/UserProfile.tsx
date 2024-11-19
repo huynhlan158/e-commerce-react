@@ -11,9 +11,9 @@ import { HStack } from '~/components/Layouts';
 import { Text } from '~/components/TypoGraphy';
 
 /**
- * A UI component to render the contact content.
+ * A UI component to render the current user profile.
  */
-export function ContactContent() {
+export function UserProfile() {
   const { t } = useTranslation(['navigation-bar']);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -23,17 +23,17 @@ export function ContactContent() {
 
   return (
     <>
-      <MobileAccountDetail
+      <UserProfileItem
         iconType="PHONE"
         label={userProfile?.phoneNumber || ''}
         variant="dark"
       />
-      <MobileAccountDetail iconType="USER" label={t('item-account-info')} />
-      <MobileAccountDetail
+      <UserProfileItem iconType="USER" label={t('item-account-info')} />
+      <UserProfileItem
         iconType="ARCHIVE_BOX"
         label={t('item-shopping-history')}
       />
-      <MobileAccountDetail
+      <UserProfileItem
         iconType="ARROW_RIGHT_START_ON_RECTANGLE"
         label={t('item-log-out')}
         action={() => {
@@ -45,7 +45,7 @@ export function ContactContent() {
   );
 }
 
-interface MobileAccountDetailProps {
+interface AccountDetailProps {
   /**
    * The label of the navigation item.
    */
@@ -68,12 +68,12 @@ interface MobileAccountDetailProps {
 /**
  * A UI component to render the account detail item.
  */
-function MobileAccountDetail({
+function UserProfileItem({
   label,
   variant = 'light',
   iconType,
   action,
-}: MobileAccountDetailProps) {
+}: AccountDetailProps) {
   return (
     <HStack
       className={clsx(

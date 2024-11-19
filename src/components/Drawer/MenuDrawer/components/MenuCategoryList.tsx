@@ -40,10 +40,10 @@ export function MenuCategoryList({
       key={category.id}
       alignItems="flex-start"
       gap={[12, 12, 12, 20]}
-      mb={isActive ? 20 : 0}
+      mb={isLaptop ? 28 : isActive ? 20 : 0}
     >
       {/* The heading of the category group. */}
-      {(isLaptop && isActive) || !!category.depth ? (
+      {isLaptop || !!category.depth ? (
         <Heading
           text={category.name}
           level={5}
@@ -91,7 +91,7 @@ export function MenuCategoryList({
             className="Animation--fadeSlideIn leading-26"
             isActive={
               isLaptop &&
-              navigationPath[childCategory.depth + 1]?.id === childCategory.id
+              navigationPath[childCategory.depth]?.id === childCategory.id
             }
             onClick={() => childCategoryAction(childCategory)}
             style={{
