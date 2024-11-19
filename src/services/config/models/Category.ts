@@ -1,6 +1,6 @@
 export enum CategoryUnitId {
   PRODUCTS = 'PRODUCTS',
-  INTEREST = 'INTEREST',
+  PROBLEMS = 'PROBLEMS',
   INGREDIENTS = 'INGREDIENTS',
 }
 

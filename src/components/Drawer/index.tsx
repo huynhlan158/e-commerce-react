@@ -15,7 +15,7 @@ export function NavbarDrawer() {
 
   switch (navigationPath[0]?.id) {
     case CategoryUnitId.PRODUCTS:
-    case CategoryUnitId.INTEREST:
+    case CategoryUnitId.PROBLEMS:
       return <MenuDrawer />;
   }
 }

@@ -45,7 +45,7 @@ export function MobileMenuDrawer() {
   // TODO: move theses API calls to a initiate provider
   // which will load all needed values and show the loading icon during that process.
   const { data: productCategories } = useCategoryById(CategoryUnitId.PRODUCTS);
-  const { data: interestCategories } = useCategoryById(CategoryUnitId.INTEREST);
+  const { data: problemsCategories } = useCategoryById(CategoryUnitId.PROBLEMS);
   const { data: ingredientCategories } = useCategoryById(
     CategoryUnitId.INGREDIENTS
   );
@@ -192,10 +192,10 @@ export function MobileMenuDrawer() {
                       />
                     )}
 
-                    {interestCategories && (
+                    {problemsCategories && (
                       // (3) Top-level category list: Interest.
                       <MenuCategoryList
-                        category={interestCategories}
+                        category={problemsCategories}
                         childCategoryAction={handleChildCategoryClick}
                       />
                     )}

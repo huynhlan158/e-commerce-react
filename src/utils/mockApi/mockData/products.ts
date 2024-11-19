@@ -19,9 +19,9 @@ export const productList: Product[] = [
         name: i18n.t('products-skin-care', { ns: 'server-categories' }),
       },
       {
-        id: CategoryUnit3Id.INTEREST_OILY_ACNE_SKIN,
-        group_id: CategoryUnitId.INTEREST,
-        name: i18n.t('interest-oily-acne-skin', { ns: 'server-categories' }),
+        id: CategoryUnit3Id.PROBLEMS_OILY_ACNE_SKIN,
+        group_id: CategoryUnitId.PROBLEMS,
+        name: i18n.t('problems-oily-acne-skin', { ns: 'server-categories' }),
       },
       {
         id: CategoryUnit2Id.INGREDIENTS_SQUASH,
@@ -260,9 +260,9 @@ export const productList: Product[] = [
         name: i18n.t('products-skin-care', { ns: 'server-categories' }),
       },
       {
-        id: CategoryUnit3Id.INTEREST_OILY_ACNE_SKIN,
-        group_id: CategoryUnitId.INTEREST,
-        name: i18n.t('interest-oily-acne-skin', { ns: 'server-categories' }),
+        id: CategoryUnit3Id.PROBLEMS_OILY_ACNE_SKIN,
+        group_id: CategoryUnitId.PROBLEMS,
+        name: i18n.t('problems-oily-acne-skin', { ns: 'server-categories' }),
       },
       {
         id: CategoryUnit2Id.INGREDIENTS_SQUASH,
@@ -499,9 +499,9 @@ export const productList: Product[] = [
         name: i18n.t('products-skin-care', { ns: 'server-categories' }),
       },
       {
-        id: CategoryUnit3Id.INTEREST_OILY_ACNE_SKIN,
-        group_id: CategoryUnitId.INTEREST,
-        name: i18n.t('interest-oily-acne-skin', { ns: 'server-categories' }),
+        id: CategoryUnit3Id.PROBLEMS_OILY_ACNE_SKIN,
+        group_id: CategoryUnitId.PROBLEMS,
+        name: i18n.t('problems-oily-acne-skin', { ns: 'server-categories' }),
       },
       {
         id: CategoryUnit2Id.INGREDIENTS_SQUASH,
@@ -1093,14 +1093,14 @@ export const productList: Product[] = [
         name: i18n.t('skin-care-cleanser', { ns: 'server-categories' }),
       },
       {
-        id: CategoryUnit2Id.INTEREST_SKIN,
-        group_id: CategoryUnitId.INTEREST,
-        name: i18n.t('interest-skin', { ns: 'server-categories' }),
+        id: CategoryUnit2Id.PROBLEMS_SKIN,
+        group_id: CategoryUnitId.PROBLEMS,
+        name: i18n.t('problems-skin', { ns: 'server-categories' }),
       },
       {
-        id: CategoryUnit3Id.INTEREST_DULL_SKIN,
-        group_id: CategoryUnitId.INTEREST,
-        name: i18n.t('interest-dull-skin', { ns: 'server-categories' }),
+        id: CategoryUnit3Id.PROBLEMS_DULL_SKIN,
+        group_id: CategoryUnitId.PROBLEMS,
+        name: i18n.t('problems-dull-skin', { ns: 'server-categories' }),
       },
       {
         id: CategoryUnit2Id.INGREDIENTS_HUNGYEN_TURMERIC,
@@ -1312,14 +1312,14 @@ export const productList: Product[] = [
         name: i18n.t('skin-care-cleanser', { ns: 'server-categories' }),
       },
       {
-        id: CategoryUnit2Id.INTEREST_SKIN,
-        group_id: CategoryUnitId.INTEREST,
-        name: i18n.t('interest-skin', { ns: 'server-categories' }),
+        id: CategoryUnit2Id.PROBLEMS_SKIN,
+        group_id: CategoryUnitId.PROBLEMS,
+        name: i18n.t('problems-skin', { ns: 'server-categories' }),
       },
       {
-        id: CategoryUnit3Id.INTEREST_DULL_SKIN,
-        group_id: CategoryUnitId.INTEREST,
-        name: i18n.t('interest-dull-skin', { ns: 'server-categories' }),
+        id: CategoryUnit3Id.PROBLEMS_DULL_SKIN,
+        group_id: CategoryUnitId.PROBLEMS,
+        name: i18n.t('problems-dull-skin', { ns: 'server-categories' }),
       },
       {
         id: CategoryUnit2Id.INGREDIENTS_HUNGYEN_TURMERIC,
