@@ -48,6 +48,7 @@ export function MobileMenuDrawer() {
   const { data: ingredientCategories } = useCategoryById(
     CategoryUnitId.INGREDIENTS
   );
+  const { data: brandCategories } = useCategoryById(CategoryUnitId.BRAND);
   const {
     data: searchedProductList,
     isFetching: isFetchingSearchedProductList,
@@ -195,6 +196,14 @@ export function MobileMenuDrawer() {
                       // (3) Top-level category list: Ingredients.
                       <MenuCategoryList
                         category={ingredientCategories}
+                        childCategoryAction={handleChildCategoryClick}
+                      />
+                    )}
+
+                    {brandCategories && (
+                      // (3) Top-level category list: Cocoon.
+                      <MenuCategoryList
+                        category={brandCategories}
                         childCategoryAction={handleChildCategoryClick}
                       />
                     )}

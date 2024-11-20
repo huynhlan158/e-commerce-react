@@ -80,6 +80,7 @@ export function useNavbar(): {
       {
         content: t('navbar-cocoon'),
         action: () => {
+          onDrawerOpen();
           dispatch(setNavigationPath([{ id: NavbarItemId.COCOON }]));
         },
         isActive: navigationPath[0]?.id === NavbarItemId.COCOON,

@@ -23,6 +23,10 @@ export enum CategoryUnit2Id {
   INGREDIENTS_DAKLAK_COFFEE = 'INGREDIENTS_DAKLAK_COFFEE',
   INGREDIENTS_GRAPEFRUIT_PEEL = 'INGREDIENTS_GRAPEFRUIT_PEEL',
   INGREDIENTS_BENTRE_COCONUT_PEEL = 'INGREDIENTS_BENTRE_COCONUT_PEEL',
+
+  BRAND_STORY = 'BRAND_STORY',
+  BRAND_CORE_VALUES = 'BRAND_CORE_VALUES',
+  BRAND_COMMUNITY_RESPONSIBILITY = 'BRAND_COMMUNITY_RESPONSIBILITY',
 }
 
 // enum CategoryUnit2IdSlug {
@@ -124,6 +128,12 @@ export const categoryUnitList: CategoryUnit[] = [
   {
     id: CategoryUnitId.INGREDIENTS,
     name: i18n.t('ingredients', { ns: 'server-categories' }),
+    group_id: null,
+    depth: 0,
+  },
+  {
+    id: CategoryUnitId.BRAND,
+    name: i18n.t('brand', { ns: 'server-categories' }),
     group_id: null,
     depth: 0,
   },
@@ -237,6 +247,29 @@ export const categoryUnitList: CategoryUnit[] = [
     group_id: CategoryUnitId.INGREDIENTS,
     depth: 1,
     fetch_data_for_product_list: true,
+  },
+
+  // Unit2: BRAND
+  {
+    id: CategoryUnit2Id.BRAND_STORY,
+    name: i18n.t('brand-story', { ns: 'server-categories' }),
+    group_id: CategoryUnitId.BRAND,
+    depth: 1,
+    fetch_data_for_product_list: true, // TODO: replace by slug?
+  },
+  {
+    id: CategoryUnit2Id.BRAND_CORE_VALUES,
+    name: i18n.t('brand-core-values', { ns: 'server-categories' }),
+    group_id: CategoryUnitId.BRAND,
+    depth: 1,
+    fetch_data_for_product_list: true, // TODO: replace by slug?
+  },
+  {
+    id: CategoryUnit2Id.BRAND_COMMUNITY_RESPONSIBILITY,
+    name: i18n.t('brand-community-responsibility', { ns: 'server-categories' }),
+    group_id: CategoryUnitId.BRAND,
+    depth: 1,
+    fetch_data_for_product_list: true, // TODO: replace by slug?
   },
 
   // Unit3-PRODUCTS: skin-care

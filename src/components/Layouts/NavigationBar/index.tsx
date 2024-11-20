@@ -38,6 +38,7 @@ export function NavigationBar() {
           'laptop:z-[1500]',
           'fixed top-0 left-0 right-0',
           'transition-transform duration-300'
+          // TODO: toggle the navigation bar visibility on scrolling up and down.
           // visible ? 'translate-y-0' : 'translate-y-full'
         )}
       >

@@ -11,6 +11,7 @@ import {
 import { useDisclosureStore } from '~/contexts/disclosure/useDisclosureStore';
 import { AppDispatch, RootState } from '~/state/store';
 import {
+  NavbarItemId,
   setCategoryIdForProductList,
   setNavigationPath,
 } from '~/state/navigation/navigationSlice';
@@ -44,6 +45,7 @@ export function LaptopMenuDrawer() {
   const { data: ingredientCategories } = useCategoryById(
     CategoryUnitId.INGREDIENTS
   );
+  const { data: brandCategories } = useCategoryById(CategoryUnitId.BRAND);
   const {
     data: searchedProductList,
     isFetching: isFetchingSearchedProductList,
@@ -122,25 +124,35 @@ export function LaptopMenuDrawer() {
             pb={36}
             className="CategoryWrapper"
           >
-            {productCategories && (
+            {navigationPath[0]?.id === NavbarItemId.COCOON &&
+            brandCategories ? (
               <MenuCategoryList
-                category={productCategories}
+                category={brandCategories}
                 childCategoryAction={handleChildCategoryClick}
               />
-            )}
+            ) : (
+              <>
+                {productCategories && (
+                  <MenuCategoryList
+                    category={productCategories}
+                    childCategoryAction={handleChildCategoryClick}
+                  />
+                )}
 
-            {problemsCategories && (
-              <MenuCategoryList
-                category={problemsCategories}
-                childCategoryAction={handleChildCategoryClick}
-              />
-            )}
+                {problemsCategories && (
+                  <MenuCategoryList
+                    category={problemsCategories}
+                    childCategoryAction={handleChildCategoryClick}
+                  />
+                )}
 
-            {ingredientCategories && (
-              <MenuCategoryList
-                category={ingredientCategories}
-                childCategoryAction={handleChildCategoryClick}
-              />
+                {ingredientCategories && (
+                  <MenuCategoryList
+                    category={ingredientCategories}
+                    childCategoryAction={handleChildCategoryClick}
+                  />
+                )}
+              </>
             )}
           </VStack>
         </DrawerBody>
