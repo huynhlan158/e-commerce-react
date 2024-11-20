@@ -308,7 +308,8 @@ export const drawerTheme = defineDrawerMultiStyleConfig({
   sizes: {
     sm: defineModalPartsStyle({
       dialog: {
-        w: '33.33% !important',
+        w: '33.33%',
+        maxW: '33.33%',
       },
     }),
   },

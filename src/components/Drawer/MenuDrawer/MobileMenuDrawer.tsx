@@ -19,12 +19,12 @@ import { Category, CategoryUnitId } from '~/services/config/models/Category';
 import { useProducts } from '~/services/product/resources';
 
 import { Icon } from '~/components/Icons';
-import { HStack, LoadingState, VStack } from '~/components/Layouts';
+import { HStack, VStack } from '~/components/Layouts';
 import { IconButton } from '~/components/Forms/IconButton';
-import { Heading } from '~/components/TypoGraphy';
 import { MenuCategoryList } from './components/MenuCategoryList';
 import { MenuProductList } from './components/MenuProductList';
 import { UserProfile } from './components/UserProfile';
+import { ProductLoading } from './components/ProductLoading';
 
 type MenuDrawerType = 'MENU' | 'PROFILE';
 
@@ -158,15 +158,7 @@ export function MobileMenuDrawer() {
                  ** if not, show the top-level category list (3)).
                  */}
                 {isFetchingSearchedProductList && selectedChildCategory ? (
-                  <>
-                    <Heading
-                      text={selectedChildCategory.name}
-                      level={5}
-                      variant="secondary"
-                      size="xs"
-                    />
-                    <LoadingState />
-                  </>
+                  <ProductLoading title={selectedChildCategory.name} />
                 ) : searchedProductList &&
                   categoryIdForProductList &&
                   selectedChildCategory ? (

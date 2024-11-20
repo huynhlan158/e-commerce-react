@@ -47,7 +47,7 @@ export function MenuProductList({
             size="xl"
             className="Animation--fadeSlideIn text-gray-500 mt-4"
           />
-          <VStack gap={40} className="w-full my-40">
+          <VStack gap={40} className="w-full my-36">
             {productList.map((product, idx) => (
               <HStack
                 key={product.id}

@@ -16,7 +16,7 @@ export enum NavbarItemId {
   LANGUAGE_EN = 'LANGUAGE_EN',
 }
 
-interface NavbarItem {
+export interface NavbarItem {
   id: string;
   selectedCategory?: Category;
 }
