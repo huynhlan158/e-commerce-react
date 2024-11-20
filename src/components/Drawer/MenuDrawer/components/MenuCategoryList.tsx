@@ -9,7 +9,7 @@ import { Button } from '~/components/Forms';
 import { Heading } from '~/components/TypoGraphy';
 import { VStack } from '~/components/Layouts';
 
-interface MenuCategoryListProps {
+export interface MenuCategoryListProps {
   /**
    * The current category item.
    */
@@ -47,7 +47,7 @@ export function MenuCategoryList({
         <Heading
           text={category.name}
           level={5}
-          variant="gray"
+          variant="secondary"
           size="xs"
           className="Animation--fadeSlideIn"
           weight={700}
@@ -81,7 +81,7 @@ export function MenuCategoryList({
        ** if the category is active or in laptop view.
        */}
       {(isActive || isLaptop) &&
-        category.data.map((childCategory, idx) => (
+        category.data?.map((childCategory, idx) => (
           <Button
             key={childCategory.id}
             variant="ghost"

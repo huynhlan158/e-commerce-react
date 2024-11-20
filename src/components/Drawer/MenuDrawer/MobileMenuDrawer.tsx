@@ -24,7 +24,7 @@ import { IconButton } from '~/components/Forms/IconButton';
 import { MenuCategoryList } from './components/MenuCategoryList';
 import { MenuProductList } from './components/MenuProductList';
 import { UserProfile } from './components/UserProfile';
-import { ProductLoading } from './components/ProductLoading';
+import { MenuLoadingState } from './components/MenuLoadingState';
 
 type MenuDrawerType = 'MENU' | 'PROFILE';
 
@@ -158,7 +158,7 @@ export function MobileMenuDrawer() {
                  ** if not, show the top-level category list (3)).
                  */}
                 {isFetchingSearchedProductList && selectedChildCategory ? (
-                  <ProductLoading title={selectedChildCategory.name} />
+                  <MenuLoadingState title={selectedChildCategory.name} />
                 ) : searchedProductList &&
                   categoryIdForProductList &&
                   selectedChildCategory ? (

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Drawer as ChakraDrawer,
@@ -16,6 +16,7 @@ import {
 } from '~/state/navigation/navigationSlice';
 import { useCategoryById } from '~/services/config/resources';
 import { Category, CategoryUnitId } from '~/services/config/models/Category';
+import { Product } from '~/services/product/models/Product';
 import { useProducts } from '~/services/product/resources';
 
 import { Icon } from '~/components/Icons';
@@ -23,7 +24,7 @@ import { VStack } from '~/components/Layouts';
 import { IconButton } from '~/components/Forms/IconButton';
 import { MenuCategoryList } from './components/MenuCategoryList';
 import { MenuProductList } from './components/MenuProductList';
-import { ProductLoading } from './components/ProductLoading';
+import { MenuLoadingState } from './components/MenuLoadingState';
 import './index.css';
 
 /**
@@ -59,15 +60,12 @@ export function LaptopMenuDrawer() {
         selectedCategory: category,
       };
 
+      // Update navigation path based on category depth.
       switch (category.depth) {
         case 0:
-          // Reset the navigationPath with the top-level category
-          // if the clicked category is the top-level one.
           dispatch(setNavigationPath([currentNavigationPath]));
           break;
         case 1:
-          // Reset the first navigation path item
-          // if the clicked category is the second-level one.
           dispatch(
             setNavigationPath([
               { id: category.group_id || '' },
@@ -76,8 +74,6 @@ export function LaptopMenuDrawer() {
           );
           break;
         case 2:
-          // Update the last navigation path item
-          // if the clicked category is the third(last)-level one.
           const newNavigationPath = [...navigationPath];
           newNavigationPath[2] = currentNavigationPath;
           dispatch(setNavigationPath(newNavigationPath));
@@ -111,7 +107,7 @@ export function LaptopMenuDrawer() {
           icon={<Icon size="2xl" type="X_MARK" />}
           onClick={onDrawerClose}
           className={clsx(
-            'CategoryCloseButton',
+            'CategoryCloseButton--laptop',
             navigationPath.length === 1 && 'left-[88%]',
             navigationPath.length === 2 && 'left-[188%]',
             navigationPath.length === 3 && 'left-[288%]'
@@ -119,11 +115,11 @@ export function LaptopMenuDrawer() {
         />
 
         {/* The main top-level categories. */}
-        <DrawerBody zIndex={90}>
+        <DrawerBody zIndex={100}>
           <VStack
             alignItems="flex-start"
-            gap={12}
-            mb={36}
+            gap={20}
+            pb={36}
             className="CategoryWrapper"
           >
             {productCategories && (
@@ -150,73 +146,95 @@ export function LaptopMenuDrawer() {
         </DrawerBody>
 
         {/* The second-level categories. */}
-        {navigationPath[1]?.selectedCategory && (
-          <VStack
-            alignItems="flex-start"
-            gap={12}
-            zIndex={80}
-            left="100%"
-            width="100%"
-            className={clsx(
-              'CategoryWrapper CategoryWrapper--Expanded',
-              navigationPath.length > 1 ? 'translate-x-0' : '-translate-x-full'
-            )}
-          >
-            {isFetchingSearchedProductList && navigationPath.length === 2 ? (
-              <ProductLoading title={navigationPath[1].selectedCategory.name} />
-            ) : navigationPath[1].selectedCategory
-                .fetch_data_for_product_list &&
-              searchedProductList &&
-              navigationPath.length === 2 ? (
-              <MenuProductList
-                categoryName={navigationPath[1].selectedCategory.name}
-                productList={searchedProductList}
-              />
-            ) : (
-              <MenuCategoryList
-                category={navigationPath[1].selectedCategory}
-                childCategoryAction={handleChildCategoryClick}
-              />
-            )}
-          </VStack>
-        )}
+        <ExpandedMenuDrawer
+          level={2}
+          isFetching={
+            isFetchingSearchedProductList && navigationPath.length === 2
+          }
+          productList={searchedProductList}
+          category={navigationPath[1]?.selectedCategory}
+          childCategoryAction={handleChildCategoryClick}
+        />
 
         {/* The third(last)-level categories. */}
-        {navigationPath[2]?.selectedCategory && (
-          <VStack
-            alignItems="flex-start"
-            gap={12}
-            zIndex={70}
-            left="200%"
-            width="100%"
-            className={clsx(
-              'CategoryWrapper CategoryWrapper--Expanded',
-              navigationPath.length === 3
-                ? 'translate-x-0'
-                : navigationPath.length === 2
-                  ? '-translate-x-full'
-                  : '-translate-x-[200%]'
-            )}
-          >
-            {isFetchingSearchedProductList && navigationPath.length === 3 ? (
-              <ProductLoading title={navigationPath[2].selectedCategory.name} />
-            ) : navigationPath[2].selectedCategory
-                .fetch_data_for_product_list &&
-              searchedProductList &&
-              navigationPath.length === 3 ? (
-              <MenuProductList
-                categoryName={navigationPath[2].selectedCategory.name}
-                productList={searchedProductList}
-              />
-            ) : (
-              <MenuCategoryList
-                category={navigationPath[2].selectedCategory}
-                childCategoryAction={handleChildCategoryClick}
-              />
-            )}
-          </VStack>
-        )}
+        <ExpandedMenuDrawer
+          level={3}
+          isFetching={isFetchingSearchedProductList}
+          productList={searchedProductList}
+          category={navigationPath[2]?.selectedCategory}
+          childCategoryAction={handleChildCategoryClick}
+        />
       </DrawerContent>
     </ChakraDrawer>
+  );
+}
+
+interface ExpandedMenuDrawerProps {
+  /**
+   * The level of the expanded menu drawer.
+   */
+  level: 2 | 3;
+  /**
+   * Whether there is a running fetch request to retrieve the list of items.
+   */
+  isFetching: boolean;
+  /**
+   * The product list of the current category.
+   */
+  productList?: Product[];
+  /**
+   * The current category item.
+   */
+  category?: Category;
+  /**
+   * The hander for onClick event on the child category item.
+   */
+  childCategoryAction: (category: Category) => void;
+}
+
+/**
+ * A UI to render the expanded part in nested level of menu drawer in laptop view and upper.
+ */
+function ExpandedMenuDrawer({
+  level,
+  isFetching,
+  productList,
+  category,
+  childCategoryAction,
+}: ExpandedMenuDrawerProps) {
+  const { navigationPath } = useSelector(
+    (state: RootState) => state.navigation
+  );
+  const isVisible = useMemo(
+    () => navigationPath.length + 1 > level,
+    [navigationPath, level]
+  );
+
+  return (
+    <VStack
+      alignItems="flex-start"
+      gap={20}
+      pb={36}
+      zIndex={100 - level * 1}
+      width="100%"
+      className={clsx(
+        'CategoryWrapper CategoryWrapper--Expanded',
+        isVisible ? (level === 3 ? 'left-[200%]' : 'left-full') : 'left-0'
+      )}
+    >
+      {isFetching ? (
+        <MenuLoadingState title={category?.name || ''} />
+      ) : category?.fetch_data_for_product_list && productList ? (
+        <MenuProductList
+          categoryName={category.name}
+          productList={productList}
+        />
+      ) : category ? (
+        <MenuCategoryList
+          category={category}
+          childCategoryAction={childCategoryAction}
+        />
+      ) : null}
+    </VStack>
   );
 }
