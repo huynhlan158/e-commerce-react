@@ -11,8 +11,7 @@ import {
 } from '@chakra-ui/react';
 
 import { useDisclosureStore } from '~/contexts/disclosure/useDisclosureStore';
-
-import { Text } from '../TypoGraphy';
+import { Text } from '~/components/TypoGraphy';
 
 export interface ModalAction {
   /**
@@ -61,7 +60,7 @@ export interface ModalProps {
 }
 
 /**
- * A component that renders infomation in a popup to focus the users's attention.
+ * A UI component to render infomation in a popup to focus the users's attention.
  */
 export function Modal({
   size = 'sm',
@@ -92,7 +91,7 @@ export function Modal({
 
         <ModalBody>
           {typeof description == 'string' ? (
-            <Text className="text-14" text={description} />
+            <Text size="sm" text={description} />
           ) : (
             description
           )}

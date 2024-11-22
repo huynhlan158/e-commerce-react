@@ -34,7 +34,7 @@ import { MenuLoadingState } from './components/MenuLoadingState';
 type MenuDrawerType = 'MENU' | 'PROFILE';
 
 /**
- * The menu drawer content of the navigation in mobile view.
+ * A UI component for the menu drawer content of the navigation bar in mobile view.
  */
 export function MobileMenuDrawer() {
   const { t } = useTranslation(['navigation-bar', 'common']);

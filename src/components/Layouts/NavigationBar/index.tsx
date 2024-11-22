@@ -1,23 +1,35 @@
 import clsx from 'clsx';
+import { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from '@chakra-ui/react';
 
+import { AppDispatch, RootState } from '~/state/store';
+import {
+  NavbarItemId,
+  setNavigationPath,
+} from '~/state/navigation/navigationSlice';
 import { useDisclosureStore } from '~/contexts/disclosure/useDisclosureStore';
 import { useConfigByKey } from '~/services/config/resources';
 import { ConfigKeys } from '~/services/config/models/Keys';
+import { CategoryUnitId } from '~/services/config/models/Category';
 
 import { Button } from '~/components/Forms';
 import { Text } from '~/components/TypoGraphy';
-import { MenuDrawer } from '~/components/Drawer/MenuDrawer';
-import { Modal } from '~/components/Modal';
+import { Modal } from '~/components/Overlay/Modal';
 import { useNavbar } from './useNavbar';
 import { NavbarItem } from './NavbarItem';
 import { HStack, Stack } from '../Stack';
 
 /**
- * The main navigation bar that allow users to switch to different tabs.
+ * The main navigation bar that allow users to switch between different tabs.
  */
 export function NavigationBar() {
-  const { t } = useTranslation('navigation-bar');
+  const { t } = useTranslation(['navigation-bar', 'policy']);
+  const dispatch = useDispatch<AppDispatch>();
+  const { navigationPath } = useSelector(
+    (state: RootState) => state.navigation
+  );
   const {
     leftItems,
     mobileLeftItems,
@@ -25,19 +37,29 @@ export function NavigationBar() {
     rightItems,
     mobileRightItems,
   } = useNavbar();
-  const { isDrawerOpen, isModalOpen } = useDisclosureStore();
 
   // TODO: move this API call to a initiate provider
   // which will load all needed values and show the loading icon during that process.
   const { data: config } = useConfigByKey(ConfigKeys.SHIPMENT);
 
+  const { isModalOpen, onDrawerOpen } = useDisclosureStore();
+  const [isLaptop] = useMediaQuery('(min-width: 1024px)');
+  const isSpecialCategory = useMemo(() => {
+    return [
+      CategoryUnitId.PRODUCTS,
+      CategoryUnitId.PROBLEMS,
+      CategoryUnitId.INGREDIENTS,
+      CategoryUnitId.BRAND,
+    ].includes(navigationPath[0]?.id as CategoryUnitId);
+  }, [navigationPath[0]]);
+
   return (
     <>
       <Stack
         className={clsx(
-          'laptop:z-[1500]',
           'fixed top-0 left-0 right-0',
-          'transition-transform duration-300'
+          'transition-transform duration-300',
+          isSpecialCategory && 'laptop:z-[1500]'
           // TODO: toggle the navigation bar visibility on scrolling up and down.
           // visible ? 'translate-y-0' : 'translate-y-full'
         )}
@@ -52,28 +74,22 @@ export function NavigationBar() {
             size="sm"
             variant="ghost"
             lableVariant="light"
-            className="laptop:hidden"
-            onClick={() => {}}
-            label={t('action-free-ship--mobile', {
-              price:
-                config?.key === ConfigKeys.SHIPMENT
-                  ? config.data.freeShipPrice
-                  : '',
-            })}
-          />
-
-          <Button
-            size="sm"
-            variant="ghost"
-            lableVariant="light"
-            className="hidden laptop:block"
-            onClick={() => {}}
-            label={t('action-free-ship--laptop', {
-              price:
-                config?.key === ConfigKeys.SHIPMENT
-                  ? config.data.freeShipPrice
-                  : '',
-            })}
+            onClick={() => {
+              onDrawerOpen();
+              dispatch(setNavigationPath([{ id: NavbarItemId.SHIPPING }]));
+            }}
+            label={t(
+              isLaptop
+                ? 'action-free-ship--laptop'
+                : 'action-free-ship--mobile',
+              {
+                ns: 'policy',
+                price:
+                  config?.key === ConfigKeys.SHIPMENT
+                    ? config.data.freeShipPrice
+                    : '',
+              }
+            )}
           />
 
           <Text text="+" size="sm" className="select-none" />
@@ -83,8 +99,8 @@ export function NavigationBar() {
           justifyContent="space-between"
           alignItems="center"
           className={clsx(
-            'w-full h-60 desktop:h-86 bg-peach-200',
-            'border-b-[0.5px] border-beige-200'
+            'DeviderBottom',
+            'w-full h-60 desktop:h-86 bg-peach-200'
           )}
         >
           {/* Desktop and Laptop navigation bar. */}
@@ -145,8 +161,6 @@ export function NavigationBar() {
           </div>
         </HStack>
       </Stack>
-
-      {isDrawerOpen && <MenuDrawer />}
 
       {/* TODO: Login modal */}
       {isModalOpen && (

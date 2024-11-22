@@ -29,7 +29,7 @@ import { MenuLoadingState } from './components/MenuLoadingState';
 import './index.css';
 
 /**
- * The menu drawer conent of the navigation in laptop view.
+ * A UI component for the menu drawer content of the navigation bar in laptop view.
  */
 export function LaptopMenuDrawer() {
   const dispatch = useDispatch<AppDispatch>();

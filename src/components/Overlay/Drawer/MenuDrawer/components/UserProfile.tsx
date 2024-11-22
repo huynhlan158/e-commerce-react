@@ -92,7 +92,7 @@ function UserProfileItem({
         type={iconType}
         iconColorClassname={clsx(variant === 'dark' && 'text-peach-200')}
       />
-      <Text size="md" text={label} className="font-600" />
+      <Text size="md" text={label} weight={600} />
     </HStack>
   );
 }

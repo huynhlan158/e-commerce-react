@@ -148,8 +148,9 @@ export function useNavbar(): {
         isActive: navigationPath[0]?.id === NavbarItemId.CONTACT,
       },
       {
-        content: `${t('navbar-cart')}${myCart?.items.length ? ' (' + myCart?.items.length + ')' : ''}`,
+        content: `${t('navbar-shopping-cart')}${myCart?.items.length ? ' (' + myCart?.items.length + ')' : ''}`,
         action: () => {
+          onDrawerOpen();
           dispatch(setNavigationPath([{ id: NavbarItemId.SHOPPING_CART }]));
         },
         isActive: navigationPath[0]?.id === NavbarItemId.SHOPPING_CART,

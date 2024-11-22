@@ -3,8 +3,7 @@ import { Spinner } from '~/components/Spinner';
 import { Heading } from '~/components/TypoGraphy';
 
 /**
- * A UI component to render the loading state
- * when loading product list in menu drawer.
+ * A UI component to render the loading state when loading product list in menu drawer.
  */
 export function MenuLoadingState({ title }: { title: string }) {
   return (

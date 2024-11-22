@@ -4,6 +4,7 @@ import { Category, CategoryUnitId } from '~/services/config/models/Category';
 import { Product } from '~/services/product/models/Product';
 
 export enum NavbarItemId {
+  SHIPPING = 'SHIPPING',
   SEARCH = 'SEARCH',
   PRODUCTS = CategoryUnitId.PRODUCTS,
   PROMOTION = 'PROMOTION',

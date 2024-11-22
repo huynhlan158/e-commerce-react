@@ -57,6 +57,11 @@
   @apply py-12 laptop:py-24;
 }
 
+/* ===== Devider ===== */
+.DeviderBottom {
+  @apply border-b-[0.5px] border-beige-200;
+}
+
 /* ===== Animiation ===== */
 @keyframes fadeIn {
   0% {

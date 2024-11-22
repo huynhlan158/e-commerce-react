@@ -11,11 +11,18 @@ interface ParagraphProps extends StyleProps {
    * @default 'md'
    */
   size?: FontSize;
+  /**
+   * The font weight of the text.
+   * @default '400'
+   */
+  weight?: 400 | 500 | 600 | 700;
 }
 
-/** The paragraph component to render text as paragraph */
+/**
+ * A UI component to render text.
+ */
 export function Paragraph(props: ParagraphProps) {
-  const { className, text, size = 'md' } = props;
+  const { className, text, size = 'md', weight } = props;
 
   return (
     <p
@@ -26,6 +33,10 @@ export function Paragraph(props: ParagraphProps) {
         size === 'md' && 'TextFontSizeResponsive--md',
         size === 'sm' && 'TextFontSizeResponsive--sm',
         size === 'xs' && 'TextFontSizeResponsive--xs',
+        weight === 400 && 'font-400',
+        weight === 500 && 'font-500',
+        weight === 600 && 'font-600',
+        weight === 700 && 'font-700',
         className
       )}
     >

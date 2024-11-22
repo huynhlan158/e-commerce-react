@@ -16,17 +16,21 @@ interface HeadingProps extends StyleProps {
    * @default 'md'
    */
   size?: FontSize;
-  /** The size of the heading text.
+  /**
+   * The font weight of the heading text.
    * @default '600'
    */
   weight?: 600 | 700;
-  /** The variant of the heading text.
+  /**
+   * The variant of the heading text.
    * @default 'primary'
    */
   variant?: 'primary' | 'secondary' | 'gray';
 }
 
-/** The heading component to use for headers */
+/**
+ * A UI component to reder heading.
+ */
 export function Heading(props: HeadingProps) {
   const {
     className,

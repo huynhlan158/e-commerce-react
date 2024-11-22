@@ -80,7 +80,7 @@ export function MenuProductList({
           </VStack>
         </>
       ) : (
-        <Text text={t('no-results')} size="xl" className="text-gray-500" />
+        <Text text={t('no-results')} size="xl" variant="gray" />
       )}
     </>
   );
