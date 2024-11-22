@@ -1,5 +1,7 @@
 import clsx from 'clsx';
 import { useCallback, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Drawer as ChakraDrawer,
@@ -8,9 +10,11 @@ import {
   DrawerContent,
 } from '@chakra-ui/react';
 
+import routes from '~/config/routes';
 import { useDisclosureStore } from '~/contexts/disclosure/useDisclosureStore';
 import { AppDispatch, RootState } from '~/state/store';
 import {
+  NavbarItemId,
   setCategoryIdForProductList,
   setNavigationPath,
 } from '~/state/navigation/navigationSlice';
@@ -21,6 +25,7 @@ import { useProducts } from '~/services/product/resources';
 import { Icon } from '~/components/Icons';
 import { HStack, VStack } from '~/components/Layouts';
 import { IconButton } from '~/components/Forms/IconButton';
+import { Button } from '~/components/Forms';
 import { MenuCategoryList } from './components/MenuCategoryList';
 import { MenuProductList } from './components/MenuProductList';
 import { UserProfile } from './components/UserProfile';
@@ -32,6 +37,8 @@ type MenuDrawerType = 'MENU' | 'PROFILE';
  * The menu drawer content of the navigation in mobile view.
  */
 export function MobileMenuDrawer() {
+  const { t } = useTranslation(['navigation-bar', 'common']);
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const { navigationPath, categoryIdForProductList } = useSelector(
@@ -152,7 +159,7 @@ export function MobileMenuDrawer() {
             {menuDrawerType === 'PROFILE' ? (
               <UserProfile />
             ) : (
-              <VStack alignItems="flex-start" gap={12} className="px-20">
+              <VStack h="full" alignItems="flex-start" gap={12} px={20}>
                 {/*
                  ** Show the product list by selected category if available (1);
                  ** otherwise, show the child category list if available (2);
@@ -176,37 +183,75 @@ export function MobileMenuDrawer() {
                   />
                 ) : (
                   <>
+                    {/* (3) Top-level category list: Products. */}
                     {productCategories && (
-                      // (3) Top-level category list: Products.
                       <MenuCategoryList
                         category={productCategories}
                         childCategoryAction={handleChildCategoryClick}
                       />
                     )}
 
+                    {/* (3) Top-level category list: Interest. */}
                     {problemsCategories && (
-                      // (3) Top-level category list: Interest.
                       <MenuCategoryList
                         category={problemsCategories}
                         childCategoryAction={handleChildCategoryClick}
                       />
                     )}
 
+                    {/* (3) Top-level category list: Ingredients. */}
                     {ingredientCategories && (
-                      // (3) Top-level category list: Ingredients.
                       <MenuCategoryList
                         category={ingredientCategories}
                         childCategoryAction={handleChildCategoryClick}
                       />
                     )}
 
+                    {/* (3) Top-level category list: Brand. */}
                     {brandCategories && (
-                      // (3) Top-level category list: Cocoon.
                       <MenuCategoryList
                         category={brandCategories}
                         childCategoryAction={handleChildCategoryClick}
                       />
                     )}
+
+                    {/* (3) Button for routing to 'Articles' page. */}
+                    <Button
+                      variant="ghost"
+                      label={t('navbar-articles')}
+                      lableWeight="bold"
+                      className="Animation--fadeSlideIn leading-26"
+                      onClick={() => {
+                        navigate(routes.article);
+                        dispatch(
+                          setNavigationPath([{ id: NavbarItemId.ARTICLES }])
+                        );
+                        onDrawerClose();
+                      }}
+                    />
+
+                    {/* (3) Button for opening the contact modal. */}
+                    <Button
+                      variant="ghost"
+                      label={t('navbar-contact')}
+                      lableWeight="bold"
+                      className="Animation--fadeSlideIn leading-26"
+                      onClick={() => {
+                        onDrawerClose();
+                        // TODO: contact modal
+                      }}
+                    />
+
+                    {/* (3) Button for toggling languages. */}
+                    <Button
+                      variant="ghost"
+                      label={t('language-vi', { ns: 'common' })}
+                      lableWeight="bold"
+                      className="Animation--fadeSlideIn leading-26"
+                      onClick={() => {
+                        // TODO: language switcher
+                      }}
+                    />
                   </>
                 )}
               </VStack>

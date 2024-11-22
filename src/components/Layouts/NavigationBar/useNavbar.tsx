@@ -39,7 +39,7 @@ export function useNavbar(): {
     (state: RootState) => state.navigation
   );
 
-  const { onDrawerOpen } = useDisclosureStore();
+  const { onDrawerOpen, onDrawerClose, onModalOpen } = useDisclosureStore();
 
   // TODO: move these API calls to a initiate provider
   // which will load all needed values and show the loading icon during that process.
@@ -70,13 +70,13 @@ export function useNavbar(): {
         },
         isActive: navigationPath[0]?.id === NavbarItemId.PRODUCTS,
       },
-      {
-        content: t('navbar-promotion'),
-        action: () => {
-          dispatch(setNavigationPath([{ id: NavbarItemId.PROMOTION }]));
-        },
-        isActive: navigationPath[0]?.id === NavbarItemId.PROMOTION,
-      },
+      // {
+      //   content: t('navbar-promotion'),
+      //   action: () => {
+      //     dispatch(setNavigationPath([{ id: NavbarItemId.PROMOTION }]));
+      //   },
+      //   isActive: navigationPath[0]?.id === NavbarItemId.PROMOTION,
+      // },
       {
         content: t('navbar-cocoon'),
         action: () => {
@@ -89,6 +89,7 @@ export function useNavbar(): {
         action: () => {
           navigate(routes.article);
           dispatch(setNavigationPath([{ id: NavbarItemId.ARTICLES }]));
+          onDrawerClose();
         },
         content: t('navbar-articles'),
         isActive: navigationPath[0]?.id === NavbarItemId.ARTICLES,
@@ -135,9 +136,9 @@ export function useNavbar(): {
       {
         content: isAuthenticated ? t('navbar-account') : t('navbar-login'),
         action: () => {
-          dispatch(setNavigationPath([{ id: NavbarItemId.ACCOUNT }]));
+          // TODO: contact modal
+          onModalOpen();
         },
-        isActive: navigationPath[0]?.id === NavbarItemId.ACCOUNT,
       },
       {
         content: t('navbar-contact'),
@@ -155,7 +156,9 @@ export function useNavbar(): {
       },
       {
         content: t('language-vi', { ns: 'common' }),
-        action: () => {},
+        action: () => {
+          // TODO: language switcher
+        },
         isActive: true,
       },
     ],
@@ -167,9 +170,9 @@ export function useNavbar(): {
       {
         content: <Icon size="xl" type="MAGNIFYING_GLASS" />,
         action: () => {
-          dispatch(setNavigationPath([{ id: NavbarItemId.CONTACT }]));
+          dispatch(setNavigationPath([{ id: NavbarItemId.SEARCH }]));
         },
-        isActive: navigationPath[0]?.id === NavbarItemId.CONTACT,
+        isActive: navigationPath[0]?.id === NavbarItemId.SEARCH,
       },
       {
         content: (
