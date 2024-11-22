@@ -1,10 +1,14 @@
 import clsx from 'clsx';
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import routes, { privateRoutes } from '~/config/routes';
-import { useAuthStore } from '~/contexts/auth/AuthContext';
+import { useDisclosureStore } from '~/contexts/disclosure/useDisclosureStore';
+import { RootState } from '~/state/store';
+
 import { LoadingState, NavigationBar, Stack } from '../Layouts';
+import { Drawer } from '../Overlay/Drawer';
 
 /**
  * A route guard that restricts access to guests (unauthenticated users).
@@ -13,7 +17,9 @@ import { LoadingState, NavigationBar, Stack } from '../Layouts';
 export function GuestGuard() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isInitialized, isAuthenticated } = useAuthStore();
+  const { isAuthenticated, isInitialized } = useSelector(
+    (state: RootState) => state.auth
+  );
 
   useEffect(() => {
     /**
@@ -30,10 +36,12 @@ export function GuestGuard() {
     }
   }, [location.pathname, isAuthenticated]);
 
+  const { isDrawerOpen } = useDisclosureStore();
+
   if (!isInitialized) return <LoadingState />;
 
   return (
-    <Stack gap={0} className="min-h-screen">
+    <Stack className="min-h-screen">
       <NavigationBar />
       <Stack
         alignItems="center"
@@ -41,6 +49,8 @@ export function GuestGuard() {
         className={clsx('StackPaddingResponsive', 'flex-1')}
       >
         <Outlet />
+
+        {isDrawerOpen && <Drawer />}
       </Stack>
     </Stack>
   );

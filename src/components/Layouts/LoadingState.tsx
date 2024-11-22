@@ -12,7 +12,7 @@ export function LoadingState() {
       justifyContent="center"
       className="w-screen h-screen fixed top-0 left-0 z-50 bg-white/40"
     >
-      <Spinner size="lg" thickness="4px" />
+      <Spinner size={['md', 'md', 'md', 'lg']} thickness="4px" />
     </Stack>
   );
 }

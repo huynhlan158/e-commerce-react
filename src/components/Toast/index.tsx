@@ -8,7 +8,7 @@ import {
 
 import { Status } from '~/types/Styles';
 import { Text } from '../TypoGraphy';
-import { Stack } from '../Layouts';
+import { HStack } from '../Layouts';
 import './index.css';
 
 interface ToastProps {
@@ -23,14 +23,13 @@ interface ToastProps {
 }
 
 /**
- * A component for displaying information in a toast with appropriate highlighting.
+ * A UI component to render information in a toast with appropriate highlighting.
  */
 export function useToast() {
   return ({ text, status }: ToastProps) =>
     toast.custom(
       (t) => (
-        <Stack
-          direction="row"
+        <HStack
           justifyContent="space-between"
           alignItems="center"
           gap={10}
@@ -39,22 +38,22 @@ export function useToast() {
             t.visible ? 'top-0' : '-top-96'
           )}
         >
-          <Stack direction="row" alignItems="center" gap={[8, 12]}>
+          <HStack alignItems="center" gap={[8, 12]}>
             {status === Status.ERROR && (
-              <ExclamationCircleIcon className="size-16 md:size-20 text-red-600" />
+              <ExclamationCircleIcon className="size-16 laptop:size-20 text-red-600" />
             )}
 
             {status === Status.SUCCESS && (
-              <CheckCircleIcon className="size-16 md:size-20 text-green-600" />
+              <CheckCircleIcon className="size-16 laptop:size-20 text-green-600" />
             )}
 
             <Text text={text} />
-          </Stack>
+          </HStack>
 
           <button type="button" onClick={() => toast.dismiss(t.id)}>
             <XMarkIcon
               className={clsx(
-                'size-16 md:size-20',
+                'size-16 laptop:size-20',
                 status === Status.ERROR
                   ? 'text-red-900'
                   : status === Status.SUCCESS
@@ -63,7 +62,7 @@ export function useToast() {
               )}
             />
           </button>
-        </Stack>
+        </HStack>
       ),
       { position: 'top-center', duration: 5000 }
     );

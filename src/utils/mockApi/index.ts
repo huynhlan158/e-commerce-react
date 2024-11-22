@@ -1,20 +1,25 @@
 import { createServer } from 'miragejs';
-import { tab1Items, tab2Items, tab3Items, userList } from './mockData';
+import { v4 as uuidv4 } from 'uuid';
+
 import { ServerFetchError } from '~/services/fetch.server';
+import { Product } from '~/services/product/models/Product';
 import { ErrorType } from '~/types/FetchServer';
+import {
+  tab1Items,
+  userList,
+  configList,
+  shoppingCartList,
+  categoryUnitList,
+  productList,
+} from './mockData';
 
 export const setupServer = () => {
-  const delay = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 300));
-  };
-
   const server = createServer({
     routes() {
       this.namespace = 'mock-api';
 
       // ===== Mock API for authentication service ===== //
       this.post('/token', (schema, request) => {
-        delay();
         const { username, password } = JSON.parse(request.requestBody);
         const user = schema.db.userList.findBy({ username, id: password });
         if (user) {
@@ -28,45 +33,102 @@ export const setupServer = () => {
         }
       });
 
+      // ===== Mock API for config service ===== //
+      this.get('/config', (schema) => {
+        return schema.db.configList;
+      });
+
+      this.get('/config/:key', (schema, request) => {
+        const { key } = request.params;
+        return schema.db.configList.findBy({ key });
+      });
+
+      // ===== Mock API for categories service ===== //
+      this.get('/categories/:categoryUnitId', (schema, request) => {
+        const { categoryUnitId } = request.params;
+        const categoryUnitList = schema.db.categoryUnitList;
+        const category = categoryUnitList.find(categoryUnitId);
+        if (category) {
+          const categoryUnit2List = categoryUnitList.filter(
+            (category2) => category2.group_id === category.id
+          );
+          category.data = categoryUnit2List;
+          if (categoryUnit2List.length) {
+            categoryUnit2List.forEach((category2) => {
+              const categoryUnit3List = categoryUnitList.filter(
+                (category3) => category3.group_id === category2.id
+              );
+              category2.data = categoryUnit3List;
+            });
+          }
+        }
+        return category;
+      });
+
+      // ===== Mock API for products service ===== //
+      this.get('/products', (schema, request) => {
+        if (request.queryParams.categoryId) {
+          const categoryId = request.queryParams.categoryId;
+          return schema.db.productList.where((product: Product) =>
+            product.categories.some((category) => category.id === categoryId)
+          );
+        } else {
+          return schema.db.productList;
+        }
+      });
+
       // ===== Mock API for users service ===== //
       this.get('/users', (schema) => {
-        delay();
         return schema.db.userList;
       });
 
       this.get('/users/info/:id', (schema, request) => {
-        delay();
         const { id } = request.params;
         return schema.db.userList.find(id);
       });
 
+      // ===== Mock API for cart service ===== //
+      this.get('/findMyCart', (schema, request) => {
+        const { Authorization } = request.requestHeaders;
+        const userId = Authorization.replace('Bearer ', '');
+        return schema.db.shoppingCartList.findBy({ user_id: userId });
+      });
+
       // ===== Mock API for tab 1 ===== //
       this.get('/tab1-items', (schema) => {
-        delay();
         return schema.db.tab1Items;
       });
 
-      // ===== Mock API for tab 2 ===== //
-      this.get('/tab2-items', (schema) => {
-        delay();
-        return schema.db.tab2Items;
+      this.post('/tab1-items', (schema, request) => {
+        let newItem = JSON.parse(request.requestBody);
+        newItem.id = uuidv4();
+        schema.db.tab1Items.insert(newItem);
+        return newItem;
       });
-      // ===== Mock API for tab 3 ===== //
-      this.get('/tab3-items', (schema) => {
-        delay();
-        return schema.db.tab3Items;
+
+      this.delete('/tab1-items/delete/:id', (schema, request) => {
+        const { id } = request.params;
+        const deleteItem = schema.db.tab1Items.find(id);
+        schema.db.tab1Items.remove(id);
+        return deleteItem;
       });
     },
 
     seeds(server) {
       server.db.loadData({
+        configList: configList,
+        categoryUnitList: categoryUnitList,
+        productList: productList,
         userList: userList,
+        shoppingCartList: shoppingCartList,
         tab1Items: tab1Items,
-        tab2Items: tab2Items,
-        tab3Items: tab3Items,
       });
     },
   });
 
   return server;
+};
+
+export const delay = async (time?: number) => {
+  await new Promise((resolve) => setTimeout(resolve, time || 100));
 };

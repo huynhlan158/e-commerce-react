@@ -1,0 +1,12 @@
+/* TODO: the close button is not moving consistent with the CategoryWrapper. */
+.CategoryCloseButton--laptop {
+  @apply absolute top-[110px] desktop:top-[150px] z-[110] transition-all ease-in-out duration-500;
+}
+
+.CategoryWrapper {
+  @apply bg-peach-200 px-20 desktop:px-32 pt-136 desktop:pt-160;
+}
+
+.CategoryWrapper--Expanded {
+  @apply absolute top-0 bottom-0 border-l-[0.5px] border-beige-200 transition-[left] ease-in-out duration-500 overflow-y-auto;
+}
