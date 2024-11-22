@@ -7,3 +7,7 @@ export enum ConfigKeys {
   SHIPMENT = 'shipment',
   LOCALE = 'locale',
 }
+
+export enum CategoryQueryKeys {
+  CATEGORY = 'CATEGORY',
+}

@@ -2,8 +2,16 @@ import { createServer } from 'miragejs';
 import { v4 as uuidv4 } from 'uuid';
 
 import { ServerFetchError } from '~/services/fetch.server';
+import { Product } from '~/services/product/models/Product';
 import { ErrorType } from '~/types/FetchServer';
-import { tab1Items, userList, configList, shoppingCartList } from './mockData';
+import {
+  tab1Items,
+  userList,
+  configList,
+  shoppingCartList,
+  categoryUnitList,
+  productList,
+} from './mockData';
 
 export const setupServer = () => {
   const server = createServer({
@@ -33,6 +41,40 @@ export const setupServer = () => {
       this.get('/config/:key', (schema, request) => {
         const { key } = request.params;
         return schema.db.configList.findBy({ key });
+      });
+
+      // ===== Mock API for categories service ===== //
+      this.get('/categories/:categoryUnitId', (schema, request) => {
+        const { categoryUnitId } = request.params;
+        const categoryUnitList = schema.db.categoryUnitList;
+        const category = categoryUnitList.find(categoryUnitId);
+        if (category) {
+          const categoryUnit2List = categoryUnitList.filter(
+            (category2) => category2.group_id === category.id
+          );
+          category.data = categoryUnit2List;
+          if (categoryUnit2List.length) {
+            categoryUnit2List.forEach((category2) => {
+              const categoryUnit3List = categoryUnitList.filter(
+                (category3) => category3.group_id === category2.id
+              );
+              category2.data = categoryUnit3List;
+            });
+          }
+        }
+        return category;
+      });
+
+      // ===== Mock API for products service ===== //
+      this.get('/products', (schema, request) => {
+        if (request.queryParams.categoryId) {
+          const categoryId = request.queryParams.categoryId;
+          return schema.db.productList.where((product: Product) =>
+            product.categories.some((category) => category.id === categoryId)
+          );
+        } else {
+          return schema.db.productList;
+        }
       });
 
       // ===== Mock API for users service ===== //
@@ -75,6 +117,8 @@ export const setupServer = () => {
     seeds(server) {
       server.db.loadData({
         configList: configList,
+        categoryUnitList: categoryUnitList,
+        productList: productList,
         userList: userList,
         shoppingCartList: shoppingCartList,
         tab1Items: tab1Items,

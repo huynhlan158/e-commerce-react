@@ -23,7 +23,7 @@ interface ToastProps {
 }
 
 /**
- * A component for displaying information in a toast with appropriate highlighting.
+ * A UI component to render information in a toast with appropriate highlighting.
  */
 export function useToast() {
   return ({ text, status }: ToastProps) =>

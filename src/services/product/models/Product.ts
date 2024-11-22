@@ -1,4 +1,4 @@
-type ProductGroup = 'PRODUCTS' | 'INGREDIENTS' | 'PROBLEMS';
+import { CategoryUnitId } from '~/services/config/models/Category';
 
 type Certification = 'PETA' | 'CRUELTY_FREE' | 'VEGAN';
 
@@ -10,7 +10,7 @@ type Property =
 
 interface Category {
   id: string;
-  group: ProductGroup;
+  group_id: CategoryUnitId;
   name: string;
 }
 

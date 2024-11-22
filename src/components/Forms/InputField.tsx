@@ -28,7 +28,7 @@ interface InputFieldProps extends InputProps {
 }
 
 /**
- * A component for input field in forms.
+ * A UI component for input field in forms.
  */
 export function InputField({
   title,
@@ -51,7 +51,7 @@ export function InputField({
       isInvalid={!!errorMessage || isInvalid}
       className="w-full flex flex-col gap-4 laptop:gap-6"
     >
-      {title && <Text text={title} className="font-500" />}
+      {title && <Text text={title} weight={500} />}
 
       {type === 'password' ? (
         <InputGroup size={size} width="100%">
@@ -91,7 +91,7 @@ export function InputField({
       {!errorMessage && !!helperText ? (
         <Text text={helperText} />
       ) : errorMessage ? (
-        <Text text={errorMessage} className="text-red-600" />
+        <Text text={errorMessage} variant="danger" />
       ) : (
         ''
       )}

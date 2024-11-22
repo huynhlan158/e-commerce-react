@@ -1,0 +1,15 @@
+{
+  "action-free-ship--mobile": "Miễn phí giao hàng với hoá đơn từ {{price}}đ",
+  "action-free-ship--laptop": "Tận hưởng giao hàng miễn phí toàn quốc với hoá đơn từ  {{price}}đ",
+  "shipping-fee-title": "Phí vận chuyển",
+  "shipping-fee-content-line-1": "Với hóa đơn từ {{orderThreshold}}đ: miễn phí vận chuyển toàn quốc.",
+  "shipping-fee-content-line-2": "Với hóa đơn dưới {{orderThreshold}}đ: phí vận chuyển mặc định {{defaultShippingFee}}đ áp dụng toàn quốc.",
+  "shipping-time": "Thời gian giao hàng",
+  "shipping-time-title-line-1": "Đơn hàng nội thành TP.HCM",
+  "shipping-time-content-line-1": "Thời gian giao hàng là {{min}}-{{max}} ngày sau khi đặt hàng.",
+  "shipping-time-title-line-2": "Đơn hàng ở ngoại thành Tp.HCM và các tỉnh thành khác",
+  "shipping-time-content-line-2": "Thời gian là {{innerCityMin}}-{{innerCityMax}} ngày đối với khu vực trung tâm tỉnh thành phố, {{suburbunMin}}-{{suburbunMax}} ngày đối với khu vực huyện, xã, thị trấn… (Không tính chủ nhật hay các ngày lễ tết) Có thể thay đổi thời gian giao hàng trong một số trường hợp bất khả kháng như: chịu ảnh hưởng của thiên tai, dịch Covid hoặc các sự kiện đặc biệt khác.",
+  "shipping-time-title-line-3": "Lưu ý",
+  "shipping-time-content-line-3": "Đơn hàng đặt mua tại website: {{website}} sẽ được chúng tôi chuyển phát đến các bạn thông qua {{count}} đơn vị vận chuyển chính: {{shippingPartners}}. {{specialNote}}",
+  "shipping-note": "Để kiểm tra thông tin hoặc tình trạng đơn hàng của quý khách, xin vui lòng nhắn tin vào Fanpage hoặc gọi số Hotline, cung cấp tên, số điện thoại, mã đơn hàng (nếu có) để được kiểm tra."
+}

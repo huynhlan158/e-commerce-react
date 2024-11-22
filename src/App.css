@@ -19,16 +19,28 @@
   @apply text-18 leading-20;
 }
 
+.TextFontSizeResponsive--xl {
+  @apply text-20 leading-22;
+}
+
+.TextFontSizeResponsive--2xl {
+  @apply text-24 leading-26;
+}
+
+.HeadingFontSizeResponsive--xs {
+  @apply text-16 leading-22;
+}
+
 .HeadingFontSizeResponsive--sm {
-  @apply text-18 laptop:text-20 leading-24 laptop:leading-28;
+  @apply text-18 leading-24;
 }
 
 .HeadingFontSizeResponsive--md {
-  @apply text-22 laptop:text-24 leading-28 laptop:leading-32;
+  @apply text-22 leading-26;
 }
 
 .HeadingFontSizeResponsive--lg {
-  @apply text-24 laptop:text-28 leading-28 laptop:leading-32;
+  @apply text-24 leading-28;
 }
 
 /* ===== Responsive Modal ===== */
@@ -43,4 +55,46 @@
 
 .StackPyResponsive {
   @apply py-12 laptop:py-24;
+}
+
+/* ===== Devider ===== */
+.DeviderBottom {
+  @apply border-b-[0.5px] border-beige-200;
+}
+
+/* ===== Animiation ===== */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-15px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.Animation--fadeIn {
+  opacity: 0;
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.Animation--slideIn {
+  transform: translateX(-15px);
+  animation: slideIn 0.8s ease forwards;
+}
+
+.Animation--fadeSlideIn {
+  opacity: 0;
+  transform: translateX(-15px);
+  animation:
+    fadeIn 0.8s ease forwards,
+    slideIn 0.8s ease forwards;
 }

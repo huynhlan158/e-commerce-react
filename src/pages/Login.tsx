@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
+import { useDispatch } from 'react-redux';
 
 import { setCookie, StorageKeys } from '~/utils/cookie';
 import { getErrorMessage } from '~/services/fetch.server';
@@ -10,7 +11,7 @@ import {
   loginInitialValues,
   LoginRequestSchema,
 } from '~/services/auth/models/LoginRequest';
-import { useStore } from '~/state/useStore';
+import { AppDispatch } from '~/state/store';
 import { logIn } from '~/state/auth/authSlice';
 
 import { Heading } from '~/components/TypoGraphy';
@@ -21,7 +22,7 @@ import { Status } from '~/types/Styles';
 
 export function Login() {
   const { t } = useTranslation(['authentication', 'zod']);
-  const { dispatch } = useStore('auth');
+  const dispatch = useDispatch<AppDispatch>();
 
   const toast = useToast();
 

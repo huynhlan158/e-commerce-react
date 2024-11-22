@@ -4,6 +4,7 @@ import {
   fontSize,
   spacing,
   borderWidth,
+  screens,
 } from './src/config/customTheme';
 
 export default {
@@ -14,11 +15,7 @@ export default {
       fontSize,
       spacing,
       borderWidth,
-      screens: {
-        tablet: '640px',
-        laptop: '1024px',
-        desktop: '1280px',
-      },
+      screens,
     },
   },
   plugins: [],

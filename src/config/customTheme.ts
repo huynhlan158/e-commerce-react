@@ -1,4 +1,19 @@
-import { ComponentStyleConfig, defineStyle } from '@chakra-ui/react';
+import {
+  ComponentStyleConfig,
+  createMultiStyleConfigHelpers,
+  defineStyle,
+} from '@chakra-ui/react';
+import { drawerAnatomy } from '@chakra-ui/anatomy';
+
+const {
+  definePartsStyle: defineDrawerPartsStyle,
+  defineMultiStyleConfig: defineDrawerMultiStyleConfig,
+} = createMultiStyleConfigHelpers(drawerAnatomy.keys);
+
+const {
+  definePartsStyle: defineModalPartsStyle,
+  defineMultiStyleConfig: defineModalMultiStyleConfig,
+} = createMultiStyleConfigHelpers(drawerAnatomy.keys);
 
 /** ===== General custom theme ===== */
 export const commonTheme = {
@@ -14,6 +29,7 @@ export const commonTheme = {
     },
     peach: {
       200: '#fefbf4',
+      400: '#f3ede3',
     },
     beige: {
       200: '#EDE0CC',
@@ -102,6 +118,7 @@ export const commonTheme = {
     20: '20px',
     22: '22px',
     24: '24px',
+    26: '26px',
     28: '28px',
     32: '32px',
   },
@@ -110,6 +127,7 @@ export const commonTheme = {
     400: '400',
     500: '500',
     600: '600',
+    700: '700',
   },
   borderRadius: {
     DEFAULT: '4px',
@@ -125,6 +143,15 @@ export const commonTheme = {
       },
     },
   },
+};
+
+/** ===== Custom breakpoints ===== */
+export const screens = {
+  base: '0px',
+  mobile: '410px',
+  tablet: '640px',
+  laptop: '1024px',
+  desktop: '1280px',
 };
 
 /** ===== Custom font size ===== */
@@ -266,3 +293,45 @@ export const buttonTheme: ComponentStyleConfig = {
     }),
   },
 };
+
+/** ===== Drawer theme ===== */
+export const drawerTheme = defineDrawerMultiStyleConfig({
+  baseStyle: defineDrawerPartsStyle({
+    dialog: {
+      bg: 'peach.200',
+      // TODO: add transition for dialog when closing
+    },
+    body: {
+      px: '0px',
+    },
+  }),
+  sizes: {
+    sm: defineModalPartsStyle({
+      dialog: {
+        w: '33.33%',
+        maxW: '33.33%',
+      },
+    }),
+  },
+});
+
+/** ===== Modal theme ===== */
+export const modalTheme = defineModalMultiStyleConfig({
+  sizes: {
+    sm: defineModalPartsStyle({
+      dialog: {
+        minWidth: '520px',
+      },
+    }),
+    md: defineModalPartsStyle({
+      dialog: {
+        minWidth: '640px',
+      },
+    }),
+    xl: defineModalPartsStyle({
+      dialog: {
+        minWidth: '750px',
+      },
+    }),
+  },
+});

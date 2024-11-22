@@ -5,8 +5,8 @@ import { Config } from '../models/Config';
 import { ConfigKeys, ConfigQueryKeys } from '../models/Keys';
 
 /**
- * Performs a fetch request to the config server and retrieve the list of system config items.
- * @returns A promise that resolves to the list of system config items.
+ * Performs a fetch request to the server and retrieve a system config item by provided key.
+ * @returns A promise that resolves to the system config item.
  */
 export async function getConfigByKey(key: ConfigKeys): Promise<Config> {
   return fetchServer({ path: `/config/${key}`, method: 'GET' });

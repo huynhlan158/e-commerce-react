@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import routes, { privateRoutes, publicRoutes } from '~/config/routes';
 import { authInitialize } from '~/state/auth/authSlice';
-import { useStore } from '~/state/useStore';
+import { AppDispatch } from '~/state/store';
 import { setupServer } from '~/utils/mockApi';
 
 import { PageNotFound } from '~/pages';
@@ -12,7 +13,7 @@ import { AuthGuard } from '~/components/Guards/AuthGuard';
 import '~/App.css';
 
 export default function App() {
-  const { dispatch } = useStore('auth');
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     // Setup the mock API server.
